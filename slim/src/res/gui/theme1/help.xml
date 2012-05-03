@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<themes>
+    
+    <images>
+        <alias name="help.scrollpane.background" ref="black" inset="0,0,0,4"/>
+        
+        <select name="help.mainui.area">
+            <alias ref="-area8X" if="hover"/>
+            <alias ref="-area8X" tint="#AAA"/>
+        </select>
+        <composed name="help.button.opMoveNodeUp" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opMoveNodeUp.overlay"/>
+        </composed>
+        <composed name="help.button.opMoveNodeDown" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opMoveNodeDown.overlay"/>
+        </composed>
+        <composed name="help.button.opDeleteNode" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opDeleteNode.overlay"/>
+        </composed>
+        <composed name="help.button.opNewNode" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opNewNode.overlay"/>
+        </composed>
+        <composed name="help.button.opCloneNode" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opCloneNode.overlay"/>
+        </composed>
+        <composed name="help.button.opCopyNode" sizeOverwriteH="20">
+            <alias ref="-area7X"/>
+            <alias ref="button.opCopyNode.overlay"/>
+        </composed>
+    </images>
+    
+    <theme name="helpDialog" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="scrollpane" ref="scrollpane">
+                <param name="background"><image>help.scrollpane.background</image></param>
+                <theme name="textarea" ref="textarea">
+                    <param name="background"><image>none</image></param>
+                    <param name="fonts"><map>
+                        <param name="default"><fontDef filename="font.fnt"/></param>
+                        <param name="big"><fontDef filename="bigfont.fnt"/></param>
+                        <param name="link"><fontDef filename="font.fnt" underlineOffset="1">
+                            <fontParam if="hover" underline="true"/>
+                        </fontDef></param>
+                    </map></param>
+                    <param name="images"><map>
+                        <param name="white"><image>white</image></param>
+                        <param name="twl-logo"><image>twl-logo</image></param>
+                        <param name="mainui.area"><image>help.mainui.area</image></param>
+                        <param name="opMoveNodeUp"><image>help.button.opMoveNodeUp</image></param>
+                        <param name="opMoveNodeDown"><image>help.button.opMoveNodeDown</image></param>
+                        <param name="opDeleteNode"><image>help.button.opDeleteNode</image></param>
+                        <param name="opNewNode"><image>help.button.opNewNode</image></param>
+                        <param name="opCloneNode"><image>help.button.opCloneNode</image></param>
+                        <param name="opCopyNode"><image>help.button.opCopyNode</image></param>
+                        <param name="icon"><image>icon.*</image></param>
+                    </map></param>
+                </theme>
+            </theme>
+            <theme name="closebutton" ref="button">
+                <param name="text"><string>Close</string></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="scrollpane-closebutton"><gap>20</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+</themes>

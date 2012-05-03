@@ -1,0 +1,1728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<themes>
+    <include filename="cursors.xml"/>
+    <include filename="gui_base.xml"/>
+
+    <images file="gui.png" format="RGBA">
+        <area name="checkerboard" tiled="true" xywh="56,106,8,8"/>
+        <area name="-positionbar-horizontal-0" tiled="true" xywh="124,68,32,1"/>
+        <area name="-positionbar-horizontal-1" tiled="true" xywh="122,68,32,1"/>
+        <area name="-positionbar-horizontal-2" tiled="true" xywh="120,68,32,1"/>
+        <area name="-positionbar-horizontal-3" tiled="true" xywh="118,68,32,1"/>
+        <area name="-positionbar-vertical-0" tiled="true" xywh="156,6,1,40"/>
+        <area name="-positionbar-vertical-1" tiled="true" xywh="156,4,1,40"/>
+        <area name="-positionbar-vertical-2" tiled="true" xywh="156,2,1,40"/>
+        <area name="-positionbar-vertical-3" tiled="true" xywh="156,0,1,40"/>
+        <area name="-icon-moveup" center="true" xywh="74,19,12,8"/>
+        <area name="-icon-movedown" center="true" xywh="87,19,12,8"/>
+        <area name="-icon-apply" center="true" inset="0,1,0,-1" xywh="86,37,13,10"/>
+
+        <area name="--icon-clone" center="true" xywh="142,70,13,10"/>
+        <area name="--icon-clone-arrow0" xywh="147,92,4,6" inset="2,2,2,7"/>
+        <area name="--icon-clone-arrow1" xywh="146,92,5,6" inset="2,2,2,6"/>
+        <area name="--icon-clone-arrow2" xywh="145,92,6,6" inset="2,2,2,5"/>
+        <area name="--icon-clone-arrow3" xywh="144,92,7,6" inset="2,2,2,4"/>
+        <area name="--icon-clone-arrow4" xywh="143,92,8,6" inset="2,2,2,3"/>
+        <area name="--icon-clone-arrow5" xywh="142,92,9,6" inset="2"/>
+        <area name="--icon-clone-dest" xywh="148,81,7,10" inset="0,6,0,0"/>
+        <select name="-icon-clone" sizeOverwriteH="13" sizeOverwriteV="10">
+            <composed if="hover" center="true">
+                <area xywh="142,81,5,10" inset="0,0,0,8"/>
+                <animation timeSource="hover">
+                    <frame duration="500" ref="--icon-clone-dest" tint="#00FFFFFF"/>
+                    <frame duration="500" ref="--icon-clone-dest"/>
+                    <frame duration="0" ref="--icon-clone-dest"/>
+                </animation>
+                <animation timeSource="hover">
+                    <frame duration="100" ref="--icon-clone-arrow0"/>
+                    <frame duration="100" ref="--icon-clone-arrow1"/>
+                    <frame duration="100" ref="--icon-clone-arrow2"/>
+                    <frame duration="100" ref="--icon-clone-arrow3"/>
+                    <frame duration="100" ref="--icon-clone-arrow4"/>
+                    <frame duration="500" ref="--icon-clone-arrow5"/>
+                </animation>
+            </composed>
+            <alias ref="--icon-clone"/>
+        </select>
+        
+        <area name="-icon-copy" center="true" xywh="84,48,11,12"/>
+        <area name="-icon-jump" center="true" xywh="83,61,14,9"/>
+        <area name="-icon-add" center="true" xywh="48,19,12,12"/>
+        <area name="-icon-remove" center="true" xywh="61,19,12,12"/>
+        <area name="-icon-select" center="true" xywh="105,68,12,12"/>
+        <area name="-icon-relative-left" center="true" xywh="107,81,8,9"/>
+        <area name="-icon-relative-right" center="true" xywh="116,81,8,9"/>
+        <area name="-icon-relative-top" center="true" xywh="107,91,9,8"/>
+        <area name="-icon-relative-bottom" center="true" xywh="117,91,9,8"/>
+
+        <cursor name="cursor.dragSelect" hotSpotX="5" hotSpotY="5" xywh="90,82,16,16"/>
+        
+        <alias name="textureviewer.background" ref="checkerboard" border="64" inset="64" sizeOverwriteH="0" sizeOverwriteV="0"/>
+
+        <alias name="listbox.background" ref="panel.background" inset="0,0,0,6"/>
+        
+        <select name="positionbar-horizontal">
+            <animation timeSource="now" if="animatedPositionBars">
+                <frame duration="200" ref="-positionbar-horizontal-0"/>
+                <frame duration="100" ref="-positionbar-horizontal-1"/>
+                <frame duration="100" ref="-positionbar-horizontal-2"/>
+                <frame duration="200" ref="-positionbar-horizontal-3"/>
+                <frame duration="100" ref="-positionbar-horizontal-2"/>
+                <frame duration="100" ref="-positionbar-horizontal-1"/>
+            </animation>
+            <alias ref="-positionbar-horizontal-0"/>
+        </select>
+
+        <select name="positionbar-vertical">
+            <animation timeSource="now" if="animatedPositionBars">
+                <frame duration="200" ref="-positionbar-vertical-0"/>
+                <frame duration="100" ref="-positionbar-vertical-1"/>
+                <frame duration="100" ref="-positionbar-vertical-2"/>
+                <frame duration="200" ref="-positionbar-vertical-3"/>
+                <frame duration="100" ref="-positionbar-vertical-2"/>
+                <frame duration="100" ref="-positionbar-vertical-1"/>
+            </animation>
+            <alias ref="-positionbar-vertical-0"/>
+        </select>
+        
+        <grid name="mainmenu.background" weightsX="1" weightsY="1,0,0" border="0,0,4,0">
+            <alias ref="none"/>
+            <alias ref="panel.separator"/>
+            <alias ref="none" sizeOverwriteV="1"/>
+        </grid>
+
+        <grid name="statusbar.background" weightsX="1" weightsY="0,0,1" border="5,5,2,5">
+            <alias ref="none" sizeOverwriteV="1"/>
+            <alias ref="panel.separator"/>
+            <alias ref="none"/>
+        </grid>
+
+        <grid name="-white-frame" weightsX="0,1,0" weightsY="0,1,0">
+            <alias ref="white"/>
+            <alias ref="white"/>
+            <alias ref="white"/>
+            <alias ref="white"/>
+            <alias ref="none"/>
+            <alias ref="white"/>
+            <alias ref="white"/>
+            <alias ref="white"/>
+            <alias ref="white"/>
+        </grid>
+        <select name="flashImage">
+            <animation timeSource="flashing" count="1" if="flashing">
+                <repeat count="5">
+                    <frame ref="-white-frame" duration="100" tint="red"/>
+                    <frame ref="-white-frame" duration="100" tint="blue"/>
+                </repeat>
+                <frame ref="none" duration="100"/>
+            </animation>
+            <alias ref="-white-frame" tint="red"/>
+        </select>
+
+        <composed name="addbutton.overlay">
+            <select>
+                <alias ref="-icon-add" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-add" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-add"/>
+            </select>
+            <alias ref="button.overlay"/>
+        </composed>
+
+        <composed name="removebutton.overlay">
+            <select>
+                <alias ref="-icon-remove" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-remove" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-remove"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <alias name="button.opDeleteNode.overlay" ref="removebutton.overlay"/>
+        <alias name="button.opNewNode.overlay" ref="addbutton.overlay"/>
+
+        <composed name="button.opMoveNodeUp.overlay">
+            <select>
+                <alias ref="-icon-moveup" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-moveup" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-moveup"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="button.opMoveNodeDown.overlay">
+            <select>
+                <alias ref="-icon-movedown" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-movedown" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-movedown"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="button.opCloneNode.overlay">
+            <select>
+                <alias ref="-icon-clone" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-clone" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-clone"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="button.opCopyNode.overlay">
+            <select>
+                <alias ref="-icon-copy" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-copy" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-copy"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="applybutton.overlay">
+            <select>
+                <alias ref="-icon-apply" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-apply" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-apply"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="jumpbutton.overlay">
+            <select>
+                <alias ref="-icon-jump" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-jump" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-jump"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+        
+        <grid name="-icon-flash" weightsX="1" weightsY="0,1,0" center="true">
+            <alias ref="white" sizeOverwriteV="2"/>
+            <grid weightsX="0,1,0" weightsY="1" sizeOverwriteV="8">
+                <alias ref="white" sizeOverwriteH="2"/>
+                <alias ref="none" sizeOverwriteH="8"/>
+                <alias ref="white" sizeOverwriteH="2"/>
+            </grid>
+            <alias ref="white" sizeOverwriteV="2"/>
+        </grid>
+        <composed name="flashbutton.overlay">
+            <select>
+                <alias ref="-icon-flash" tint="#6fff" if="disabled"/>
+                <alias ref="-icon-flash" tint="#C00" if="armed" inset="1,1,-1,-1"/>
+                <animation timeSource="hover" if="hover">
+                    <frame duration="100" ref="-icon-flash" tint="#C00"/>
+                    <frame duration="100" ref="-icon-flash" tint="#00C"/>
+                </animation>
+                <alias ref="-icon-flash" tint="#C00"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <composed name="selectbutton.overlay">
+            <select>
+                <alias ref="-icon-select" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-select" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-select"/>
+            </select>
+            <alias ref="vbutton.overlay"/>
+        </composed>
+
+        <grid name="-icon-linked" weightsX="0,1,0" weightsY="1" inset="1,0,-1,0">
+            <area xywh="144,107,10,7" center="true"/>
+            <alias ref="none"/>
+            <area xywh="154,107,10,7" center="true"/>
+        </grid>
+        <alias name="--icon-linked0" ref="-icon-linked" sizeOverwriteH="20"/>
+        <alias name="--icon-linked1" ref="-icon-linked" sizeOverwriteH="22"/>
+        <alias name="--icon-linked2" ref="-icon-linked" sizeOverwriteH="24"/>
+        <alias name="--icon-linked3" ref="-icon-linked" sizeOverwriteH="26"/>
+        <alias name="-icon-linked0" ref="--icon-linked0" sizeOverwriteH="26" center="true"/>
+        <alias name="-icon-linked1" ref="--icon-linked1" sizeOverwriteH="26" center="true"/>
+        <alias name="-icon-linked2" ref="--icon-linked2" sizeOverwriteH="26" center="true"/>
+        <alias name="-icon-linked3" ref="--icon-linked3" sizeOverwriteH="26" center="true"/>
+        <composed name="button.link.overlay">
+            <select>
+                <animation timeSource="selected" if="selected" count="1" frozenTime="200">
+                    <frame duration="50" ref="-icon-linked3"/>
+                    <frame duration="50" ref="-icon-linked2"/>
+                    <frame duration="50" ref="-icon-linked1"/>
+                    <frame duration="50" ref="-icon-linked0"/>
+                </animation>
+                <animation timeSource="selected" count="1" frozenTime="200">
+                    <frame duration="50" ref="-icon-linked0"/>
+                    <frame duration="50" ref="-icon-linked1"/>
+                    <frame duration="50" ref="-icon-linked2"/>
+                    <frame duration="50" ref="-icon-linked3"/>
+                </animation>
+            </select>
+            <alias ref="togglebutton.overlay"/>
+        </composed>
+
+        <composed name="relativebutton.left.overlay">
+            <select>
+                <alias ref="-icon-relative-left" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-relative-left" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-relative-left"/>
+            </select>
+            <alias ref="radiobutton.overlay"/>
+        </composed>
+
+        <composed name="relativebutton.right.overlay">
+            <select>
+                <alias ref="-icon-relative-right" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-relative-right" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-relative-right"/>
+            </select>
+            <alias ref="radiobutton.overlay"/>
+        </composed>
+
+        <composed name="relativebutton.top.overlay">
+            <select>
+                <alias ref="-icon-relative-top" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-relative-top" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-relative-top"/>
+            </select>
+            <alias ref="radiobutton.overlay"/>
+        </composed>
+
+        <composed name="relativebutton.bottom.overlay">
+            <select>
+                <alias ref="-icon-relative-bottom" if="disabled" tint="#6fff"/>
+                <alias ref="-icon-relative-bottom" if="armed" inset="1,1,-1,-1"/>
+                <alias ref="-icon-relative-bottom"/>
+            </select>
+            <alias ref="radiobutton.overlay"/>
+        </composed>
+
+        <grid name="property-checkbox.background" weightsX="1" weightsY="1,0,0" border="0,18,5,0">
+            <alias ref="checkbox.background"/>
+            <alias ref="none" sizeOverwriteV="3"/>
+            <alias ref="panel.separator"/>
+        </grid>
+        <grid name="property-checkbox.overlay" weightsX="1" weightsY="1,0">
+            <alias ref="checkbox.overlay"/>
+            <alias ref="none" sizeOverwriteV="5"/>
+        </grid>
+
+        <area name="-progressbar.indeterminate-icon" xywh="158,19,28,13" tiled="true"/>
+        <alias name="-progressbar.indeterminate0" ref="-progressbar.indeterminate-icon" inset="0,-26,0,0"/>
+        <alias name="-progressbar.indeterminate1" ref="-progressbar.indeterminate-icon" inset="0,-24,0,0"/>
+        <alias name="-progressbar.indeterminate2" ref="-progressbar.indeterminate-icon" inset="0,-22,0,0"/>
+        <alias name="-progressbar.indeterminate3" ref="-progressbar.indeterminate-icon" inset="0,-20,0,0"/>
+        <alias name="-progressbar.indeterminate4" ref="-progressbar.indeterminate-icon" inset="0,-18,0,0"/>
+        <alias name="-progressbar.indeterminate5" ref="-progressbar.indeterminate-icon" inset="0,-16,0,0"/>
+        <alias name="-progressbar.indeterminate6" ref="-progressbar.indeterminate-icon" inset="0,-14,0,0"/>
+        <alias name="-progressbar.indeterminate7" ref="-progressbar.indeterminate-icon" inset="0,-12,0,0"/>
+        <alias name="-progressbar.indeterminate8" ref="-progressbar.indeterminate-icon" inset="0,-10,0,0"/>
+        <alias name="-progressbar.indeterminate9" ref="-progressbar.indeterminate-icon" inset="0,-8,0,0"/>
+        <alias name="-progressbar.indeterminate10" ref="-progressbar.indeterminate-icon" inset="0,-6,0,0"/>
+        <alias name="-progressbar.indeterminate11" ref="-progressbar.indeterminate-icon" inset="0,-4,0,0"/>
+        <alias name="-progressbar.indeterminate12" ref="-progressbar.indeterminate-icon" inset="0,-2,0,0"/>
+        <alias name="-progressbar.indeterminate13" ref="-progressbar.indeterminate-icon"/>
+        <composed name="progressbar.background" sizeOverwriteV="13">
+            <alias ref="white" tint="#CCCCCC"/>
+            <animation timeSource="hover">
+                <frame duration="50" ref="-progressbar.indeterminate0"/>
+                <frame duration="50" ref="-progressbar.indeterminate1"/>
+                <frame duration="50" ref="-progressbar.indeterminate2"/>
+                <frame duration="50" ref="-progressbar.indeterminate3"/>
+                <frame duration="50" ref="-progressbar.indeterminate4"/>
+                <frame duration="50" ref="-progressbar.indeterminate5"/>
+                <frame duration="50" ref="-progressbar.indeterminate6"/>
+                <frame duration="50" ref="-progressbar.indeterminate7"/>
+                <frame duration="50" ref="-progressbar.indeterminate8"/>
+                <frame duration="50" ref="-progressbar.indeterminate9"/>
+                <frame duration="50" ref="-progressbar.indeterminate10"/>
+                <frame duration="50" ref="-progressbar.indeterminate11"/>
+                <frame duration="50" ref="-progressbar.indeterminate12"/>
+                <frame duration="50" ref="-progressbar.indeterminate13"/>
+            </animation>
+        </composed>
+        <area name="progressbar.overlay" xywh="158,33,7,7" splitx="L3,B3" splity="L3,B3"/>
+        
+        <grid name="colorbutton.white" weightsX="0,1" weightsY="1">
+            <alias ref="white" inset="5,5,5,0" sizeOverwriteH="20"/>
+            <alias ref="none"/>
+        </grid>
+        
+        <grid name="popupmenucolorbutton.white" weightsX="0,1" weightsY="1" border="1,16,1,0">
+            <alias ref="white" inset="3,0,2,0" sizeOverwriteH="12"/>
+            <alias ref="none"/>
+        </grid>
+        
+        <composed name="collapsiblepanelbottom.background">
+            <alias ref="panel.background"/>
+            <grid weightsX="1" weightsY="0,1" border="5,0,0,0">
+                <alias ref="panel.separator"/>
+                <alias ref="none"/>
+            </grid>
+        </composed>
+        
+        <grid name="gradientstopeditor.colorbutton.white" weightsX="0,1" weightsY="1">
+            <alias ref="white" inset="3,5,3,0" sizeOverwriteH="20"/>
+            <alias ref="none"/>
+        </grid>
+        <select name="gradientstopeditor.colorbutton.background">
+            <grid if="selected + armed" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton6ML"/>
+                <alias ref="-vbutton6MM"/>
+                <alias ref="-vbutton6MR"/>
+            </grid>
+            <grid if="selected + hover + !disabled" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton5ML"/>
+                <alias ref="-vbutton5MM"/>
+                <alias ref="-vbutton5MR"/>
+            </grid>
+            <grid if="selected" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton4ML"/>
+                <alias ref="-vbutton4MM"/>
+                <alias ref="-vbutton4MR"/>
+            </grid>
+            <grid if="armed" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton3ML"/>
+                <alias ref="-vbutton3MM"/>
+                <alias ref="-vbutton3MR"/>
+            </grid>
+            <grid if="hover + !disabled" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton2ML"/>
+                <alias ref="-vbutton2MM"/>
+                <alias ref="-vbutton2MR"/>
+            </grid>
+            <grid weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton1ML"/>
+                <alias ref="-vbutton1MM"/>
+                <alias ref="-vbutton1MR"/>
+            </grid>
+        </select>
+        <grid name="gradientstopeditor.colorbutton.overlay" if="keyboardFocus" weightsX="0,1,0" weightsY="1" tint="keyboardFocus">
+            <alias ref="-vbuttonSelML"/>
+            <alias ref="-vbuttonSelMM"/>
+            <alias ref="-vbuttonSelMR"/>
+        </grid>
+        
+        <select name="gradientstopeditor.valueadjuster.edit.background">
+            <alias ref="-adjuster2MM" if="hover + !disabled"/>
+            <alias ref="-adjuster1MM"/>
+        </select>
+        <composed name="gradientstopeditor.valueadjuster.display.background">
+            <alias ref="gradientstopeditor.valueadjuster.edit.background"/>
+            <alias ref="-adjuster-drag-arrows"/>
+        </composed>
+        <select name="gradientstopeditor.valueadjuster.dec.background">
+            <alias ref="-adjuster3ML" if="armed"/>
+            <alias ref="-adjuster2ML" if="hover + !disabled"/>
+            <alias ref="-adjuster1ML"/>
+        </select>
+        <select name="gradientstopeditor.valueadjuster.inc.background">
+            <alias ref="-adjuster3MR" if="armed"/>
+            <alias ref="-adjuster2MR" if="hover + !disabled"/>
+            <alias ref="-adjuster1MR"/>
+        </select>
+        <grid name="gradientstopeditor.valueadjuster.overlay" inset="1,0" tint="keyboardFocus" if="keyboardFocus" weightsX="0,1,0" weightsY="1">
+            <alias ref="-adjusterSelML"/>
+            <alias ref="-adjusterSelMM"/>
+            <alias ref="-adjusterSelMR"/>
+        </grid>
+        
+        <grid name="textureviewerpane.properties.background" weightsX="0,1" weightsY="1">
+            <alias ref="splitpane.hsplitter.background"/>
+            <alias ref="none"/>
+        </grid>
+    </images>
+
+    <images file="gui.png" format="RGBA" comment="icons">
+        <area name="-icon-link" xywh="175,38,14,7" inset="9,2,0,0"/>
+        <area name="icon.image-composed" xywh="158,85,16,13" center="true"/>
+        <area name="icon.image-animation" xywh="165,99,12,15" center="true" sizeOverwriteH="16"/>
+        <area name="icon.image-area" xywh="178,99,14,14" center="true" sizeOverwriteH="16"/>
+        <area name="icon.image-grid" xywh="193,96,16,16" center="true"/>
+        <area name="icon.image-cursor" xywh="190,79,10,16" center="true" sizeOverwriteH="16"/>
+        <composed name="icon.image-cursorref" center="true">
+            <alias ref="icon.image-cursor" sizeOverwriteH="16" sizeOverwriteV="16"/>
+            <alias ref="-icon-link"/>
+        </composed>
+        <composed name="icon.image-alias" center="true">
+            <alias ref="icon.image-area" sizeOverwriteH="16" sizeOverwriteV="16"/>
+            <alias ref="-icon-link"/>
+        </composed>
+        <area name="icon.image-select" xywh="175,46,16,16" center="true"/>
+        <area name="icon.inputmapdef" xywh="164,115,16,12" center="true"/>
+        <area name="icon.images" xywh="181,114,16,13" center="true"/>
+        <area name="icon.include" xywh="175,90,12,7" center="true" inset="2,0,0,0" sizeOverwriteH="16"/>
+        <area name="icon.theme" xywh="175,75,14,14" center="true" sizeOverwriteH="16"/>
+        <area name="icon.fontdef" xywh="174,63,10,11" center="true" sizeOverwriteH="16"/>
+        <alias name="icon.themes" ref="icon.include"/>
+
+        <alias name="-icon-param-background" ref="white" tint="#6F97DF" sizeOverwriteH="16" sizeOverwriteV="16"/>
+        <composed name="icon.param-image" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.image-alias"/>
+        </composed>
+        <composed name="icon.param-cursor" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.image-cursorref"/>
+        </composed>
+        <composed name="icon.param-inputmapdef" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.inputmapdef"/>
+        </composed>
+        <composed name="icon.param-fontdef" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.fontdef" center="true"/>
+        </composed>
+        <composed name="icon.param-string" center="true">
+            <alias ref="-icon-param-background"/>
+            <area xywh="198,121,16,7" center="true"/>
+        </composed>
+        <composed name="icon.param-int" center="true">
+            <alias ref="-icon-param-background"/>
+            <area xywh="215,121,14,7" center="true"/>
+        </composed>
+        <composed name="icon.param-bool" center="true">
+            <alias ref="-icon-param-background"/>
+            <area xywh="198,113,15,7" center="true"/>
+        </composed>
+        <composed name="icon.param-border" center="true">
+            <alias ref="-icon-param-background"/>
+            <area xywh="215,104,16,16" center="true"/>
+        </composed>
+        <composed name="icon.param-font" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.fontdef" sizeOverwriteH="16" sizeOverwriteV="16"/>
+            <alias ref="-icon-link"/>
+        </composed>
+        <composed name="icon.param-inputmap" center="true">
+            <alias ref="-icon-param-background"/>
+            <alias ref="icon.inputmapdef" sizeOverwriteH="16" sizeOverwriteV="16"/>
+            <alias ref="-icon-link"/>
+        </composed>
+        <composed name="icon.param-color" center="true">
+            <alias ref="-icon-param-background"/>
+            <area xywh="200,79,16,16" center="true"/>
+        </composed>
+        
+        <grid name="opnewnode.animation.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-animation" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.area.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-area" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.select.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-select" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.composed.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-composed" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.grid.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-grid" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.alias.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-alias" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.cursor.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-cursor" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.cursorref.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.image-cursorref" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.theme.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.theme" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.include.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.include" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.images.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.images" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.fontdef.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.fontdef" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.inputmapdef.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.inputmapdef" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-image.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-image" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-font.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-font" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-fontdef.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-fontdef" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-cursor.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-cursor" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-inputmap.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-inputmap" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-inputmapdef.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-inputmapdef" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-int.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-int" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-string.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-string" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-bool.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-bool" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="opnewnode.param-border.overlay" weightsX="0,1" weightsY="1" inset="0,4,0,0">
+            <alias ref="icon.param-border" sizeOverwriteH="16"/>
+            <alias ref="none"/>
+        </grid>
+    
+    </images>
+
+    <theme name="themetreepane" ref="dialoglayout">
+        <param name=""><image>panel.*</image></param>
+        <param name="border"><border>0,0,5,0</border></param>
+        <theme name="scrollpane" ref="scrollpane">
+            <param name="border"><border>background.border</border></param>
+            <theme name="treetable" ref="table">
+                <param name="columnWidths"><map>
+                    <param name="1"><int>80</int></param>
+                </map></param>
+                <param name="inputMap"><inputMapDef merge="true">
+                    <action name="opDeleteNode">DELETE</action>
+                    <action name="opDeleteNode">SHIFT DELETE</action>
+                    <action name="opDeleteNode">BACK</action>
+                    <action name="opCopyNode">CTRL C</action>
+                    <action name="opCloneNode">CTRL SHIFT DOWN</action>
+                </inputMapDef></param>
+                <theme name="iconcellrenderer" ref="-defaults">
+                    <param name="font"><font>normal</font></param>
+                    <param name="border"><border>0,20,0,0</border></param>
+                    <param name="icons">
+                        <map>
+                            <param name=""><image>icon.*</image></param>
+                        </map>
+                    </param>
+                </theme>
+                <theme name="stringcellrenderer" ref="-defaults">
+                    <param name="font"><font>normal</font></param>
+                    <param name="border"><border>0,20,0,0</border></param>
+                </theme>
+            </theme>
+            <theme name="table" ref="table"/>
+        </theme>
+        <theme name="filter" ref="editfield">
+            <param name="tooltip"><string>Search for nodes</string></param>
+        </theme>
+        <theme name="collapsiblepanel" ref="dialoglayout">
+            <param name="border"><border>0,2,0,5</border></param>
+            <theme name="arrow" ref="-defaults">
+                <param name=""><image>collapsiblepanel.arrowH.*</image></param>
+                <param name="tooltip"><string>Toggle tree editing buttons</string></param>
+                <param name="minWidth"><int>12</int></param>
+                <param name="maxHeight"><int>32767</int></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="title-content"><gap>0</gap></param>
+            </map></param>
+            
+            <theme name="contentcontainer" ref="-defaults">
+                <theme name="boxlayout" ref="-defaults">
+                    <param name="alignment"><enum type="alignment">center</enum></param>
+                    <param name="spacing"><int>2</int></param>
+                    <theme name="opMoveNodeUp" ref="button">
+                        <param name=""><image>button.opMoveNodeUp.*</image></param>
+                        <param name="tooltip"><string>Moves the selected node upwards</string></param>
+                    </theme>
+                    <theme name="opMoveNodeDown" ref="button">
+                        <param name=""><image>button.opMoveNodeDown.*</image></param>
+                        <param name="tooltip"><string>Moves the selected node downwards</string></param>
+                    </theme>
+                    <theme name="opDeleteNode" ref="button">
+                        <param name=""><image>button.opDeleteNode.*</image></param>
+                        <param name="tooltip"><string>Deletes the selected node</string></param>
+                    </theme>
+                    <theme name="opNewNode" ref="button">
+                        <param name=""><image>button.opNewNode.*</image></param>
+                        <param name="tooltip"><string>Creates a new child node</string></param>
+                    </theme>
+                    <theme name="opCloneNode" ref="button">
+                        <param name=""><image>button.opCloneNode.*</image></param>
+                        <param name="tooltip"><string>Clones the current node</string></param>
+                    </theme>
+                    <theme name="opCopyNode" ref="button">
+                        <param name=""><image>button.opCopyNode.*</image></param>
+                        <param name="tooltip"><string>Puts the XML for the current node on the clipboard</string></param>
+                    </theme>
+                </theme>
+            </theme>
+        </theme>
+        <theme name="" ref="*"/>
+    </theme>
+    
+    <theme name="opNewNode-popupMenu" ref="dialoglayout">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>5</border></param>
+
+        <theme name="opPasteNode" ref="popupMenuButton">
+            <param name="text"><string>Paste</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeArea" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;area&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.area.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeAlias" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;alias&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.alias.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeGrid" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;grid&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.grid.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeSelect" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;select&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.select.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeComposed" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;composed&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.composed.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeGradient" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;gradient&gt; node</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeAnimation" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;animation&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.animation.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeFrame" ref="popupMenuButton">
+            <param name="text"><string>Create a new animation &lt;frame&gt; node</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeFrames" ref="popupMenuButton">
+            <param name="text"><string>Create a new animation &lt;frames&gt; (frame sequence) node</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeRepeat" ref="popupMenuButton">
+            <param name="text"><string>Create a new animation &lt;repeat&gt; node</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeTheme" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;theme&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.theme.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeWildcardTheme" ref="popupMenuButton">
+            <param name="text"><string>Create a new child theme wildcard node</string></param>
+            <param name="tooltip"><string>A wildcard is a &lt;theme name="" ref="*"&gt; node and can reference all top level nodes which have allowWildcard enabled.</string></param>
+            <param name="overlay"><image>opnewnode.theme.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeImages" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;images&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.images.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeFontDef" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;fontDef&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.fontdef.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeInputMapDef" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;inputMapDef&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.inputmapdef.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeInputMapAction" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;action&gt; node</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeInclude" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;include&gt; node</string></param>
+            <param name="overlay"><image>opnewnode.include.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeCursor" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;cursor&gt; node</string></param>
+            <param name="tooltip"><string>This is an mouse cursor</string></param>
+            <param name="overlay"><image>opnewnode.cursor.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeCursorAlias" ref="popupMenuButton">
+            <param name="text"><string>Create a new &lt;cursor ref="..."&gt; node</string></param>
+            <param name="tooltip"><string>This is an alias to another mouse cursor</string></param>
+            <param name="overlay"><image>opnewnode.cursorref.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewNodeFontParam" ref="popupMenuButton">
+            <param name="text"><string>Create a new font parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamFromClass" ref="popupMenuButton">
+            <param name="text"><string>Create a new parameter based on a Widget class</string></param>
+            <param name="overlay"><image>opnewnode.param-image.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamImage" ref="popupMenuButton">
+            <param name="text"><string>Create a new image parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-image.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamBorder" ref="popupMenuButton">
+            <param name="text"><string>Create a new border parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+            <param name="overlay"><image>opnewnode.param-border.overlay</image></param>
+        </theme>
+        <theme name="opNewParamInt" ref="popupMenuButton">
+            <param name="text"><string>Create a new integer parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+            <param name="overlay"><image>opnewnode.param-int.overlay</image></param>
+        </theme>
+        <theme name="opNewParamString" ref="popupMenuButton">
+            <param name="text"><string>Create a new string parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+            <param name="overlay"><image>opnewnode.param-string.overlay</image></param>
+        </theme>
+        <theme name="opNewParamFont" ref="popupMenuButton">
+            <param name="text"><string>Create a new font parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-font.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamFontDef" ref="popupMenuButton">
+            <param name="text"><string>Create a new fontDef parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-fontdef.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamInputMap" ref="popupMenuButton">
+            <param name="text"><string>Create a new inputMap parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-inputmap.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamInputMapDef" ref="popupMenuButton">
+            <param name="text"><string>Create a new inputMapDef parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-inputmapdef.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamCursor" ref="popupMenuButton">
+            <param name="text"><string>Create a new cursor parameter</string></param>
+            <param name="overlay"><image>opnewnode.param-cursor.overlay</image></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamBool" ref="popupMenuButton">
+            <param name="text"><string>Create a new boolean parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+            <param name="overlay"><image>opnewnode.param-bool.overlay</image></param>
+        </theme>
+        <theme name="opNewParamGap" ref="popupMenuButton">
+            <param name="text"><string>Create a new layout gap parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamDimension" ref="popupMenuButton">
+            <param name="text"><string>Create a new dimension parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamMap" ref="popupMenuButton">
+            <param name="text"><string>Create a new parameter map</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <theme name="opNewParamEnumAlignment" ref="popupMenuButton">
+            <param name="text"><string>Create a new alignment enum parameter</string></param>
+            <param name="border"><border>0,24,0,0</border></param>
+        </theme>
+        <param name="namedGaps"><map>
+            <param name="menuitem"><gap>5</gap></param>
+        </map></param>
+    </theme>
+
+    <theme name="confirmationDlg-opDeleteNode" ref="simpledialog">
+        <theme name="content" merge="true">
+            <theme name="title" merge="true">
+                <param name="text"><string>Delete the selected node ?</string></param>
+            </theme>
+            <theme name="btnOk" merge="true">
+                <param name="text"><string>Delete</string></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="-parameterDlg" ref="simpledialog">
+        <theme name="content" merge="true">
+            <theme name="queryoperationparameter" ref="dialoglayout">
+                <theme name="label" ref="label"/>
+                <theme name="filename" ref="editfield">
+                    <param name="maxWidth"><int>32767</int></param>
+                </theme>
+                <theme name="selectFile" ref="button">
+                    <param name="text"><string>...</string></param>
+                </theme>
+                <theme name="selectThemeParameterInfo" ref="scrollpane">
+                    <theme name="treetable" ref="table">
+                        <theme name="folderrenderer" ref="stringcellrenderer">
+                        </theme>
+                        <param name="columnWidths"><map>
+                            <param name="1"><int>120</int></param>
+                            <param name="2"><int>120</int></param>
+                        </map></param>
+                    </theme>
+                    <param name="minWidth"><int>600</int></param>
+                    <param name="minHeight"><int>400</int></param>
+                </theme>
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <param name="namedGaps"><map ref="namedGaps">
+                <param name="msg-right"><gap>0</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+    <theme name="parameterDlg-opNewNodeImages" ref="-parameterDlg">
+        <theme name="content" merge="true">
+            <theme name="title" merge="true">
+                <param name="text"><string>Specify the parameters for the new &lt;images&gt; node.
+Leave empty to create an &lt;images&gt; node without an image.</string></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="parameterDlg-opNewNodeFontDef" ref="-parameterDlg">
+        <theme name="content" merge="true">
+            <theme name="title" merge="true">
+                <param name="text"><string>Specify the parameters for the new &lt;fontDef&gt; node</string></param>
+            </theme>
+        </theme>
+    </theme>
+    <theme name="parameterDlg-opNewParamFontDef" ref="parameterDlg-opNewNodeFontDef"/>
+
+    <theme name="parameterDlg-opNewParamFromClass" ref="-parameterDlg">
+        <theme name="content" merge="true">
+            <theme name="title" merge="true">
+                <param name="text"><string>Select the parameter from one of the loaded classes</string></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="parameterDlg-opNewNodeInclude" ref="-parameterDlg">
+        <theme name="content" merge="true">
+            <theme name="title" merge="true">
+                <param name="text"><string>Specify the parameters for the new &lt;include&gt; node</string></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="-property-editors" ref="dialoglayout">
+        <theme name="" ref="*"/>
+        <theme name="boolean" ref="togglebutton"/>
+        <theme name="colorselector" ref="colorselector"/>
+
+        <theme name="conditioneditor" ref="dialoglayout">
+            <theme name="condition-none" ref="radiobutton">
+                <param name="text"><string>None</string></param>
+            </theme>
+            <theme name="condition-if" ref="radiobutton">
+                <param name="text"><string>If</string></param>
+            </theme>
+            <theme name="condition-unless" ref="radiobutton">
+                <param name="text"><string>Unless</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="recteditor" ref="dialoglayout">
+            <theme name="" ref="*"/>
+            <theme name="btnWholeArea" ref="checkbox">
+                <param name="text"><string>Whole area</string></param>
+                <param name="tooltip"><string>Use whole image area</string></param>
+            </theme>
+            <theme name="btnFlipHorz" ref="checkbox">
+                <param name="text"><string>flip horizontally</string></param>
+                <param name="tooltip"><string>flip the area horizontally</string></param>
+            </theme>
+            <theme name="btnFlipVert" ref="checkbox">
+                <param name="text"><string>flip vertically</string></param>
+                <param name="tooltip"><string>flip the area vertically</string></param>
+            </theme>
+            <theme name="actionButton" ref="button"/>
+        </theme>
+
+        <theme name="weightseditor" ref="dialoglayout">
+            <theme name="removebutton" ref="vbutton">
+                <param name=""><image>removebutton.*</image></param>
+                <param name="tooltip"><string>Remove this weight</string></param>
+            </theme>
+            <theme name="addbutton" ref="button">
+                <param name=""><image>addbutton.*</image></param>
+                <param name="tooltip"><string>Add a new weight</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="animstateeditor" ref="dialoglayout">
+            <theme name="addbutton" ref="button">
+                <param name=""><image>addbutton.*</image></param>
+                <param name="tooltip"><string>Add this state name to the list</string></param>
+            </theme>
+            <theme name="statebutton" ref="vbutton"/>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="spliteditor" ref="dialoglayout">
+            <theme name="removebutton" ref="vbutton">
+                <param name=""><image>removebutton.*</image></param>
+                <param name="tooltip"><string>Remove this split position</string></param>
+            </theme>
+            <theme name="addbutton" ref="button">
+                <param name=""><image>addbutton.*</image></param>
+                <param name="tooltip"><string>Add a new split position</string></param>
+            </theme>
+            <theme name="btnRelativeTop" ref="radiobutton">
+                <param name=""><image>relativebutton.top.*</image></param>
+                <param name="tooltip"><string>Position is relative to the top edge</string></param>
+            </theme>
+            <theme name="btnRelativeLeft" ref="radiobutton">
+                <param name=""><image>relativebutton.left.*</image></param>
+                <param name="tooltip"><string>Position is relative to the left edge</string></param>
+            </theme>
+            <theme name="btnRelativeRight" ref="radiobutton">
+                <param name=""><image>relativebutton.right.*</image></param>
+                <param name="tooltip"><string>Position is relative to the right edge</string></param>
+            </theme>
+            <theme name="btnRelativeBottom" ref="radiobutton">
+                <param name=""><image>relativebutton.bottom.*</image></param>
+                <param name="tooltip"><string>Position is relative to the bottom edge</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="hotspoteditor" ref="dialoglayout">
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="gapeditor" ref="dialoglayout">
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="dimensioneditor" ref="dialoglayout">
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="bordereditor" ref="dialoglayout">
+            <theme name="btnUseFormula" ref="checkbox">
+                <param name="tooltip"><string>Use formula instead of value adjusters</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="integereditor" ref="dialoglayout">
+            <theme name="btnUseFormula" ref="checkbox">
+                <param name="tooltip"><string>Use formula instead of value adjuster</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="nameeditor" ref="dialoglayout">
+            <theme name="applybutton" ref="vbutton">
+                <param name=""><image>applybutton.*</image></param>
+                <param name="tooltip"><string>Change name of this element</string></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+
+        <theme name="nodereferenceeditor" ref="dialoglayout">
+            <theme name="applybutton" ref="vbutton">
+                <param name=""><image>applybutton.*</image></param>
+                <param name="tooltip"><string>Change the referenced element</string></param>
+            </theme>
+            <theme name="jumpbutton" ref="vbutton">
+                <param name=""><image>jumpbutton.*</image></param>
+                <param name="tooltip"><string>Jump to the referenced element</string></param>
+            </theme>
+            <theme name="combobox" ref="combobox">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="editfield" ref="editfield">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+        </theme>
+
+        <theme name="widgetthemeeditor" ref="dialoglayout">
+            <theme name="jumpbutton" ref="vbutton">
+                <param name=""><image>jumpbutton.*</image></param>
+                <param name="tooltip"><string>Jump to the referenced theme element</string></param>
+            </theme>
+            <theme name="combobox" ref="combobox">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="themepath" ref="editfield">
+                <param name="background"><image>none</image></param>
+                <param name="tooltip"><string>Effective theme path for this widget</string></param>
+            </theme>
+        </theme>
+
+        <theme name="keyStrokeEditor" ref="button"/>
+        <theme name="colorbutton" ref="button">
+            <param name="white"><image>colorbutton.white</image></param>
+            <param name="border"><border>4,5*2+white.width,4,5</border></param>
+            <param name="maxWidth"><int>32767</int></param>
+            <param name="minHeight"><int>25</int></param>
+            <param name="textAlignment"><enum type="alignment">left</enum></param>
+        </theme>
+        
+        <theme name="gradientstopeditor" ref="table">
+            <param name="rowHeight"><int>18</int></param>
+            <theme name="valueadjuster" ref="valueadjuster">
+                <param name=""><image>gradientstopeditor.valueadjuster.*</image></param>
+                <theme name="incButton" merge="true">
+                    <param name=""><image>gradientstopeditor.valueadjuster.inc.*</image></param>
+                </theme>
+                <theme name="decButton" merge="true">
+                    <param name=""><image>gradientstopeditor.valueadjuster.dec.*</image></param>
+                </theme>
+                <theme name="valueDisplay" merge="true">
+                    <param name=""><image>gradientstopeditor.valueadjuster.display.*</image></param>
+                </theme>
+                <theme name="valueEdit" merge="true">
+                    <param name=""><image>gradientstopeditor.valueadjuster.edit.*</image></param>
+                </theme>
+            </theme>
+            <theme name="colorbutton" ref="-defaults">
+                <param name=""><image>gradientstopeditor.colorbutton.*</image></param>
+                <param name="white"><image>gradientstopeditor.colorbutton.white</image></param>
+                <param name="border"><border>0,5*2+white.width,0,5</border></param>
+                <param name="textAlignment"><enum type="alignment">left</enum></param>
+            </theme>
+            <theme name="addbutton" ref="button">
+                <param name=""><image>addbutton.*</image></param>
+                <param name="tooltip"><string>Add a new stop</string></param>
+            </theme>
+            <theme name="removebutton" ref="vbutton">
+                <param name=""><image>removebutton.*</image></param>
+                <param name="tooltip"><string>Remove this stop</string></param>
+            </theme>
+            <param name="columnWidths"><map>
+                <param name="2"><int>20</int></param>
+                <param name="3"><int>20</int></param>
+            </map></param>
+            <theme name="editor"/>
+        </theme>
+    </theme>
+
+    <theme name="propertyEditor" ref="scrollpane">
+        <param name=""><image>panel.*</image></param>
+        <param name="border"><border>background.border</border></param>
+
+        <theme name="propertypanel" ref="dialoglayout">
+            <param name="border"><border>5</border></param>
+
+            <theme name="checkbox" ref="checkbox">
+                <param name=""><image>property-checkbox.*</image></param>
+                <param name="border"><border>background.border</border></param>
+            </theme>
+
+            <theme name="readOnlyInteger" ref="dialoglayout">
+                <param name=""><image>collapsiblepanel.*</image></param>
+                <param name="border"><border>background.border</border></param>
+                <theme name="label" ref="label"/>
+                <theme name="value" ref="label">
+                    <param name="textAlignment"><enum type="alignment">right</enum></param>
+                </theme>
+            </theme>
+
+            <theme name="collapsiblepanel" ref="dialoglayout">
+                <param name=""><image>collapsiblepanel.*</image></param>
+                <param name="border"><border>background.border</border></param>
+                <theme name="arrow" ref="-defaults">
+                    <param name=""><image>collapsiblepanel.arrow.*</image></param>
+                </theme>
+                <theme name="title" ref="label"/>
+                <theme name="active" ref="checkbox"/>
+                <param name="namedGaps"><map>
+                    <param name="title-content"><gap>5</gap></param>
+                </map></param>
+
+                <theme name="contentcontainer" ref="-property-editors"/>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="widgetTree" ref="dialoglayout">
+        <param name="border"><border>0,0,5,0</border></param>
+        <theme name="scrollpane" ref="scrollpane">
+            <theme name="themetree" ref="table"/>
+        </theme>
+        <theme name="btnReloadWidget" ref="button">
+            <param name="text"><string>Reload</string></param>
+            <param name="tooltip"><string>Reloads the current widget</string></param>
+        </theme>
+        <theme name="btnFlash" ref="button">
+            <param name=""><image>flashbutton.*</image></param>
+            <param name="tooltip"><string>Highlight selected widget with a flashing red/blue frame for 1 second</string></param>
+        </theme>
+        <theme name="btnSelect" ref="button">
+            <param name=""><image>selectbutton.*</image></param>
+            <param name="tooltip"><string>Select a widget by dragging the mouse over it</string></param>
+            <param name="mouseCursorDragging"><cursor>cursor.dragSelect</cursor></param>
+        </theme>
+        <param name="namedGaps"><map>
+            <param name="left-reload"><gap>5</gap></param>
+            <param name="reload-select"><gap>5,5,32767</gap></param>
+            <param name="select-flash"><gap>5</gap></param>
+            <param name="flash-right"><gap>5</gap></param>
+        </map></param>
+    </theme>
+
+    <theme name="previewwidget" ref="-defaults">
+<!--            <param name="mouseCursor"><cursor>cursor.none</cursor></param> -->
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="maxHeight"><int>32767</int></param>
+        <param name="flashImage"><image>flashImage</image></param>
+        <param name="whiteImage"><image>white</image></param>
+    </theme>
+
+    <theme name="keystrokepopup" ref="simpledialog"/>
+    
+    <theme name="colorEditorPopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="" ref="*"/>
+    </theme>
+    
+    <theme name="messagePopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="messagedialog" ref="dialoglayout">
+            <theme name="splitpane" ref="splitpane">
+                <theme name="scrollpane" ref="scrollpane">
+                    <theme name="table" ref="table">
+                        <theme name="stringcellrenderer" merge="true">
+                            <param name="font"><font>popupmenu-font</font></param>
+                        </theme>
+                        <param name="columnWidths"><map>
+                            <param name="0"><int>80</int></param>
+                            <param name="1"><int>120</int></param>
+                        </map></param>
+                    </theme>
+                    <theme name="textarea" ref="textarea">
+                        <param name="background"><image>none</image></param>
+                        <param name="fonts"><map>
+                            <param name="default"><font>popupmenu-font</font></param>
+                        </map></param>
+                    </theme>
+                </theme>
+                <param name="maxHeight"><int>32767</int></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+    </theme>
+
+    <theme name="textureviewerpane" ref="dialoglayout">
+        <param name=""><image>panel.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        
+        <theme name="linkZoomFactors" ref="togglebutton">
+            <param name=""><image>button.link.*</image></param>
+            <param name="tooltip"><string>Link X and Y zoom factors</string></param>
+            <param name="minWidth"><int>34</int></param>
+        </theme>
+        <theme name="showCompleteTexture" ref="togglebutton">
+            <param name="text"><string>ALL</string></param>
+            <param name="tooltip"><string>Show complete texture instead of selected rect</string></param>
+        </theme>
+        <theme name="showSplitPositions" ref="togglebutton">
+            <param name="text"><string>Splits</string></param>
+            <param name="tooltip"><string>Highlight split positions and edges of the selected texture</string></param>
+        </theme>
+        <theme name="scrollpane" ref="scrollpane">
+            <theme name="textureviewer" ref="-defaults">
+                <param name="background"><image>textureviewer.background</image></param>
+                <param name="border"><border>background.border</border></param>
+                <param name="positionBarHorz"><image>positionbar-horizontal</image></param>
+                <param name="positionBarVert"><image>positionbar-vertical</image></param>
+                <param name="mouseCursor.horz"><cursor>arrow.top</cursor></param>
+                <param name="mouseCursor.vert"><cursor>arrow.left</cursor></param>
+                <param name="mouseCursor.both"><cursor>arrow.top-left</cursor></param> <!-- TODO: add all directions cursors -->
+            </theme>
+        </theme>
+        <theme name="zoomadjuster" ref="valueadjuster">
+            <param name="maxWidth"><int>0</int></param>
+        </theme>
+        <theme name="mousePositionDisplay" ref="label">
+            <param name="minWidth"><int>80</int></param>
+        </theme>
+        <theme name="collapsiblepanel" ref="dialoglayout">
+            <param name="border"><border>0,2,0,0</border></param>
+            <theme name="arrow" ref="-defaults">
+                <param name=""><image>collapsiblepanel.arrowH.*</image></param>
+                <param name="tooltip"><string>Toggle animation state panel</string></param>
+                <param name="minWidth"><int>7</int></param>
+                <param name="maxHeight"><int>32767</int></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="title-content"><gap>0</gap></param>
+            </map></param>
+            
+            <theme name="contentcontainer" ref="-defaults">
+                <theme name="layout" ref="dialoglayout">
+                    <param name=""><image>textureviewerpane.properties.*</image></param>
+                    <param name="border"><border>0,7,0,0</border></param>
+                    <theme name="title" ref="label"/>
+                    <theme name="animstateeditor" ref="dialoglayout">
+                        <theme name="addbutton" ref="button">
+                            <param name=""><image>addbutton.*</image></param>
+                            <param name="tooltip"><string>Add this state name to the list</string></param>
+                        </theme>
+                        <theme name="statebutton" ref="vbutton"/>
+                        <theme name="" ref="*"/>
+                    </theme>
+                </theme>
+            </theme>
+        </theme>
+        <theme name="" ref="*"/>
+    </theme>
+    
+    <theme name="popupMenuColorButton" ref="button">
+        <param name=""><image>popupmenucheckbox.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="font"><font>popupmenu-font</font></param>
+        <param name="white"><image>popupmenucolorbutton.white</image></param>
+    </theme>
+
+    <theme name="menumanager" ref="-defaults">
+        <theme name="menupopup" ref="opNewNode-popupMenu">
+            <theme name="button" ref="popupMenuButton"/>
+            <theme name="checkbox" ref="popupMenuCheckbox"/>
+            <theme name="colorbtn" ref="popupMenuColorButton"/>
+            <theme name="radiobtn" ref="popupMenuRadioButton"/>
+            <theme name="submenu" ref="popupMenuSubMenuButton"/>
+            <theme name="spacer" ref="-defaults">
+                <param name="background"><image>popupmenu.separator</image></param>
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="opCloneNode" ref="popupMenuButton">
+                <param name="text"><string>Clone</string></param>
+                <param name="tooltip"><string>Clones the current node</string></param>
+            </theme>
+            <theme name="opCopyNode" ref="popupMenuButton">
+                <param name="text"><string>Copy</string></param>
+                <param name="tooltip"><string>Puts the XML for the current node on the clipboard</string></param>
+            </theme>
+            <theme name="opMoveNodeUp" ref="popupMenuButton">
+                <param name="text"><string>Move up</string></param>
+                <param name="tooltip"><string>Moves the selected node upwards</string></param>
+            </theme>
+            <theme name="opMoveNodeDown" ref="popupMenuButton">
+                <param name="text"><string>Move down</string></param>
+                <param name="tooltip"><string>Moves the selected node downwards</string></param>
+            </theme>
+            <theme name="opDeleteNode" ref="popupMenuButton">
+                <param name="text"><string>Delete</string></param>
+                <param name="tooltip"><string>Deletes the selected node</string></param>
+            </theme>
+            <theme name="opNewNode" ref="popupMenuSubMenuButton">
+                <param name="text"><string>New child</string></param>
+                <param name="tooltip"><string>Creates a new child and inserts it at the end</string></param>
+            </theme>
+            <theme name="opNewNodeBefore" ref="popupMenuSubMenuButton">
+                <param name="text"><string>Insert before</string></param>
+                <param name="tooltip"><string>Inserts a new node before this one</string></param>
+            </theme>
+            <theme name="opNewNodeAfter" ref="popupMenuSubMenuButton">
+                <param name="text"><string>Insert after</string></param>
+                <param name="tooltip"><string>Inserts a new node after this one</string></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="menuitem"><gap>0</gap></param>
+            </map></param>
+        </theme>
+        <theme name="opNewNode-popupMenu" ref="opNewNode-popupMenu"/>
+    </theme>
+    
+    <theme name="mainui" ref="dialoglayout">
+        <param name=""><image>panel.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <theme name="mainmenu" ref="dialoglayout">
+            <param name="background"><image>mainmenu.background</image></param>
+            <param name="border"><border>background.border</border></param>
+            <theme name="submenu" ref="popupMenuButton"/>
+            <theme name="button" ref="popupMenuButton"/>
+            <param name="namedGaps"><map>
+                <param name="menuitem"><gap>5</gap></param>
+            </map></param>
+        </theme>
+        <theme name="editorarea" ref="-defaults">
+            <theme name="" ref="*"/>
+            <param name="maxWidth"><int>32767</int></param>
+            <param name="maxHeight"><int>32767</int></param>
+        </theme>
+        <theme name="statusbar" ref="dialoglayout">
+            <param name="background"><image>statusbar.background</image></param>
+            <param name="border"><border>background.border</border></param>
+            <theme name="time" ref="label"/>
+            <theme name="message" ref="label"/>
+            <theme name="discardButton" ref="button">
+                <param name="tooltip"><string>Discards the currently displayed message</string></param>
+            </theme>
+            <theme name="detailsButton" ref="button">
+                <param name="tooltip"><string>Shows message details and history</string></param>
+            </theme>
+            <param name="minHeight"><int>24</int></param>
+        </theme>
+        <param name="namedGaps"><map>
+            <param name="menubar-editorarea"><gap>0</gap></param>
+            <param name="editorarea-statusbar"><gap>0</gap></param>
+        </map></param>
+        <param name="inputMap"><inputMapDef merge="true">
+            <action name="reloadTestWidget">F5</action>
+            <action name="undo">ctrl Z</action>
+            <action name="undo">cmd Z</action>
+        </inputMapDef></param>
+    </theme>
+
+    <theme name="fileselector-popup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="fileselector" ref="fileselector">
+            <theme name="editfield" ref="editfield"/>
+        </theme>
+    </theme>
+
+    <theme name="newproject-popup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="newprojectdialog" ref="dialoglayout">
+            <theme name="label" ref="label"/>
+            <theme name="currentFolder" ref="treecombobox">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="buttonFoldersMRU" ref="button">
+                <param name=""><image>fileselector.buttonMRU.*</image></param>
+                <param name="minWidth"><int>20</int></param>
+                <param name="tooltip"><string>Shows recently used folders</string></param>
+            </theme>
+            <theme name="editfieldProjectName" ref="editfield">
+                <param name="tooltip"><string>Enter the project name (name of the main XML file)</string></param>
+            </theme>
+            <theme name="labelInfo" ref="label">
+                <param name="background"><image>frame.background</image></param>
+                <param name="border"><border>10</border></param>
+                <param name="textAlignment"><enum type="alignment">topleft</enum></param>
+                <param name="maxWidth"><int>32767</int></param>
+                <param name="minHeight"><int>200</int></param>
+            </theme>
+            <theme name="buttonOk" ref="button">
+                <param name="text"><string>OK</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+            <theme name="buttonCancel" ref="button">
+                <param name="text"><string>Cancel</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="buttonBarLeft"><gap/></param>
+                <param name="buttonBarSpacer"><gap>20</gap></param>
+                <param name="buttonBarRight"><gap>0</gap></param>
+                <param name="settings-info"><gap>20</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+    <theme name="errorMsgDialog" ref="simpledialog">
+        <theme name="content" merge="true">
+            <theme name="scrollpane" ref="scrollpane">
+                <theme name="textarea" ref="textarea">
+                    <param name="minWidth"><int>600</int></param>
+                </theme>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="progressdialog" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <param name="background"><image>panel.background</image></param>
+            <param name="border"><border>5</border></param>
+            <theme name="title" ref="label"/>
+            <theme name="message" ref="label"/>
+            <theme name="progressbar" ref="-defaults">
+                <param name="minWidth"><int>600</int></param>
+                <param name=""><image>progressbar.*</image></param>
+                <param name="progressImage"><image>none</image></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="title-message"><gap>10</gap></param>
+                <param name="message-progressbar"><gap>5</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+    <images file="TWL Logo.png" format="RGBA">
+        <area name="twl-logo" inset="-8" xywh="*"/>
+    </images>
+    <theme name="aboutDialog" ref="simpledialog">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="content" merge="true">
+            <theme name="textarea" ref="textarea">
+                <param name="background"><image>none</image></param>
+                <param name="minWidth"><int>600</int></param>
+                <param name="fonts"><map>
+                    <param name="default"><font>popupmenu-font</font></param>
+                    <param name="sysinfo"><font>normal</font></param>
+                    <param name="sysinfo-link"><font>normal-link</font></param>
+                </map></param>
+                <param name="images"><map>
+                    <param name="twl-logo"><image>twl-logo</image></param>
+                    <param name="sysinfo-bg"><image>frame.background</image></param>
+                </map></param>
+            </theme>
+        </theme>
+    </theme>
+    
+    <theme name="fontselectpopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="fileselector" ref="fileselector">
+            <theme name="fontpreview" ref="-defaults">
+                <param name="background"><image>innerframe.background</image></param>
+                <param name="border"><border>background.border</border></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="fontGenDialog-popup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="fontgendialog" ref="dialoglayout">
+            <theme name="splitpane" ref="splitpane">
+                <theme name="effectsPanel" ref="scrollpane">
+                    <param name="background"><image>panel.background</image></param>
+                    <theme name="effectspanel" ref="dialoglayout">
+                        <param name="border"><border>5</border></param>
+                        <theme name="" ref="*"/>
+                        <theme name="label" ref="label">
+                            <param name="font"><font>popupmenu-font</font></param>
+                            <param name="textAlignment"><enum type="alignment">topleft</enum></param>
+                        </theme>
+                        <theme name="selectFontBtn" ref="button">
+                            <param name="text"><string>...</string></param>
+                        </theme>
+                        <theme name="fontMetricInfo" ref="label"/>
+                        <theme name="useAACheckbox" ref="checkbox">
+                            <param name=""><image>property-checkbox.*</image></param>
+                            <param name="border"><border>background.border</border></param>
+                        </theme>
+
+                        <theme name="collapsiblepanel" ref="dialoglayout">
+                            <param name=""><image>collapsiblepanel.*</image></param>
+                            <param name="border"><border>background.border</border></param>
+                            <theme name="arrow" ref="-defaults">
+                                <param name=""><image>collapsiblepanel.arrow.*</image></param>
+                            </theme>
+                            <theme name="title" ref="label">
+                                <param name="font"><font>popupmenu-font</font></param>
+                            </theme>
+                            <theme name="active" ref="checkbox"/>
+                            <param name="namedGaps"><map>
+                                <param name="title-content"><gap>5</gap></param>
+                            </map></param>
+
+                            <theme name="contentcontainer" ref="dialoglayout">
+                                <theme name="effectpropertypanel" ref="-property-editors">
+                                    <theme name="label" ref="label">
+                                        <param name="font"><font>popupmenu-font</font></param>
+                                        <param name="textAlignment"><enum type="alignment">topleft</enum></param>
+                                    </theme>
+                                </theme>
+
+                                <theme name="unicodeBlocks" ref="scrollpane">
+                                    <theme name="boxlayout" ref="-defaults">
+                                        <theme name="checkbox" ref="checkbox">
+                                            <param name="font"><font>popupmenu-font</font></param>
+                                        </theme>
+                                        <param name="alignment"><enum type="alignment">left</enum></param>
+                                        <param name="spacing"><int>5</int></param>
+                                    </theme>
+                                    <param name="maxHeight"><int>200</int></param>
+                                </theme>
+
+                                <theme name="manualCharacters" ref="editfield">
+                                    <param name="tooltip"><string>Enter characters to include in addition to the selected unicode blocks</string></param>
+                                </theme>
+
+                                <theme name="dialoglayout" ref="dialoglayout">
+                                    <theme name="" ref="*"/>
+                                </theme>
+                            </theme>
+                        </theme>
+                    </theme>
+                </theme>
+                <theme name="rightArea" ref="dialoglayout">
+                    <theme name="fontDisplay" ref="scrollpane">
+                        <param name="border"><border>0,5,0,0</border></param>
+                        <theme name="fontdisplay-black" ref="-defaults">
+                            <param name="background"><image>black</image></param>
+                        </theme>
+                        <theme name="fontdisplay-white" ref="-defaults">
+                            <param name="background"><image>white</image></param>
+                        </theme>
+                        <theme name="fontdisplay-checkerboard" ref="-defaults">
+                            <param name="background"><image>checkerboard</image></param>
+                        </theme>
+                    </theme>
+                    <theme name="collapsiblepanel" ref="dialoglayout">
+                        <param name=""><image>collapsiblepanelbottom.*</image></param>
+                        <param name="border"><border>5</border></param>
+                        <theme name="arrow" ref="-defaults">
+                            <param name=""><image>collapsiblepanel.arrow.*</image></param>
+                        </theme>
+                        <theme name="title" ref="label"/>
+                        <theme name="active" ref="checkbox"/>
+                        <param name="namedGaps"><map>
+                            <param name="title-content"><gap>5</gap></param>
+                        </map></param>
+
+                        <theme name="contentcontainer" ref="-defaults">
+                            <theme name="" ref="*"/>
+                        </theme>
+                    </theme>
+                </theme>
+                <param name="maxHeight"><int>32767</int></param>
+            </theme>
+            <theme name="statusBar" ref="label">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+    </theme>
+
+    <theme name="newclasspathdialog" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="" ref="*"/>
+            <theme name="title" ref="label">
+                <param name="font"><font>popupmenu-font</font></param>
+            </theme>
+            <theme name="listbox" ref="listbox">
+                <param name="background"><image>listbox.background</image></param>
+                <param name="border"><border>0</border></param>
+                <theme name="display" ref="popupMenuButton"/>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="selectfolder" ref="simpledialog">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="content" merge="true">
+            <theme name="scrollpane" ref="scrollpane">
+                <theme name="treetable" ref="table">
+                    <param name="background"><image>table.background</image></param>
+                    <param name="border"><border>2</border></param>
+                    <param name="columnHeaderHeight"><int>0</int></param>
+                </theme>
+                <param name="minWidth"><int>400</int></param>
+                <param name="minHeight"><int>500</int></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="imageselectpopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="fileselector" ref="fileselector">
+            <theme name="imagepreview" ref="-defaults"/>
+        </theme>
+    </theme>
+
+    <theme name="convertimagedialog" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="splitpane" ref="splitpane">
+                <theme name="effectsPanel" ref="scrollpane">
+                    <param name="background"><image>panel.background</image></param>
+                    <theme name="effectspanel" ref="dialoglayout">
+                        <param name="border"><border>5</border></param>
+                        <theme name="" ref="*"/>
+                        <theme name="label" ref="label">
+                            <param name="font"><font>popupmenu-font</font></param>
+                            <param name="textAlignment"><enum type="alignment">topleft</enum></param>
+                        </theme>
+                        <theme name="selectImageBtn" ref="button">
+                            <param name="text"><string>...</string></param>
+                        </theme>
+                    </theme>
+                </theme>
+                <theme name="imageDisplay" ref="scrollpane">
+                    <param name="border"><border>0,5,0,0</border></param>
+                    <theme name="imagedisplay-black" ref="-defaults">
+                        <param name="background"><image>black</image></param>
+                    </theme>
+                    <theme name="imagedisplay-white" ref="-defaults">
+                        <param name="background"><image>white</image></param>
+                    </theme>
+                    <theme name="imagedisplay-checkerboard" ref="-defaults">
+                        <param name="background"><image>checkerboard</image></param>
+                    </theme>
+                </theme>
+                <param name="maxHeight"><int>32767</int></param>
+            </theme>
+            <theme name="statusBar" ref="label">
+                <param name="maxWidth"><int>32767</int></param>
+            </theme>
+            <theme name="" ref="*"/>
+        </theme>
+    </theme>
+    
+    <theme name="exitWithUnsavedChangesDialog" ref="simpledialog">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>50</border></param>
+        <theme name="content" merge="true">
+            <param name="background"><image>frame.background</image></param>
+            <param name="border"><border>20</border></param>
+            <theme name="title" merge="true">
+                <param name="textAlignment"><enum type="alignment">center</enum></param>
+            </theme>
+        </theme>
+    </theme>
+    
+    <include filename="help.xml"/>
+    
+    <!-- The following themes are for the preview window -->
+
+    <theme name="previewwidgets" ref="dialoglayout">
+        <param name="border"><border>10</border></param>
+        <theme name="" ref="*"/>
+    </theme>
+
+    <theme name="testformular" ref="dialoglayout">
+        <param name="background"><image>panel.background</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="" ref="*"/>
+    </theme>
+</themes>

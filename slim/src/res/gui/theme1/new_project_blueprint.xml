@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<themes>
+    <fontDef name="normal" filename="font.fnt" color="white" default="true">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="textSelection" color="blue"/>
+    </fontDef>
+
+    <inputMapDef name="-defaultInputMap">
+        <action name="selectAll">ctrl A</action>
+        <action name="selectAll">cmd A</action>
+        <action name="cut">ctrl X</action>
+        <action name="cut">cmd X</action>
+        <action name="copy">ctrl C</action>
+        <action name="copy">cmd C</action>
+        <action name="paste">ctrl V</action>
+        <action name="paste">cmd V</action>
+    </inputMapDef>
+
+    <theme name="-defaults">
+        <param name="background"><image>none</image></param>
+        <param name="overlay"><image>none</image></param>
+        <param name="font"><font>normal</font></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+    </theme>
+
+    <theme name="label" ref="-defaults" allowWildcard="true">
+    </theme>
+</themes>

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<themes>
+    <images file="gui.png">
+        <cursor name="cursor_text" hotSpotX="3" hotSpotY="2" xywh="56,0,7,18"/>
+        <cursor name="cursor_pointer" hotSpotX="1" hotSpotY="1" xywh="98,0,11,18"/>
+        <area name="white_pixel" xywh="8,10,1,1"/>
+        <area name="button_active" xywh="0,0,15,29" splitx="L5,R5" splity="T5,B6"/>
+        <area name="button_hover" xywh="19,0,15,29" splitx="L5,R5" splity="T5,B6"/>
+        <area name="button_pressed" xywh="38,0,15,29" splitx="L5,R5" splity="T5,B6"/>
+        <area name="combobox_popup" xywh="19,5,15,24" splitx="L5,R5" splity="T1,B7"/>
+        <area name="editfield_active" xywh="0,88,17,30" splitx="L4,R4" splity="T7,B5"/>
+        <alias name="editfield_selection" ref="white_pixel" tint="#58ACACAC" inset="1,0,0,0"/>
+        <alias name="editfield_cursor" ref="white_pixel" tint="#B9B9B9" inset="1,0,0,2"/>
+        <area name="scrollpane_border" xywh="57,42,3,3" splitx="L1,R1" splity="T1,B1"/>
+        <area name="vscrollbar_thumb" xywh="67,0,10,17" splity="T5,B7"/>
+        <area name="vscrollbar" xywh="81,0,10,17" splity="T5,B4"/>
+        <area name="hscrollbar_thumb" xywh="67,20,16,12" splitx="L5,R5"/>
+        <area name="hscrollbar" xywh="87,21,18,12" splitx="L5,R5"/>
+        <area name="icon_arrow" xywh="20,33,11,7" center="true"/>
+        <area name="icon_checkbox" xywh="0,33,16,14"/>
+        <area name="tooltip_background" xywh="67,34,7,14" splitx="L3,R3" splity="T5,B6"/>
+        <area name="panel_background" xywh="0,48,34,34" splitx="L14,R14" splity="T14,B14"/>
+        <alias name="textarea_background" ref="white_pixel" tint="#ECECEC"/>
+        <select name="button_background">
+            <alias ref="button_pressed" if="pressed"/>
+            <alias ref="button_hover" if="hover"/>
+            <alias ref="button_active"/>
+        </select>
+        <select name="togglebutton_background">
+            <alias ref="button_pressed" if="pressed|selected"/>
+            <alias ref="button_hover" if="hover"/>
+            <alias ref="button_active"/>
+        </select>
+        <grid name="checkbox_background" weightsX="0,1" weightsY="0,1" inset="2,0,0,0">
+            <select>
+                <area xywh="40,89,17,18" if="hover"/>
+                <area xywh="19,89,17,18"/>
+            </select>
+            <alias ref="none"/>
+            <alias ref="none"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="checkbox_overlay" weightsX="0,1" weightsY="0,1" inset="2,3,0,0">
+            <select>
+                <animation timeSource="selected" if="selected" frozenTime="200" count="1">
+                    <frame duration="200" ref="icon_checkbox" zoom="1.5"/>
+                    <frame duration="0" ref="icon_checkbox"/>
+                </animation>
+                <animation timeSource="selected" count="1" frozenTime="200">
+                    <frame duration="200" ref="icon_checkbox" zoomCenterY="0.5"/>
+                    <frame duration="0" ref="icon_checkbox" zoom="0.0" zoomCenterY="0.6" zoomCenterX="0.4"/>
+                </animation>
+            </select>
+            <alias ref="none"/>
+            <alias ref="none"/>
+            <alias ref="none"/>
+        </grid>
+        <grid name="radiobutton_background" weightsX="0,1" weightsY="0,1" inset="3,0,0,0">
+            <select>
+                <area xywh="104,89,16,18" if="selected"/>
+                <area xywh="82,89,17,18" if="hover"/>
+                <area xywh="61,89,17,18"/>
+            </select>
+            <alias ref="none"/>
+            <alias ref="none"/>
+            <alias ref="none"/>
+        </grid>
+        <select name="combobox_background">
+            <area xywh="19,0,15,6" if="hasOpenPopups" splitx="L5,R5" splity="T5,B0"/>
+            <alias ref="button_hover" if="hover"/>
+            <alias ref="button_active"/>
+        </select>
+        <select name="listbox_display">
+            <alias ref="white_pixel" if="selected" tint="#2AC16420"/>
+            <alias ref="white_pixel" if="hover" tint="#12707070"/>
+            <alias ref="none" tint="#FFFFFF"/>
+        </select>
+    </images>
+    <fontDef name="normal" filename="ptsans.fnt" default="true" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#B0B0B0"/>
+        <fontParam if="readonly" color="#9A9A9A"/>
+        <fontParam if="textSelection|selected" color="#C26824"/>
+    </fontDef>
+    <fontDef name="link" filename="ptsans.fnt" color="#4C93D6">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#B0B0B0"/>
+        <fontParam if="hover" color="#2A74BB"/>
+    </fontDef>
+    <fontDef name="italic" filename="ptsans_italic.fnt" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#B0B0B0"/>
+        <fontParam if="readonly" color="#9A9A9A"/>
+        <fontParam if="textSelection|selected" color="#C26824"/>
+    </fontDef>
+    <fontDef name="button_font" filename="ptsans.fnt" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="textSelection" color="#C16723"/>
+        <fontParam if="pressed" color="#C3313131" offsetX="1" offsetY="1"/>
+        <fontParam if="hover" color="#C3313131"/>
+    </fontDef>
+    <fontDef name="italic_button_font" filename="ptsans_italic.fnt" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="textSelection" color="#C26824"/>
+        <fontParam if="pressed" color="#C3313131" offsetX="1" offsetY="1"/>
+        <fontParam if="hover" color="#C3313131"/>
+    </fontDef>
+    <fontDef name="togglebutton_font" filename="ptsans.fnt" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed|selected" color="#C26824" offsetX="1" offsetY="1"/>
+        <fontParam if="hover" color="#C3313131"/>
+    </fontDef>
+    <fontDef name="italic_togglebutton_font" filename="ptsans_italic.fnt" color="#C32B2B2B">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed|selected" color="#C26824" offsetX="1" offsetY="1"/>
+        <fontParam if="hover" color="#C3313131"/>
+    </fontDef>
+
+    <inputMapDef name="-defaultInputMap">
+        <action name="selectAll">ctrl A</action>
+        <action name="selectAll">cmd A</action>
+        <action name="cut">ctrl X</action>
+        <action name="cut">cmd X</action>
+        <action name="copy">ctrl C</action>
+        <action name="copy">cmd C</action>
+        <action name="paste">ctrl V</action>
+        <action name="paste">cmd V</action>
+    </inputMapDef>
+
+    <theme name="-defaults">
+        <param name="background"><image>none</image></param>
+        <param name="overlay"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="font"><font>normal</font></param>
+    </theme>
+
+    <theme name="label" ref="-defaults" allowWildcard="true">
+    </theme>
+    <theme name="button" ref="label">
+        <param name="border"><border>6,0</border></param>
+        <param name="background"><image>button_background</image></param>
+        <param name="minHeight"><int>30</int></param>
+        <param name="minWidth"><int>30</int></param>
+        <param name="font"><font>button_font</font></param>
+    </theme>
+    <theme name="radiobutton" ref="button">
+        <param name="background"><image>radiobutton_background</image></param>
+        <param name="border"><border>0,18,0,0</border></param>
+        <param name="minHeight"><int>23</int></param>
+        <param name="maxHeight"><int>23</int></param>
+    </theme>
+    <theme name="togglebutton" ref="button">
+        <param name="font"><font>togglebutton_font</font></param>
+        <param name="background"><image>togglebutton_background</image></param>
+    </theme>
+    <theme name="checkbox" ref="button">
+        <param name="background"><image>checkbox_background</image></param>
+        <param name="border"><border>0,20,0,0</border></param>
+        <param name="overlay"><image>checkbox_overlay</image></param>
+        <param name="maxHeight"><int>23</int></param>
+        <param name="minHeight"><int>23</int></param>
+    </theme>
+    <theme name="editfield" ref="-defaults">
+        <param name="columns"><int>8</int></param>
+        <theme name="renderer" ref="-defaults">
+            <param name="border"><border>1,0,0,0</border></param>
+        </theme>
+        <param name="background"><image>editfield_active</image></param>
+        <param name="border"><border>4,0</border></param>
+        <param name="cursor"><image>editfield_cursor</image></param>
+        <param name="selection"><image>editfield_selection</image></param>
+        <param name="font"><font>button_font</font></param>
+        <param name="autocompletion-height"><int>0</int></param>
+        <param name="passwordChar"><int>42</int></param>
+        <param name="mouseCursor"><cursor>cursor_text</cursor></param>
+    </theme>
+    <theme name="vscrollbar" ref="-defaults">
+        <param name="background"><image>vscrollbar</image></param>
+        <theme name="thumb" ref="-defaults">
+            <param name="background"><image>vscrollbar_thumb</image></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>10</int></param>
+        <param name="minHeight"><int>20</int></param>
+        <param name="maxWidth"><int>10</int></param>
+        <theme name="upbutton" ref="-defaults"/>
+        <theme name="downbutton" ref="-defaults"/>
+    </theme>
+    <theme name="hscrollbar" ref="-defaults">
+        <param name="background"><image>hscrollbar</image></param>
+        <theme name="thumb" ref="-defaults">
+            <param name="background"><image>hscrollbar_thumb</image></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>20</int></param>
+        <param name="minHeight"><int>12</int></param>
+        <theme name="leftbutton" ref="-defaults"/>
+        <theme name="rightbutton" ref="-defaults"/>
+    </theme>
+    <theme name="listbox" ref="button">
+        <theme name="display" ref="label">
+            <param name="border"><border>1,3,0,3</border></param>
+            <param name="background"><image>listbox_display</image></param>
+        </theme>
+        <theme name="vscrollbar" ref="vscrollbar">
+        </theme>
+        <param name="border"><border>2,3,4,2</border></param>
+        <param name="maxHeight"><int>100</int></param>
+        <param name="cellWidth"><constant>SINGLE_COLUMN</constant></param>
+        <param name="cellHeight"><int>font.lineHeight</int></param>
+        <param name="minDisplayedRows"><int>1</int></param>
+        <param name="fixedCellWidth"><bool>false</bool></param>
+        <param name="fixedCellHeight"><bool>false</bool></param>
+        <param name="rowMajor"><bool>true</bool></param>
+    </theme>
+    <theme name="combobox" ref="-defaults">
+        <theme name="display" ref="label">
+            <param name="border"><border>0,6,0,0</border></param>
+        </theme>
+        <param name="background"><image>combobox_background</image></param>
+        <theme name="button" ref="-defaults">
+            <param name="background"><image>icon_arrow</image></param>
+            <param name="border"><border>0,0,0,24</border></param>
+        </theme>
+        <param name="minWidth"><int>30</int></param>
+        <param name="minHeight"><int>30</int></param>
+    </theme>
+    <theme name="comboboxPopup" ref="-defaults">
+        <theme name="listbox" ref="listbox">
+            <param name="background"><image>combobox_popup</image></param>
+        </theme>
+    </theme>
+    <theme name="scrollpane" ref="-defaults">
+        <theme name="hscrollbar" ref="hscrollbar"/>
+        <theme name="vscrollbar" ref="vscrollbar"/>
+        <param name="background"><image>scrollpane_border</image></param>
+        <param name="border"><border>3</border></param>
+        <param name="scrollbarsAlwaysVisible"><bool>false</bool></param>
+        <param name="hasDragButton"><bool>false</bool></param>
+    </theme>
+    <theme name="tooltipwindow" ref="-defaults">
+        <theme name="label" ref="label"/>
+        <param name="background"><image>tooltip_background</image></param>
+        <param name="fadeInTime"><int>0</int></param>
+        <param name="border"><border>3,1</border></param>
+    </theme>
+    <theme name="dialoglayout" ref="-defaults" allowWildcard="true">
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map>
+                <param name="radiobutton"><gap>5,15,15</gap></param>
+                <param name="adjuster"><gap>0</gap></param>
+                <param name="vbutton"><gap>0</gap></param>
+            </map></param>
+    </theme>
+    <theme name="textarea" ref="label">
+        <param name="fonts">
+            <map>
+                <param name="default"><font>normal</font></param>
+                <param name="italic"><font>italic</font></param>
+                <param name="link"><font>link</font></param>
+            </map>
+        </param>
+    
+    </theme>
+    <theme name="panel" ref="dialoglayout">
+        <param name="background"><image>panel_background</image></param>
+        <param name="border"><border>10</border></param>
+    </theme>
+    <theme name="previewwidgets" ref="panel">
+        <theme name="label" ref="label">
+        </theme>
+        <theme name="button" ref="button"/>
+        <theme name="togglebutton" ref="togglebutton">
+            <param name="tooltip"><string>press me</string></param>
+            <param name="font"><font>italic_togglebutton_font</font></param>
+        </theme>
+        <theme name="checkbox" ref="checkbox"/>
+        <theme name="combobox" ref="combobox"/>
+        <theme name="editfield" ref="editfield">
+            <theme name="renderer" ref="-defaults">
+            </theme>
+        </theme>
+        <theme name="radiobutton" ref="radiobutton"/>
+        <theme name="vscrollbar" ref="vscrollbar">
+        </theme>
+        <theme name="hscrollbar" ref="hscrollbar">
+        </theme>
+    </theme>
+</themes>

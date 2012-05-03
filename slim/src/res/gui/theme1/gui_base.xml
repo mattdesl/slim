@@ -1,0 +1,1611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<themes>
+    <constantDef name="keyboardFocus"><color>#6f97df</color></constantDef>
+    
+    <images file="gui.png" format="RGBA" comment="Buttons">
+        <area name="--area1L" xywh="0,0,4,18"/>
+        <area name="--area1F" xywh="3,0,1,18"/>
+        <area name="--area1M" xywh="4,0,1,18"/>
+        <area name="--area1R" xywh="5,0,4,18"/>
+
+        <area name="--area2L" xywh="10,0,4,18"/>
+        <area name="--area2F" xywh="13,0,1,18"/>
+        <area name="--area2M" xywh="14,0,1,18"/>
+        <area name="--area2R" xywh="15,0,4,18"/>
+
+        <area name="--area3L" xywh="20,0,4,18"/>
+        <area name="--area3F" xywh="23,0,1,18"/>
+        <area name="--area3M" xywh="24,0,1,18"/>
+        <area name="--area3R" xywh="25,0,4,18"/>
+
+        <area name="--area4L" xywh="30,0,4,18"/>
+        <area name="--area4F" xywh="33,0,1,18"/>
+        <area name="--area4M" xywh="34,0,1,18"/>
+        <area name="--area4R" xywh="35,0,4,18"/>
+
+        <area name="--area5L" xywh="40,0,4,18"/>
+        <area name="--area5F" xywh="43,0,1,18"/>
+        <area name="--area5M" xywh="44,0,1,18"/>
+        <area name="--area5R" xywh="45,0,4,18"/>
+
+        <area name="--area6L" xywh="50,0,4,18"/>
+        <area name="--area6F" xywh="53,0,1,18"/>
+        <area name="--area6M" xywh="54,0,1,18"/>
+        <area name="--area6R" xywh="55,0,4,18"/>
+
+        <area name="--area7L" xywh="60,0,4,18" splity="T4,B4"/>
+        <area name="--area7F" xywh="63,0,1,18" splity="T4,B4"/>
+        <area name="--area7M" xywh="64,0,1,18" splity="T4,B4"/>
+        <area name="--area7R" xywh="65,0,4,18" splity="T4,B4"/>
+
+        <area name="--area8L" xywh="70,0,4,18" splity="T4,B4"/>
+        <area name="--area8F" xywh="73,0,1,18" splity="T4,B4"/>
+        <area name="--area8M" xywh="74,0,1,18" splity="T4,B4"/>
+        <area name="--area8R" xywh="75,0,4,18" splity="T4,B4"/>
+
+        <area name="--area9L" xywh="80,0,4,18"/>
+        <area name="--area9F" xywh="83,0,1,18"/>
+        <area name="--area9M" xywh="84,0,1,18"/>
+        <area name="--area9R" xywh="85,0,4,18"/>
+
+        <area name="--outlineL" xywh="90,0,4,18"/>
+        <area name="--outlineF" xywh="93,0,1,18"/>
+        <area name="--outlineM" xywh="94,0,1,18"/>
+        <area name="--outlineR" xywh="95,0,4,18"/>
+
+        <grid name="-area1L" weightsX="0,1" weightsY="1">
+            <alias ref="--area1L"/>
+            <alias ref="--area1F"/>
+        </grid>
+        <grid name="-area1C" weightsX="0,1" weightsY="1">
+            <alias ref="--area1M"/>
+            <alias ref="--area1F"/>
+        </grid>
+        <grid name="-area1R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area1M"/>
+            <alias ref="--area1F"/>
+            <alias ref="--area1R"/>
+        </grid>
+        <grid name="-area1X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area1L"/>
+            <alias ref="--area1F"/>
+            <alias ref="--area1R"/>
+        </grid>
+
+        <grid name="-area2L" weightsX="0,1" weightsY="1">
+            <alias ref="--area2L"/>
+            <alias ref="--area2F"/>
+        </grid>
+        <grid name="-area2C" weightsX="0,1" weightsY="1">
+            <alias ref="--area2M"/>
+            <alias ref="--area2F"/>
+        </grid>
+        <grid name="-area2R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area2M"/>
+            <alias ref="--area2F"/>
+            <alias ref="--area2R"/>
+        </grid>
+        <grid name="-area2X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area2L"/>
+            <alias ref="--area2F"/>
+            <alias ref="--area2R"/>
+        </grid>
+
+        <grid name="-area3L" weightsX="0,1" weightsY="1">
+            <alias ref="--area3L"/>
+            <alias ref="--area3F"/>
+        </grid>
+        <grid name="-area3C" weightsX="0,1" weightsY="1">
+            <alias ref="--area3M"/>
+            <alias ref="--area3F"/>
+        </grid>
+        <grid name="-area3R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area3M"/>
+            <alias ref="--area3F"/>
+            <alias ref="--area3R"/>
+        </grid>
+        <grid name="-area3X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area3L"/>
+            <alias ref="--area3F"/>
+            <alias ref="--area3R"/>
+        </grid>
+
+        <grid name="-area4L" weightsX="0,1" weightsY="1">
+            <alias ref="--area4L"/>
+            <alias ref="--area4F"/>
+        </grid>
+        <grid name="-area4C" weightsX="0,1" weightsY="1">
+            <alias ref="--area4M"/>
+            <alias ref="--area4F"/>
+        </grid>
+        <grid name="-area4R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area4M"/>
+            <alias ref="--area4F"/>
+            <alias ref="--area4R"/>
+        </grid>
+        <grid name="-area4X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area4L"/>
+            <alias ref="--area4F"/>
+            <alias ref="--area4R"/>
+        </grid>
+
+        <grid name="-area5L" weightsX="0,1" weightsY="1">
+            <alias ref="--area5L"/>
+            <alias ref="--area5F"/>
+        </grid>
+        <grid name="-area5C" weightsX="0,1" weightsY="1">
+            <alias ref="--area5M"/>
+            <alias ref="--area5F"/>
+        </grid>
+        <grid name="-area5R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area5M"/>
+            <alias ref="--area5F"/>
+            <alias ref="--area5R"/>
+        </grid>
+        <grid name="-area5X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area5L"/>
+            <alias ref="--area5F"/>
+            <alias ref="--area5R"/>
+        </grid>
+        
+        <grid name="-area6L" weightsX="0,1" weightsY="1">
+            <alias ref="--area6L"/>
+            <alias ref="--area6F"/>
+        </grid>
+        <grid name="-area6C" weightsX="0,1" weightsY="1">
+            <alias ref="--area6M"/>
+            <alias ref="--area6F"/>
+        </grid>
+        <grid name="-area6R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area6M"/>
+            <alias ref="--area6F"/>
+            <alias ref="--area6R"/>
+        </grid>
+        <grid name="-area6X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area6L"/>
+            <alias ref="--area6F"/>
+            <alias ref="--area6R"/>
+        </grid>
+
+        <grid name="-area7L" weightsX="0,1" weightsY="1">
+            <alias ref="--area7L"/>
+            <alias ref="--area7F"/>
+        </grid>
+        <grid name="-area7C" weightsX="0,1" weightsY="1">
+            <alias ref="--area7M"/>
+            <alias ref="--area7F"/>
+        </grid>
+        <grid name="-area7R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area7M"/>
+            <alias ref="--area7F"/>
+            <alias ref="--area7R"/>
+        </grid>
+        <grid name="-area7X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area7L"/>
+            <alias ref="--area7F"/>
+            <alias ref="--area7R"/>
+        </grid>
+
+        <grid name="-area8L" weightsX="0,1" weightsY="1">
+            <alias ref="--area8L"/>
+            <alias ref="--area8F"/>
+        </grid>
+        <grid name="-area8C" weightsX="0,1" weightsY="1">
+            <alias ref="--area8M"/>
+            <alias ref="--area8F"/>
+        </grid>
+        <grid name="-area8R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area8M"/>
+            <alias ref="--area8F"/>
+            <alias ref="--area8R"/>
+        </grid>
+        <grid name="-area8X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area8L"/>
+            <alias ref="--area8F"/>
+            <alias ref="--area8R"/>
+        </grid>
+        
+        <grid name="-area9L" weightsX="0,1" weightsY="1">
+            <alias ref="--area9L"/>
+            <alias ref="--area9F"/>
+        </grid>
+        <grid name="-area9C" weightsX="0,1" weightsY="1">
+            <alias ref="--area9M"/>
+            <alias ref="--area9F"/>
+        </grid>
+        <grid name="-area9R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area9M"/>
+            <alias ref="--area9F"/>
+            <alias ref="--area9R"/>
+        </grid>
+        <grid name="-area9X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--area9L"/>
+            <alias ref="--area9F"/>
+            <alias ref="--area9R"/>
+        </grid>
+
+        <grid name="-outlineL" weightsX="0,1,0" weightsY="1">
+            <alias ref="--outlineL"/>
+            <alias ref="--outlineF"/>
+            <alias ref="--outlineM"/>
+        </grid>
+        <grid name="-outlineC" weightsX="0,1,0" weightsY="1">
+            <alias ref="--outlineM"/>
+            <alias ref="--outlineF"/>
+            <alias ref="--outlineM"/>
+        </grid>
+        <grid name="-outlineR" weightsX="0,1,0" weightsY="1">
+            <alias ref="--outlineM"/>
+            <alias ref="--outlineF"/>
+            <alias ref="--outlineR"/>
+        </grid>
+        <grid name="-outlineX" weightsX="0,1,0" weightsY="1">
+            <alias ref="--outlineL"/>
+            <alias ref="--outlineF"/>
+            <alias ref="--outlineR"/>
+        </grid>
+
+        <select name="radiobuttonL.background">
+            <alias ref="-area6L" if="selected + armed"/>
+            <alias ref="-area5L" if="selected + hover + !disabled"/>
+            <alias ref="-area4L" if="selected"/>
+            <alias ref="-area3L" if="armed"/>
+            <alias ref="-area2L" if="hover + !disabled"/>
+            <alias ref="-area1L"/>
+        </select>
+        <select name="radiobuttonC.background">
+            <alias ref="-area6C" if="selected + armed"/>
+            <alias ref="-area5C" if="selected + hover + !disabled"/>
+            <alias ref="-area4C" if="selected"/>
+            <alias ref="-area3C" if="armed"/>
+            <alias ref="-area2C" if="hover + !disabled"/>
+            <alias ref="-area1C"/>
+        </select>
+        <select name="radiobuttonR.background">
+            <alias ref="-area6R" if="selected + armed"/>
+            <alias ref="-area5R" if="selected + hover + !disabled"/>
+            <alias ref="-area4R" if="selected"/>
+            <alias ref="-area3R" if="armed"/>
+            <alias ref="-area2R" if="hover + !disabled"/>
+            <alias ref="-area1R"/>
+        </select>
+        <select name="radiobuttonX.background">
+            <alias ref="-area6X" if="selected + armed"/>
+            <alias ref="-area5X" if="selected + hover + !disabled"/>
+            <alias ref="-area4X" if="selected"/>
+            <alias ref="-area3X" if="armed"/>
+            <alias ref="-area2X" if="hover + !disabled"/>
+            <alias ref="-area1X"/>
+        </select>
+
+        <select name="radiobutton.background" border="5,1">
+            <alias ref="radiobuttonX.background" if="!radiobuttonNotFirst + !radiobuttonNotLast"/>
+            <alias ref="radiobuttonL.background" if="!radiobuttonNotFirst"/>
+            <alias ref="radiobuttonR.background" if="!radiobuttonNotLast"/>
+            <alias ref="radiobuttonC.background"/>
+        </select>
+        <select name="radiobutton.overlay" tint="keyboardFocus" if="keyboardFocus">
+            <alias ref="-outlineX" if="!radiobuttonNotFirst + !radiobuttonNotLast"/>
+            <alias ref="-outlineL" if="!radiobuttonNotFirst"/>
+            <alias ref="-outlineR" if="!radiobuttonNotLast"/>
+            <alias ref="-outlineC"/>
+        </select>
+
+        <alias name="togglebutton.background" ref="radiobuttonX.background" border="4,1"/>
+        <alias name="togglebutton.overlay" ref="radiobutton.overlay"/>
+        <select name="buttonL.background">
+            <alias ref="-area9L" if="armed"/>
+            <alias ref="-area8L" if="hover + !disabled"/>
+            <alias ref="-area7L"/>
+        </select>
+        <select name="buttonC.background">
+            <alias ref="-area9C" if="armed"/>
+            <alias ref="-area8C" if="hover + !disabled"/>
+            <alias ref="-area7C"/>
+        </select>
+        <select name="buttonR.background">
+            <alias ref="-area9R" if="armed"/>
+            <alias ref="-area8R" if="hover + !disabled"/>
+            <alias ref="-area7R"/>
+        </select>
+        <select name="buttonX.background">
+            <alias ref="-area9X" if="armed"/>
+            <alias ref="-area8X" if="hover + !disabled"/>
+            <alias ref="-area7X"/>
+        </select>
+        <alias name="button.background" ref="buttonX.background" border="5,1"/>
+        <alias name="button.overlay" ref="-outlineX" tint="keyboardFocus" if="keyboardFocus"/>
+    </images>
+
+    <images file="gui.png" format="RGBA" comment="Adjuster">
+        <area name="-adjuster1TL" xywh="0,28,12,17"/>
+        <area name="-adjuster1TM" xywh="8,28,4,17"/>
+        <area name="-adjuster1TR" xywh="8,28,12,17"/>
+        <area name="-adjuster1ML" xywh="0,45,12,17"/>
+        <area name="-adjuster1MM" xywh="8,45,4,17"/>
+        <area name="-adjuster1MR" xywh="8,45,12,17"/>
+        <area name="-adjuster1BL" xywh="0,62,12,18"/>
+        <area name="-adjuster1BM" xywh="8,62,4,18"/>
+        <area name="-adjuster1BR" xywh="8,62,12,18"/>
+        <area name="-adjuster1XL" xywh="0,81,12,18"/>
+        <area name="-adjuster1XM" xywh="8,81,4,18"/>
+        <area name="-adjuster1XR" xywh="8,81,12,18"/>
+
+        <area name="-adjuster2TL" xywh="21,28,12,17"/>
+        <area name="-adjuster2TM" xywh="29,28,4,17"/>
+        <area name="-adjuster2TR" xywh="29,28,12,17"/>
+        <area name="-adjuster2ML" xywh="21,45,12,17"/>
+        <area name="-adjuster2MM" xywh="29,45,4,17"/>
+        <area name="-adjuster2MR" xywh="29,45,12,17"/>
+        <area name="-adjuster2BL" xywh="21,62,12,18"/>
+        <area name="-adjuster2BM" xywh="29,62,4,18"/>
+        <area name="-adjuster2BR" xywh="29,62,12,18"/>
+        <area name="-adjuster2XL" xywh="21,81,12,18"/>
+        <area name="-adjuster2XM" xywh="29,81,4,18"/>
+        <area name="-adjuster2XR" xywh="29,81,12,18"/>
+
+        <area name="-adjuster3TL" xywh="42,32,12,17"/>
+        <area name="-adjuster3TM" xywh="50,32,4,17"/>
+        <area name="-adjuster3TR" xywh="50,32,12,17"/>
+        <area name="-adjuster3ML" xywh="42,49,12,17"/>
+        <area name="-adjuster3MM" xywh="50,49,4,17"/>
+        <area name="-adjuster3MR" xywh="50,49,12,17"/>
+        <area name="-adjuster3BL" xywh="42,66,12,18"/>
+        <area name="-adjuster3BM" xywh="50,66,4,18"/>
+        <area name="-adjuster3BR" xywh="50,66,12,18"/>
+        <area name="-adjuster3XL" xywh="42,85,12,18"/>
+        <area name="-adjuster3XM" xywh="50,85,4,18"/>
+        <area name="-adjuster3XR" xywh="50,85,12,18"/>
+
+        <area name="-adjusterSelTL" xywh="63,32,8,17"/>
+        <area name="-adjusterSelTM" xywh="72,32,1,17"/>
+        <area name="-adjusterSelTR" xywh="74,32,8,17"/>
+        <area name="-adjusterSelML" xywh="63,49,8,17"/>
+        <area name="-adjusterSelMM" xywh="72,49,1,17"/>
+        <area name="-adjusterSelMR" xywh="74,49,8,17"/>
+        <area name="-adjusterSelBL" xywh="63,66,8,18"/>
+        <area name="-adjusterSelBM" xywh="72,66,1,18"/>
+        <area name="-adjusterSelBR" xywh="74,66,8,18"/>
+        <area name="-adjusterSelXL" xywh="63,85,8,18"/>
+        <area name="-adjusterSelXM" xywh="72,85,1,18"/>
+        <area name="-adjusterSelXR" xywh="74,85,8,18"/>
+        <area name="-adjuster-icon-plus" xywh="144,99,7,7"/>
+        <area name="-adjuster-icon-minus" xywh="145,102,5,1"/>
+        <grid name="-adjuster-drag-arrows" weightsX="0,1,0" weightsY="1" if="hover + !disabled">
+            <area xywh="159,115,4,5" inset="7,3,6,0"/>
+            <alias ref="none"/>
+            <area xywh="159,121,4,5" inset="7,0,6,3"/>
+        </grid>
+
+        <select name="valueadjuster.edit.background">
+            <select if="!adjusterNotFirst + !adjusterNotLast">
+                <alias ref="-adjuster2XM" if="hover + !disabled"/>
+                <alias ref="-adjuster1XM"/>
+            </select>
+            <select if="!adjusterNotFirst">
+                <alias ref="-adjuster2TM" if="hover + !disabled"/>
+                <alias ref="-adjuster1TM"/>
+            </select>
+            <select if="!adjusterNotLast">
+                <alias ref="-adjuster2BM" if="hover + !disabled"/>
+                <alias ref="-adjuster1BM"/>
+            </select>
+            <alias ref="-adjuster2MM" if="hover + !disabled"/>
+            <alias ref="-adjuster1MM"/>
+        </select>
+        <alias name="valueadjuster.edit.overlay" ref="none"/>
+        <composed name="valueadjuster.display.background">
+            <alias ref="valueadjuster.edit.background"/>
+            <alias ref="-adjuster-drag-arrows"/>
+        </composed>
+        <alias name="valueadjuster.display.overlay" ref="none"/>
+        <select name="valueadjuster.dec.background">
+            <select if="!adjusterNotFirst + !adjusterNotLast">
+                <alias ref="-adjuster3XL" if="armed"/>
+                <alias ref="-adjuster2XL" if="hover + !disabled"/>
+                <alias ref="-adjuster1XL"/>
+            </select>
+            <select if="!adjusterNotFirst">
+                <alias ref="-adjuster3TL" if="armed"/>
+                <alias ref="-adjuster2TL" if="hover + !disabled"/>
+                <alias ref="-adjuster1TL"/>
+            </select>
+            <select if="!adjusterNotLast">
+                <alias ref="-adjuster3BL" if="armed"/>
+                <alias ref="-adjuster2BL" if="hover + !disabled"/>
+                <alias ref="-adjuster1BL"/>
+            </select>
+            <alias ref="-adjuster3ML" if="armed"/>
+            <alias ref="-adjuster2ML" if="hover + !disabled"/>
+            <alias ref="-adjuster1ML"/>
+        </select>
+        <alias name="valueadjuster.dec.overlay" ref="-adjuster-icon-minus" inset="9,5,8,2"/>
+        <select name="valueadjuster.inc.background">
+            <select if="!adjusterNotFirst + !adjusterNotLast">
+                <alias ref="-adjuster3XR" if="armed"/>
+                <alias ref="-adjuster2XR" if="hover + !disabled"/>
+                <alias ref="-adjuster1XR"/>
+            </select>
+            <select if="!adjusterNotFirst">
+                <alias ref="-adjuster3TR" if="armed"/>
+                <alias ref="-adjuster2TR" if="hover + !disabled"/>
+                <alias ref="-adjuster1TR"/>
+            </select>
+            <select if="!adjusterNotLast">
+                <alias ref="-adjuster3BR" if="armed"/>
+                <alias ref="-adjuster2BR" if="hover + !disabled"/>
+                <alias ref="-adjuster1BR"/>
+            </select>
+            <alias ref="-adjuster3MR" if="armed"/>
+            <alias ref="-adjuster2MR" if="hover + !disabled"/>
+            <alias ref="-adjuster1MR"/>
+        </select>
+        <alias name="valueadjuster.inc.overlay" ref="-adjuster-icon-plus" inset="6,1,5,4"/>
+        <alias name="valueadjuster.background" ref="none"/>
+        <select name="valueadjuster.overlay" inset="1,0" tint="keyboardFocus">
+            <grid if="keyboardFocus + !adjusterNotFirst + !adjusterNotLast" weightsX="0,1,0" weightsY="1">
+                <alias ref="-adjusterSelXL"/>
+                <alias ref="-adjusterSelXM"/>
+                <alias ref="-adjusterSelXR"/>
+            </grid>
+            <grid if="keyboardFocus + !adjusterNotFirst" weightsX="0,1,0" weightsY="1">
+                <alias ref="-adjusterSelTL"/>
+                <alias ref="-adjusterSelTM"/>
+                <alias ref="-adjusterSelTR"/>
+            </grid>
+            <grid if="keyboardFocus + !adjusterNotLast" weightsX="0,1,0" weightsY="1">
+                <alias ref="-adjusterSelBL"/>
+                <alias ref="-adjusterSelBM"/>
+                <alias ref="-adjusterSelBR"/>
+            </grid>
+            <grid if="keyboardFocus" weightsX="0,1,0" weightsY="1">
+                <alias ref="-adjusterSelML"/>
+                <alias ref="-adjusterSelMM"/>
+                <alias ref="-adjusterSelMR"/>
+            </grid>
+        </select>
+    </images>
+
+    <images file="gui.png" format="RGBA" comment="VButtons">
+        <area name="-vbutton1TL" xywh="100,0,4,17"/>
+        <area name="-vbutton1TM" xywh="103,0,1,17"/>
+        <area name="-vbutton1TR" xywh="103,0,4,17"/>
+        <area name="-vbutton1ML" xywh="100,17,4,17"/>
+        <area name="-vbutton1MM" xywh="103,17,1,17"/>
+        <area name="-vbutton1MR" xywh="103,17,4,17"/>
+        <area name="-vbutton1BL" xywh="100,34,4,18"/>
+        <area name="-vbutton1BM" xywh="103,34,1,18"/>
+        <area name="-vbutton1BR" xywh="103,34,4,18"/>
+
+        <area name="-vbutton2TL" xywh="108,0,4,17"/>
+        <area name="-vbutton2TM" xywh="111,0,1,17"/>
+        <area name="-vbutton2TR" xywh="111,0,4,17"/>
+        <area name="-vbutton2ML" xywh="108,17,4,17"/>
+        <area name="-vbutton2MM" xywh="111,17,1,17"/>
+        <area name="-vbutton2MR" xywh="111,17,4,17"/>
+        <area name="-vbutton2BL" xywh="108,34,4,18"/>
+        <area name="-vbutton2BM" xywh="111,34,1,18"/>
+        <area name="-vbutton2BR" xywh="111,34,4,18"/>
+
+        <area name="-vbutton3TL" xywh="116,0,4,17"/>
+        <area name="-vbutton3TM" xywh="119,0,1,17"/>
+        <area name="-vbutton3TR" xywh="119,0,4,17"/>
+        <area name="-vbutton3ML" xywh="116,17,4,17"/>
+        <area name="-vbutton3MM" xywh="119,17,1,17"/>
+        <area name="-vbutton3MR" xywh="119,17,4,17"/>
+        <area name="-vbutton3BL" xywh="116,34,4,18"/>
+        <area name="-vbutton3BM" xywh="119,34,1,18"/>
+        <area name="-vbutton3BR" xywh="119,34,4,18"/>
+
+        <area name="-vbuttonSelTL" xywh="124,0,4,17"/>
+        <area name="-vbuttonSelTM" xywh="127,0,1,17"/>
+        <area name="-vbuttonSelTR" xywh="127,0,4,17"/>
+        <area name="-vbuttonSelML" xywh="124,17,4,17"/>
+        <area name="-vbuttonSelMM" xywh="127,17,1,17"/>
+        <area name="-vbuttonSelMR" xywh="127,17,4,17"/>
+        <area name="-vbuttonSelBL" xywh="124,34,4,18"/>
+        <area name="-vbuttonSelBM" xywh="127,34,1,18"/>
+        <area name="-vbuttonSelBR" xywh="127,34,4,18"/>
+
+        <area name="-vbutton4TL" xywh="132,0,4,17"/>
+        <area name="-vbutton4TM" xywh="135,0,1,17"/>
+        <area name="-vbutton4TR" xywh="135,0,4,17"/>
+        <area name="-vbutton4ML" xywh="132,17,4,17"/>
+        <area name="-vbutton4MM" xywh="135,17,1,17"/>
+        <area name="-vbutton4MR" xywh="135,17,4,17"/>
+        <area name="-vbutton4BL" xywh="132,34,4,18"/>
+        <area name="-vbutton4BM" xywh="135,34,1,18"/>
+        <area name="-vbutton4BR" xywh="135,34,4,18"/>
+
+        <area name="-vbutton5TL" xywh="140,0,4,17"/>
+        <area name="-vbutton5TM" xywh="143,0,1,17"/>
+        <area name="-vbutton5TR" xywh="143,0,4,17"/>
+        <area name="-vbutton5ML" xywh="140,17,4,17"/>
+        <area name="-vbutton5MM" xywh="143,17,1,17"/>
+        <area name="-vbutton5MR" xywh="143,17,4,17"/>
+        <area name="-vbutton5BL" xywh="140,34,4,18"/>
+        <area name="-vbutton5BM" xywh="143,34,1,18"/>
+        <area name="-vbutton5BR" xywh="143,34,4,18"/>
+
+        <area name="-vbutton6TL" xywh="148,0,4,17"/>
+        <area name="-vbutton6TM" xywh="151,0,1,17"/>
+        <area name="-vbutton6TR" xywh="151,0,4,17"/>
+        <area name="-vbutton6ML" xywh="148,17,4,17"/>
+        <area name="-vbutton6MM" xywh="151,17,1,17"/>
+        <area name="-vbutton6MR" xywh="151,17,4,17"/>
+        <area name="-vbutton6BL" xywh="148,34,4,18"/>
+        <area name="-vbutton6BM" xywh="151,34,1,18"/>
+        <area name="-vbutton6BR" xywh="151,34,4,18"/>
+
+        <select name="vbutton.background">
+            <alias ref="button.background" if="!vbuttonNotFirst + !vbuttonNotLast"/>
+            <select if="!vbuttonNotFirst">
+                <grid if="selected + armed" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton6TL"/>
+                    <alias ref="-vbutton6TM"/>
+                    <alias ref="-vbutton6TR"/>
+                </grid>
+                <grid if="selected + hover + !disabled" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton5TL"/>
+                    <alias ref="-vbutton5TM"/>
+                    <alias ref="-vbutton5TR"/>
+                </grid>
+                <grid if="selected" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton4TL"/>
+                    <alias ref="-vbutton4TM"/>
+                    <alias ref="-vbutton4TR"/>
+                </grid>
+                <grid if="armed" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton3TL"/>
+                    <alias ref="-vbutton3TM"/>
+                    <alias ref="-vbutton3TR"/>
+                </grid>
+                <grid if="hover + !disabled" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton2TL"/>
+                    <alias ref="-vbutton2TM"/>
+                    <alias ref="-vbutton2TR"/>
+                </grid>
+                <grid weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton1TL"/>
+                    <alias ref="-vbutton1TM"/>
+                    <alias ref="-vbutton1TR"/>
+                </grid>
+            </select>
+            <select if="!vbuttonNotLast">
+                <grid if="selected + armed" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton6BL"/>
+                    <alias ref="-vbutton6BM"/>
+                    <alias ref="-vbutton6BR"/>
+                </grid>
+                <grid if="selected + hover + !disabled" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton5BL"/>
+                    <alias ref="-vbutton5BM"/>
+                    <alias ref="-vbutton5BR"/>
+                </grid>
+                <grid if="selected" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton4BL"/>
+                    <alias ref="-vbutton4BM"/>
+                    <alias ref="-vbutton4BR"/>
+                </grid>
+                <grid if="armed" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton3BL"/>
+                    <alias ref="-vbutton3BM"/>
+                    <alias ref="-vbutton3BR"/>
+                </grid>
+                <grid if="hover + !disabled" weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton2BL"/>
+                    <alias ref="-vbutton2BM"/>
+                    <alias ref="-vbutton2BR"/>
+                </grid>
+                <grid weightsX="0,1,0" weightsY="1">
+                    <alias ref="-vbutton1BL"/>
+                    <alias ref="-vbutton1BM"/>
+                    <alias ref="-vbutton1BR"/>
+                </grid>
+            </select>
+            <grid if="selected + armed" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton6ML"/>
+                <alias ref="-vbutton6MM"/>
+                <alias ref="-vbutton6MR"/>
+            </grid>
+            <grid if="selected + hover + !disabled" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton5ML"/>
+                <alias ref="-vbutton5MM"/>
+                <alias ref="-vbutton5MR"/>
+            </grid>
+            <grid if="selected" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton4ML"/>
+                <alias ref="-vbutton4MM"/>
+                <alias ref="-vbutton4MR"/>
+            </grid>
+            <grid if="armed" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton3ML"/>
+                <alias ref="-vbutton3MM"/>
+                <alias ref="-vbutton3MR"/>
+            </grid>
+            <grid if="hover + !disabled" weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton2ML"/>
+                <alias ref="-vbutton2MM"/>
+                <alias ref="-vbutton2MR"/>
+            </grid>
+            <grid weightsX="0,1,0" weightsY="1">
+                <alias ref="-vbutton1ML"/>
+                <alias ref="-vbutton1MM"/>
+                <alias ref="-vbutton1MR"/>
+            </grid>
+        </select>
+        <select name="vbutton.overlay">
+            <alias ref="button.overlay" if="keyboardFocus + !vbuttonNotFirst + !vbuttonNotLast"/>
+            <grid if="keyboardFocus + !vbuttonNotFirst" weightsX="0,1,0" weightsY="1" tint="keyboardFocus">
+                <alias ref="-vbuttonSelTL"/>
+                <alias ref="-vbuttonSelTM"/>
+                <alias ref="-vbuttonSelTR"/>
+            </grid>
+            <grid if="keyboardFocus + !vbuttonNotLast" weightsX="0,1,0" weightsY="1" tint="keyboardFocus">
+                <alias ref="-vbuttonSelBL"/>
+                <alias ref="-vbuttonSelBM"/>
+                <alias ref="-vbuttonSelBR"/>
+            </grid>
+            <grid if="keyboardFocus" weightsX="0,1,0" weightsY="1" tint="keyboardFocus">
+                <alias ref="-vbuttonSelML"/>
+                <alias ref="-vbuttonSelMM"/>
+                <alias ref="-vbuttonSelMR"/>
+            </grid>
+        </select>
+    </images>
+
+    <images file="gui.png" format="RGBA">
+        <area name="white" xywh="66,66,1,1"/>
+        <area name="black" xywh="96,66,1,1"/>
+
+        <area name="panel.background" xywh="0,19,1,1"/>
+        <area name="panel.separator" xywh="6,19,1,2"/>
+
+        <area name="frame.background" border="3" xywh="0,121,7,7" splitx="L3,R3" splity="T3,B3"/>
+        <area name="innerframe.background" xywh="8,121,5,5" splitx="L2,B2" splity="L2,B2"/>
+        <area name="tooltipwindow.background" xywh="0,100,3,3" splitx="L1,B1" splity="L1,B1" border="3"/>
+    
+
+        <area name="popup.background" border="4" tint="#E0FFFFFF" xywh="66,104,10,10" splitx="L4,R4" splity="T4,B4"/>
+        <area name="popupmenu.separator" xywh="8,124,1,2"/>
+
+        <area name="-popupmenubutton.hover" border="2,0" xywh="83,82,6,18" splitx="L2,R2"/>
+        <area name="-popupmenubutton.selected" border="2,0" tint="#808080" xywh="83,82,6,18" splitx="L2,R2"/>
+        <select name="popupmenubutton.background" border="4,1">
+            <alias ref="-popupmenubutton.hover" if="(hover | hasOpenMenus) + !disabled + !empty"/>
+            <alias ref="-popupmenubutton.selected" if="selected + !disabled"/>
+        </select>
+        <alias name="popupmenubutton.overlay" ref="none"/>
+
+        <area name="-popupmenucheckbox.hover" border="2,0" xywh="83,82,6,18" splitx="L2,R2"/>
+        <grid name="-popupmenucheckbox.icon" weightsX="0,1" weightsY="1">
+            <area center="true" xywh="35,19,12,9"/>
+            <alias ref="none"/>
+        </grid>
+        <select name="popupmenucheckbox.background" border="16,1">
+            <alias ref="-popupmenucheckbox.hover" if="(hover | hasOpenPopups | hasOpenMenus) + !disabled"/>
+        </select>
+        <alias name="popupmenucheckbox.overlay" ref="-popupmenucheckbox.icon" if="selected"/>
+
+        <area name="-popupmenuradiobtn.hover" border="2,0" xywh="83,82,6,18" splitx="L2,R2"/>
+        <grid name="-popupmenuradiobtn.icon" weightsX="0,0,1" weightsY="1">
+            <alias ref="none" sizeOverwriteH="4"/>
+            <area center="true" xywh="100,106,8,8"/>
+            <alias ref="none"/>
+        </grid>
+        <select name="popupmenuradiobtn.background" border="16,1">
+            <alias ref="-popupmenuradiobtn.hover" if="(hover | hasOpenPopups | hasOpenMenus) + !disabled"/>
+        </select>
+        <alias name="popupmenuradiobtn.overlay" ref="-popupmenuradiobtn.icon" if="selected"/>
+
+        <alias name="popupmenusubmenubutton.background" ref="popupmenubutton.background" border="1,4,1,12"/>
+        <grid name="popupmenusubmenubutton.overlay" weightsX="1,0" weightsY="1">
+            <alias ref="none"/>
+            <select>
+                <area sizeOverwriteH="9" center="true" inset="1,0,-1,0" if="(hover | hasOpenPopups) + !disabled" xywh="23,19,5,9"/>
+                <area sizeOverwriteH="9" center="true" inset="1,0,-1,0" xywh="17,19,5,9"/>
+            </select>
+        </grid>
+        <select name="autocompletion.listbox.display.background" border="4,1">
+            <alias ref="-popupmenubutton.hover" if="(selected | hasOpenMenus) + !disabled + !empty"/>
+        </select>
+
+        <select name="editfield.background" border="5,1">
+            <alias ref="-area8X" if="hover + !disabled"/>
+            <alias ref="-area7X"/>
+        </select>
+        <alias name="editfield.overlay" ref="none"/>
+        <alias name="editfield.cursor" ref="white" sizeOverwriteH="2" inset="0,-1,0,1" tint="keyboardFocus"/>
+        <alias name="editfield.selection" ref="white" tint="#444"/>
+
+        <area name="-icon.combobox" center="true" xywh="10,19,6,8"/>
+        <select name="combobox.background">
+            <alias ref="-area3X" if="armed"/>
+            <alias ref="-area2X" if="hover + !disabled"/>
+            <alias ref="-area1X"/>
+        </select>
+        <select name="combobox.button.background">
+            <alias ref="-icon.combobox" inset="1,1,-1,-1" if="armed"/>
+            <alias ref="-icon.combobox"/>
+        </select>
+        <alias name="combobox.display.background" ref="none"/>
+        <alias name="combobox.overlay" ref="-outlineX" tint="keyboardFocus" if="keyboardFocus"/>
+
+        <select name="treepathdisplay.node.background" border="2">
+            <area xywh="152,92,5,5" if="armed" splitx="L2,B2" splity="L2,B2"/>
+            <area xywh="137,94,3,3" if="hover" splitx="L1,B1" splity="L1,B1"/>
+        </select>
+
+        <area name="-icon.checkbox" inset="0,2,5,0" xywh="35,19,12,9"/>
+        <grid name="checkbox.background" weightsX="0,1" weightsY="1" border="0,18,0,0">
+            <select center="true">
+                <area if="armed" xywh="128,53,14,14"/>
+                <area if="hover + !disabled" xywh="113,53,14,14"/>
+                <area xywh="98,53,14,14"/>
+            </select>
+            <alias ref="none"/>
+        </grid>
+        <grid name="checkbox.overlay" weightsX="0,1" weightsY="1">
+            <composed center="true">
+                <area tint="keyboardFocus" if="keyboardFocus" xywh="143,53,14,14"/>
+                <select>
+                    <animation if="selected" timeSource="selected" count="1" frozenTime="200">
+                        <frame ref="-icon.checkbox" duration="200" zoom="2"/>
+                        <frame ref="-icon.checkbox" duration="0"/>
+                    </animation>
+                    <animation timeSource="selected" count="1" frozenTime="200">
+                        <frame ref="-icon.checkbox" duration="200" zoomCenterY="0.75"/>
+                        <frame ref="-icon.checkbox" duration="0" zoom="0" zoomCenterY="0.75"/>
+                    </animation>
+                </select>
+            </composed>
+            <alias ref="none"/>
+        </grid>
+
+
+        <area name="vscrollbar.background" splity="7,9" xywh="0,104,13,16"/>
+        <select name="vscrollbar.thumb.background">
+            <area splity="10,14" if="pressed" xywh="42,104,13,24"/>
+            <area splity="10,14" if="hover + !disabled" xywh="28,104,13,24"/>
+            <area splity="10,14" xywh="14,104,13,24"/>
+        </select>
+
+        <area name="hscrollbar.background" splitx="7,9" xywh="83,101,16,13"/>
+        <select name="hscrollbar.thumb.background">
+            <area splitx="10,14" if="pressed" xywh="106,115,24,13"/>
+            <area splitx="10,14" if="hover + !disabled" xywh="81,115,24,13"/>
+            <area splitx="10,14" xywh="56,115,24,13"/>
+        </select>
+
+
+        <grid name="collapsiblepanel.background" weightsX="1" weightsY="1,0" border="0,0,5,0">
+            <alias ref="none"/>
+            <alias ref="panel.separator"/>
+        </grid>
+
+        <select name="collapsiblepanel.arrow.background" center="true">
+            <area unless="expanded" xywh="94,71,10,10"/>
+            <area xywh="83,71,10,10"/>
+        </select>
+
+        <select name="collapsiblepanel.arrowH.background" center="true">
+            <area if="expanded" xywh="90,28,5,8"/>
+            <area xywh="94,28,5,8"/>
+        </select>
+        
+        <area name="splitpane.hsplitter.background" xywh="4,24,5,1"/>
+        <alias name="splitpane.hsplitter.overlay" ref="none"/>
+        
+        <area name="splitpane.vsplitter.background" xywh="1,21,1,5"/>
+        <alias name="splitpane.vsplitter.overlay" ref="none"/>
+        
+        <area name="-fileselector.onelevelup" xywh="109,100,11,14" center="true"/>
+        <area name="-fileselector.home" xywh="121,100,11,14" center="true"/>
+        <area name="-fileselector.refresh" xywh="133,100,10,14" center="true"/>
+        <!-- fileselector.folder icon based on famfamfam Icon "folder.png" -->
+        <area name="-fileselector.folder" xywh="159,58,14,11"/>
+        <!-- fileselector.hiddenfiles icon based on famfamfam Icon "key.png" -->
+        <area name="-fileselector.hiddenfiles" xywh="158,41,16,16"/>
+        <!-- fileselector.history icon based on famfamfam Icon "book_open.png" -->
+        <area name="-fileselector.history" xywh="156,70,16,14"/>
+
+        <composed name="fileselector.buttonOneLevelUp.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-fileselector.onelevelup" unless="armed"/>
+                <alias ref="-fileselector.onelevelup" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+
+        <composed name="fileselector.buttonHome.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-fileselector.home" unless="armed"/>
+                <alias ref="-fileselector.home" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+
+        <composed name="fileselector.buttonRefresh.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-fileselector.refresh" unless="armed"/>
+                <alias ref="-fileselector.refresh" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+
+        <composed name="fileselector.buttonMRU.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-fileselector.history" if="disabled" tint="#8fff"/>
+                <alias ref="-fileselector.history" unless="armed"/>
+                <alias ref="-fileselector.history" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+
+        <select name="-fileselector.showbutton">
+            <alias ref="-area6X" if="armed"/>
+            <alias ref="-area4X" if="selected"/>
+            <alias ref="-area2X" if="hover"/>
+        </select>
+        <composed name="fileselector.buttonShowFolders.background">
+            <alias ref="-fileselector.showbutton"/>
+            <alias ref="-fileselector.folder" center="true"/>
+        </composed>
+        <composed name="fileselector.buttonShowHidden.background">
+            <alias ref="-fileselector.showbutton"/>
+            <alias ref="-fileselector.hiddenfiles" center="true"/>
+        </composed>
+
+        <grid name="scrollpane.overlay" weightsX="1" weightsY="0,1,0" inset="23,3,2,16">
+            <grid weightsX="0,1,0,1,0" weightsY="1" if="autoScrollUp">
+                <area xywh="131,115,4,6" tint="#C0FFFFFF"/>
+                <area xywh="135,115,1,6" tint="#C0FFFFFF"/>
+                <area xywh="136,115,9,6" tint="#C0FFFFFF"/>
+                <area xywh="145,115,1,6" tint="#C0FFFFFF"/>
+                <area xywh="146,115,4,6" tint="#C0FFFFFF"/>
+            </grid>
+            <alias ref="none"/>
+            <grid weightsX="0,1,0,1,0" weightsY="1" if="autoScrollDown">
+                <area xywh="131,122,4,6" tint="#C0FFFFFF"/>
+                <area xywh="135,122,1,6" tint="#C0FFFFFF"/>
+                <area xywh="136,122,9,6" tint="#C0FFFFFF"/>
+                <area xywh="145,122,1,6" tint="#C0FFFFFF"/>
+                <area xywh="146,122,4,6" tint="#C0FFFFFF"/>
+            </grid>
+        </grid>
+    
+        <cursor name="cursor.nodrag" hotSpotX="0" hotSpotY="0" xywh="125,70,16,16"/>
+        
+        <area name="colorselector.1d.cursor" xywh="7,100,10,3" tiled="true" inset="0,-1"/>
+        <area name="colorselector.2d.cursor" xywh="4,100,3,3" inset="-1"/>
+    </images>
+
+    <images file="gui.png" format="RGBA" comment="Table">
+        <area name="--header1L" xywh="158,0,4,18"/>
+        <area name="--header1F" xywh="161,0,1,18"/>
+        <area name="--header1M" xywh="162,0,1,18"/>
+        <area name="--header1R" xywh="163,0,4,18"/>
+
+        <area name="--header2L" xywh="168,0,4,18"/>
+        <area name="--header2F" xywh="171,0,1,18"/>
+        <area name="--header2M" xywh="172,0,1,18"/>
+        <area name="--header2R" xywh="173,0,4,18"/>
+
+        <area name="--header3L" xywh="178,0,4,18"/>
+        <area name="--header3F" xywh="181,0,1,18"/>
+        <area name="--header3M" xywh="182,0,1,18"/>
+        <area name="--header3R" xywh="183,0,4,18"/>
+
+        <grid name="-header1L" weightsX="0,1" weightsY="1">
+            <alias ref="--header1L"/>
+            <alias ref="--header1F"/>
+        </grid>
+        <grid name="-header1C" weightsX="0,1" weightsY="1">
+            <alias ref="--header1M"/>
+            <alias ref="--header1F"/>
+        </grid>
+        <grid name="-header1R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header1M"/>
+            <alias ref="--header1F"/>
+            <alias ref="--header1R"/>
+        </grid>
+        <grid name="-header1X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header1L"/>
+            <alias ref="--header1F"/>
+            <alias ref="--header1R"/>
+        </grid>
+
+        <grid name="-header2L" weightsX="0,1" weightsY="1">
+            <alias ref="--header2L"/>
+            <alias ref="--header2F"/>
+        </grid>
+        <grid name="-header2C" weightsX="0,1" weightsY="1">
+            <alias ref="--header2M"/>
+            <alias ref="--header2F"/>
+        </grid>
+        <grid name="-header2R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header2M"/>
+            <alias ref="--header2F"/>
+            <alias ref="--header2R"/>
+        </grid>
+        <grid name="-header2X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header2L"/>
+            <alias ref="--header2F"/>
+            <alias ref="--header2R"/>
+        </grid>
+
+        <grid name="-header3L" weightsX="0,1" weightsY="1">
+            <alias ref="--header3L"/>
+            <alias ref="--header3F"/>
+        </grid>
+        <grid name="-header3C" weightsX="0,1" weightsY="1">
+            <alias ref="--header3M"/>
+            <alias ref="--header3F"/>
+        </grid>
+        <grid name="-header3R" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header3M"/>
+            <alias ref="--header3F"/>
+            <alias ref="--header3R"/>
+        </grid>
+        <grid name="-header3X" weightsX="0,1,0" weightsY="1">
+            <alias ref="--header3L"/>
+            <alias ref="--header3F"/>
+            <alias ref="--header3R"/>
+        </grid>
+
+        <select name="headerL.background">
+            <alias ref="-header3L" if="armed"/>
+            <alias ref="-header2L" if="hover + !disabled"/>
+            <alias ref="-header1L"/>
+        </select>
+        <select name="headerC.background">
+            <alias ref="-header3C" if="armed"/>
+            <alias ref="-header2C" if="hover + !disabled"/>
+            <alias ref="-header1C"/>
+        </select>
+        <select name="headerR.background">
+            <alias ref="-header3R" if="armed"/>
+            <alias ref="-header2R" if="hover + !disabled"/>
+            <alias ref="-header1R"/>
+        </select>
+        <select name="headerX.background">
+            <alias ref="-header3X" if="armed"/>
+            <alias ref="-header2X" if="hover + !disabled"/>
+            <alias ref="-header1X"/>
+        </select>
+
+        <area name="-table.frame.pixel" xywh="162,0,1,1"/>
+        <area name="table.background" xywh="152,101,7,5" splitx="L3,B3" splity="L3,B1"/>
+        <grid name="table.frame" weightsX="1" weightsY="0,1,0">
+            <area xywh="127,95,9,3" splitx="L4,B4"/>
+            <grid weightsX="0,1,0" weightsY="1">
+                <alias ref="-table.frame.pixel"/>
+                <alias ref="none"/>
+                <alias ref="-table.frame.pixel"/>
+            </grid>
+            <alias ref="-table.frame.pixel"/>
+        </grid>
+
+        <select name="table.row.background">
+            <alias ref="-popupmenubutton.selected" if="rowSelected"/>
+            <alias ref="white" tint="#6890D0" if="rowDropTarget"/>
+            <alias ref="-popupmenubutton.hover" tint="#CCC" if="rowHover"/>
+        </select>
+        <area name="table.row.overlay" xywh="86,51,3,3" splitx="L1,B1" splity="L1,B1" nocenter="true" tint="keyboardFocus" if="keyboardFocus + !hasFocusedChild + leadRow"/>
+    
+        <grid name="table.row.dropmarker" weightsX="1,1" weightsY="1">
+            <area xywh="127,87,14,7" splitx="L7,B6" inset="0,-2" sizeOverwriteH="50" sizeOverwriteV="1"/>
+            <alias ref="none"/>
+        </grid>
+
+        <composed name="columnHeader.background" border="5,1" inset="-3,0">
+            <select>
+                <alias ref="headerX.background" if="firstColumnHeader + lastColumnHeader"/>
+                <alias ref="headerL.background" if="firstColumnHeader"/>
+                <alias ref="headerR.background" if="lastColumnHeader"/>
+                <alias ref="headerC.background"/>
+            </select>
+            <grid weightsX="1,0" weightsY="1">
+                <alias ref="none"/>
+                <select center="true" inset="0,0,0,3">
+                    <area xywh="151,115,7,5" if="sortDescending"/>
+                    <area xywh="151,121,7,5" if="sortAscending"/>
+                </select>
+            </grid>
+        </composed>
+        <select name="treetable.treebutton.background" center="true" inset="2,0,-2,0">
+            <area unless="selected" xywh="94,71,10,10"/>
+            <area xywh="83,71,10,10"/>
+        </select>
+    
+    </images>
+
+    <fontDef name="button-font" filename="font.fnt" color="white">
+        <fontParam if="disabled" color="#ccc"/>
+        <fontParam if="selected" color="black"/>
+    </fontDef>
+
+    <fontDef name="popupmenu-font" filename="font.fnt" color="white">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#ccc"/>
+    </fontDef>
+
+    <fontDef name="normal" filename="font.fnt" color="black" default="true">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#444"/>
+        <fontParam if="textSelection" color="white"/>
+        <fontParam if="selected" color="white"/>
+        <fontParam if="modified" color="#1000FF"/>
+    </fontDef>
+
+    <fontDef name="normal-link" filename="font.fnt" color="blue" underlineOffset="1">
+        <fontParam if="hover" color="blue" underline="true"/>
+    </fontDef>
+
+    <fontDef name="combobox" filename="font.fnt" color="black">
+        <fontParam if="comboboxKeyboardFocus" color="white"/>
+    </fontDef>
+
+    <fontDef name="checkbox" filename="font.fnt" color="black">
+        <fontParam if="disabled" color="#444"/>
+    </fontDef>
+
+    <inputMapDef name="-defaultInputMap">
+        <action name="selectAll">ctrl A</action>
+        <action name="selectAll">cmd A</action>
+        <action name="cut">ctrl X</action>
+        <action name="cut">cmd X</action>
+        <action name="copy">ctrl C</action>
+        <action name="copy">cmd C</action>
+        <action name="paste">ctrl V</action>
+        <action name="paste">cmd V</action>
+    </inputMapDef>
+
+    <theme name="-defaults">
+        <param name="background"><image>none</image></param>
+        <param name="overlay"><image>none</image></param>
+        <param name="font"><font>normal</font></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+    </theme>
+
+    <theme name="*" ref="-defaults"/>
+    
+    <theme name="label" ref="-defaults" allowWildcard="true">
+    </theme>
+
+    <theme name="button" ref="-defaults" allowWildcard="true">
+        <param name=""><image>button.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">center</enum></param>
+        <param name="minWidth"><int>20</int></param>
+    </theme>
+
+    <theme name="vbutton" ref="button" allowWildcard="true">
+        <param name=""><image>vbutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+    </theme>
+
+    <theme name="radiobutton" ref="button" allowWildcard="true">
+        <param name=""><image>radiobutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>button-font</font></param>
+    </theme>
+
+    <theme name="togglebutton" ref="button" allowWildcard="true">
+        <param name=""><image>togglebutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>button-font</font></param>
+    </theme>
+
+    <theme name="checkbox" ref="-defaults" allowWildcard="true">
+        <param name=""><image>checkbox.*</image></param>
+        <param name="minWidth"><int>13</int></param>
+        <param name="minHeight"><int>13</int></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>checkbox</font></param>
+    </theme>
+
+    <theme name="popupMenuButton" ref="button">
+        <param name=""><image>popupmenubutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="font"><font>popupmenu-font</font></param>
+    </theme>
+
+    <theme name="popupMenuCheckbox" ref="button">
+        <param name=""><image>popupmenucheckbox.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="font"><font>popupmenu-font</font></param>
+    </theme>
+
+    <theme name="popupMenuRadioButton" ref="button">
+        <param name=""><image>popupmenuradiobtn.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="font"><font>popupmenu-font</font></param>
+    </theme>
+
+    <theme name="popupMenuSubMenuButton" ref="button">
+        <param name=""><image>popupmenusubmenubutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="font"><font>popupmenu-font</font></param>
+    </theme>
+
+    <theme name="editfield" ref="label" allowWildcard="true">
+        <param name=""><image>editfield.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="passwordChar"><int>0x25CF</int></param>
+        <param name="minHeight"><int>18</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="columns"><int>5</int></param>
+        <theme name="renderer" ref="label"/>
+        <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+        <param name="autocompletion-height"><int>150</int></param>
+    </theme>
+    <theme name="editfield-errorinfowindow" ref="-defaults">
+        <param name="background"><image>tooltipwindow.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <theme name="label" ref="label"/>
+    </theme>
+
+    <theme name="combobox" ref="-defaults" allowWildcard="true">
+        <param name=""><image>combobox.*</image></param>
+        <theme name="display" ref="label">
+            <param name=""><image>combobox.display.*</image></param>
+            <param name="border"><border>4,1</border></param>
+            <param name="minWidth"><int>50</int></param>
+            <param name="textAlignment"><enum type="alignment">left</enum></param>
+            <param name="font"><fontDef filename="font.fnt" color="white">
+                <fontParam if="error" color="#FF0000"/>
+                <fontParam if="hasOpenPopups" color="#aaa"/>
+            </fontDef></param>
+        </theme>
+        <theme name="button" ref="-defaults">
+            <param name=""><image>combobox.button.*</image></param>
+            <param name="minWidth"><int>18</int></param>
+        </theme>
+        <param name="minHeight"><int>18</int></param>
+    </theme>
+
+    <theme name="valueadjuster" ref="-defaults" allowWildcard="true">
+        <param name=""><image>valueadjuster.*</image></param>
+        <theme name="decButton" ref="button">
+            <param name=""><image>valueadjuster.dec.*</image></param>
+            <param name="border"><border>0</border></param>
+            <param name="minWidth"><int>12</int></param>
+        </theme>
+        <theme name="incButton" ref="button">
+            <param name=""><image>valueadjuster.inc.*</image></param>
+            <param name="border"><border>0</border></param>
+            <param name="minWidth"><int>12</int></param>
+        </theme>
+        <theme name="valueDisplay" ref="button">
+            <param name=""><image>valueadjuster.display.*</image></param>
+            <param name="textAlignment"><enum type="alignment">center</enum></param>
+            <param name="font"><font>normal</font></param>
+        </theme>
+        <theme name="valueEdit" ref="editfield">
+            <param name=""><image>valueadjuster.edit.*</image></param>
+            <param name="overlay"><image>none</image></param>
+        </theme>
+        <param name="width"><int>100</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="useMouseWheel"><bool>false</bool></param>
+        <param name="displayPrefix"><string/></param>
+    </theme>
+
+    <theme name="vscrollbar" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>vscrollbar.background</image></param>
+        <theme name="upbutton" ref="-defaults"/>
+        <theme name="downbutton" ref="-defaults"/>
+        <theme name="thumb" ref="-defaults">
+            <param name=""><image>vscrollbar.thumb.*</image></param>
+            <param name="minHeight"><int>32</int></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>13</int></param>
+        <param name="minHeight"><int>48</int></param>
+    </theme>
+
+    <theme name="hscrollbar" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>hscrollbar.background</image></param>
+        <theme name="leftbutton" ref="-defaults"/>
+        <theme name="rightbutton" ref="-defaults"/>
+        <theme name="thumb" ref="-defaults">
+            <param name=""><image>hscrollbar.thumb.*</image></param>
+            <param name="minWidth"><int>32</int></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>48</int></param>
+        <param name="minHeight"><int>13</int></param>
+    </theme>
+
+    <theme name="dialoglayout" ref="-defaults" allowWildcard="true">
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map>
+            <param name="radiobutton"><gap>0</gap></param>
+            <param name="adjuster"><gap>0</gap></param>
+            <param name="vbutton"><gap>0</gap></param>
+        </map></param>
+    </theme>
+
+    <theme name="simpledialog" ref="-defaults">
+        <param name="background"><image>frame.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="content" ref="dialoglayout">
+            <theme name="title" ref="label"/>
+            <theme name="btnOk" ref="button"/>
+            <theme name="btnCancel" ref="button"/>
+            <theme name="" ref="*"/>
+            <param name="namedGaps"><map>
+                <param name="title-buttons"><gap>20</gap></param>
+                <param name="title-msg"><gap>10</gap></param>
+                <param name="top-msg"><gap>0</gap></param>
+                <param name="msg-buttons"><gap>20</gap></param>
+                <param name="left-msg"><gap>0</gap></param>
+                <param name="msg-right"><gap>0,0,32767</gap></param>
+                <param name="left-btnOk"><gap>0,0,32767</gap></param>
+                <param name="btnOk-btnCancel"><gap>20</gap></param>
+                <param name="btnCancel-right"><gap>0</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+    <theme name="splitpane" ref="-defaults" allowWildcard="true">
+        <theme name="" ref="*"/>
+        <theme name="splitterHorizontal" ref="-defaults">
+            <param name=""><image>splitpane.hsplitter.*</image></param>
+            <param name="border"><border>background.border</border></param>
+            <param name="mouseCursor"><cursor>cursor.resizecolumn</cursor></param>
+        </theme>
+        <theme name="splitterVertical" ref="-defaults">
+            <param name=""><image>splitpane.vsplitter.*</image></param>
+            <param name="border"><border>background.border</border></param>
+            <param name="mouseCursor"><cursor>cursor.resizerow</cursor></param>
+        </theme>
+    </theme>
+
+    <theme name="scrollpane" ref="-defaults" allowWildcard="true">
+        <theme name="hscrollbar" ref="hscrollbar"/>
+        <theme name="vscrollbar" ref="vscrollbar"/>
+        <param name="minWidth"><int>100</int></param>
+        <param name="minHeight"><int>100</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="maxHeight"><int>32767</int></param>
+        <param name="hasDragButton"><bool>false</bool></param>
+        <param name="autoScrollArea"><int>5</int></param>
+        <param name="autoScrollSpeed"><int>10</int></param>
+        <param name="scrollbarsAlwaysVisible"><bool>false</bool></param>
+        <param name=""><image>scrollpane.*</image></param>
+    </theme>
+
+    <theme name="listbox" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>none</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="cellHeight"><int>font.lineHeight + 4</int></param>
+        <param name="cellWidth"><constant>SINGLE_COLUMN</constant></param>
+        <param name="rowMajor"><bool>true</bool></param>
+        <param name="fixedCellWidth"><bool>false</bool></param>
+        <param name="fixedCellHeight"><bool>false</bool></param>
+        <param name="maxHeight"><int>8000</int></param>
+        <param name="maxWidth"><int>8000</int></param>
+        <param name="minDisplayedRows"><int>1</int></param>
+        <theme name="vscrollbar" ref="vscrollbar"/>
+        <theme name="display" ref="label">
+            <param name=""><image>listbox.display.*</image></param>
+            <param name="font"><font>popupmenu-font</font></param>
+            <param name="border"><border>2</border></param>
+        </theme>
+    </theme>
+
+    <theme name="comboboxPopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="listbox" ref="listbox">
+            <param name="background"><image>none</image></param>
+            <param name="border"><border>0</border></param>
+            <param name="minDisplayedRows"><int>5</int></param>
+            <theme name="display" ref="popupMenuButton"/>
+        </theme>
+        <param name="maxHeight"><int>150</int></param>
+    </theme>
+
+    <theme name="editfieldautocompletionwindow" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <theme name="listbox" ref="listbox">
+            <theme name="display" ref="popupMenuButton">
+                <param name="background"><image>autocompletion.listbox.display.background</image></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="-treecellrenderer" ref="-defaults">
+        <param name="treeIndent"><int>15</int></param>
+        <param name="treeButtonSize"><dimension>14,11</dimension></param>
+    </theme>
+    <theme name="table" ref="-defaults" allowWildcard="true">
+        <param name="rowHeight"><int>font.lineHeight + 6</int></param>
+        <theme name="stringcellrenderer" ref="-defaults">
+            <param name="font"><font>normal</font></param>
+            <param name="border"><border>0,3,0,0</border></param>
+        </theme>
+        <theme name="TreeLeafCellRenderer" ref="-treecellrenderer"/>
+        <theme name="TreeNodeCellRenderer" ref="-treecellrenderer"/>
+        <theme name="PropertyEditorCellRender" ref="-treecellrenderer"/>
+        <theme name="PropertyListCellRenderer" ref="-treecellrenderer">
+            <param name=""><image>propertysheet.sublist.*</image></param>
+            <theme name="label" ref="label"/>
+        </theme>
+        <theme name="spanrenderer" ref="-defaults"/>
+        <theme name="treeButton" ref="-defaults">
+            <param name=""><image>treetable.treebutton.*</image></param>
+        </theme>
+        <theme name="columnHeader" ref="button">
+            <param name=""><image>columnHeader.*</image></param>
+        </theme>
+        <param name="columnHeaderWidth"><int>256</int></param>
+        <param name="columnHeaderHeight"><int>20</int></param>
+        <param name="columnDividerDragableDistance"><int>3</int></param>
+        <param name="columnResizeCursor"><cursor>cursor.resizecolumn</cursor></param>
+        <param name="columnDivider"><image>none</image></param>
+        <param name="columnWidths"><map/></param>
+        <param name="ensureColumnHeaderMinWidth"><bool>true</bool></param>
+        <param name="dragNotPossibleCursor"><cursor>cursor.nodrag</cursor></param>
+        <param name="row"><image>table.row.*</image></param>
+        <param name="inputMap"><inputMapDef ref="-defaultInputMap">
+            <action name="toggleSelectionOnLeadRow">ctrl SPACE</action>
+            <action name="selectNextRow">DOWN</action>
+            <action name="selectPreviousRow">UP</action>
+            <action name="selectNextPage">NEXT</action>
+            <action name="selectPreviousPage">PRIOR</action>
+            <action name="selectFirstRow">HOME</action>
+            <action name="selectLastRow">END</action>
+            <action name="extendSelectionToNextRow">shift DOWN</action>
+            <action name="extendSelectionToPreviousRow">shift UP</action>
+            <action name="extendSelectionToNextPage">shift NEXT</action>
+            <action name="extendSelectionToPreviousPage">shift PRIOR</action>
+            <action name="extendSelectionToFirstRow">shift HOME</action>
+            <action name="extendSelectionToLastRow">shift END</action>
+            <action name="moveLeadToNextRow">ctrl DOWN</action>
+            <action name="moveLeadToPreviousRow">ctrl UP</action>
+            <action name="moveLeadToNextPage">ctrl NEXT</action>
+            <action name="moveLeadToPreviousPage">ctrl PRIOR</action>
+            <action name="moveLeadToFirstRow">ctrl HOME</action>
+            <action name="moveLeadToLastRow">ctrl END</action>
+            <action name="expandLeadRow">ADD</action>
+            <action name="collapseLeadRow">SUBTRACT</action>
+        </inputMapDef></param>
+        <theme name="" ref="*"/>
+        <theme name="ComboBoxCellRenderer">
+            <param name="comboBoxHeight"><int>20</int></param>
+        </theme>
+        <theme name="EditFieldCellRenderer">
+            <param name="editFieldHeight"><int>20</int></param>
+        </theme>
+        <param name="overlay"><image>table.frame</image></param>
+    </theme>
+
+    <theme name="tablesearchwindow" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>20</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="label" ref="label">
+                <param name="font"><font>popupmenu-font</font></param>
+            </theme>
+            <theme name="editfield" ref="editfield">
+                <param name="columns"><int>20</int></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="colorselector" ref="dialoglayout" allowWildcard="true">
+        <theme name="label" ref="label"/>
+        <theme name="colorarea1d" ref="-defaults">
+            <param name="minWidth"><int>30</int></param>
+            <param name="minHeight"><int>128</int></param>
+            <param name="background"><image>innerframe.background</image></param>
+            <param name="border"><border>2</border></param>
+            <param name=""><image>colorselector.1d.*</image></param>
+        </theme>
+        <theme name="colorarea2d" ref="-defaults">
+            <param name="minWidth"><int>128</int></param>
+            <param name="minHeight"><int>128</int></param>
+            <param name="background"><image>innerframe.background</image></param>
+            <param name="border"><border>2</border></param>
+            <param name=""><image>colorselector.2d.*</image></param>
+        </theme>
+        <theme name="valueadjuster" ref="valueadjuster"/>
+        <theme name="previewLabel" ref="label">
+            <param name="text"><string>Current color:</string></param>
+        </theme>
+        <theme name="preview" ref="-defaults">
+            <param name="background"><image>innerframe.background</image></param>
+            <param name="border"><border>2</border></param>
+            <param name="minWidth"><int>64</int></param>
+            <param name="minHeight"><int>64</int></param>
+            <theme name="colorarea" ref="-defaults">
+                <param name="background"><image>white</image></param>
+            </theme>
+        </theme>
+        <theme name="hexColorEditField" ref="editfield">
+            <param name="tooltip"><string>Current color in ARGB hex format</string></param>
+        </theme>
+    </theme>
+
+    <theme name="textarea" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>innerframe.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="fonts"><map>
+            <param name="default"><font>normal</font></param>
+        </map></param>
+        <param name="images"><map>
+        </map></param>
+    </theme>
+
+    <theme name="treepathdisplay" ref="-defaults" allowWildcard="true">
+        <theme name="pathbox" ref="-defaults">
+            <param name="spacing"><int>0</int></param>
+            <theme name="node" ref="label">
+                <param name=""><image>treepathdisplay.node.*</image></param>
+            </theme>
+            <theme name="separator" ref="label">
+                <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+                <param name="border"><border>2,0</border></param>
+            </theme>
+            <param name="minHeight"><int>node.font.lineHeight + 4</int></param>
+            <param name="alignment"><enum type="alignment">center</enum></param>
+            <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+        </theme>
+        <theme name="patheditfield" ref="editfield"/>
+    </theme>
+
+    <theme name="treecombobox" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>innerframe.background</image></param>
+        <param name="popupThemeName"><string>treecomboboxPopup</string></param>
+        <theme name="display" ref="treepathdisplay">
+            <param name=""><image>combobox.display.*</image></param>
+            <param name="minWidth"><int>50</int></param>
+            <theme name="pathbox" merge="true">
+                <param name="border"><border>3</border></param>
+            </theme>
+        </theme>
+        <theme name="button" ref="-defaults">
+            <param name=""><image>combobox.button.*</image></param>
+            <param name="minWidth"><int>18</int></param>
+        </theme>
+    </theme>
+    <theme name="treecomboboxPopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="scrollpane" ref="scrollpane">
+            <theme name="treetable" ref="table">
+                <param name="background"><image>table.background</image></param>
+                <param name="border"><border>0</border></param>
+                <param name="columnHeaderHeight"><int>0</int></param>
+            </theme>
+        </theme>
+        <param name="minHeight"><int>300</int></param>
+    </theme>
+
+    <theme name="fileselector" ref="dialoglayout" allowWildcard="true">
+        <theme name="label" ref="label">
+            <param name="font"><font>popupmenu-font</font></param>
+        </theme>
+        <theme name="currentFolder" ref="treecombobox">
+            <param name="maxWidth"><int>32767</int></param>
+        </theme>
+        <theme name="buttonUp" ref="button">
+            <param name=""><image>fileselector.buttonOneLevelUp.*</image></param>
+            <param name="minWidth"><int>21</int></param>
+        </theme>
+        <theme name="buttonHome" ref="button">
+            <param name=""><image>fileselector.buttonHome.*</image></param>
+            <param name="minWidth"><int>21</int></param>
+        </theme>
+        <theme name="buttonFoldersMRU" ref="button">
+            <param name=""><image>fileselector.buttonMRU.*</image></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="tooltip"><string>Shows recently used folders</string></param>
+        </theme>
+        <theme name="buttonFilesMRU" ref="button">
+            <param name=""><image>fileselector.buttonMRU.*</image></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="tooltip"><string>Shows recently opened files</string></param>
+        </theme>
+        <theme name="buttonOk" ref="button">
+            <param name="text"><string>OK</string></param>
+            <param name="minWidth"><int>80</int></param>
+        </theme>
+        <theme name="buttonCancel" ref="button">
+            <param name="text"><string>Cancel</string></param>
+            <param name="minWidth"><int>80</int></param>
+        </theme>
+        <theme name="buttonShowFolders" ref="button">
+            <param name=""><image>fileselector.buttonShowFolders.*</image></param>
+            <param name="tooltip"><string>Shows folders in the file table</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="buttonShowHidden" ref="button">
+            <param name=""><image>fileselector.buttonShowHidden.*</image></param>
+            <param name="tooltip"><string>Shows hidden or system files</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="buttonRefresh" ref="button">
+            <param name=""><image>fileselector.buttonRefresh.*</image></param>
+            <param name="tooltip"><string>Refreshes the file table</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="scrollpane" ref="scrollpane">
+            <param name="border"><border>0</border></param>
+            <theme name="fileTable" ref="table">
+                <param name="columnWidths"><map>
+                    <param name="1"><int>70</int></param>
+                    <param name="2"><int>80</int></param>
+                    <param name="3"><int>140</int></param>
+                </map></param>
+                <param name="background"><image>table.background</image></param>
+            </theme>
+        </theme>
+        <theme name="fileFiltersBox" ref="combobox"/>
+        <param name="inputMap"><inputMapDef ref="-defaultInputMap">
+            <action name="goOneLevelUp">BACK</action>
+            <action name="acceptSelection">RETURN</action>
+        </inputMapDef></param>
+        <param name="namedGaps"><map>
+            <param name="buttonBarLeft"><gap/></param>
+            <param name="buttonBarSpacer"><gap>20</gap></param>
+            <param name="buttonBarRight"><gap>0</gap></param>
+        </map></param>
+    </theme>
+    <theme name="fileselector-folderMRUpopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="listbox" ref="listbox">
+            <theme name="display" ref="popupMenuButton"/>
+            <param name="background"><image>none</image></param>
+            <param name="border"><border>0</border></param>
+        </theme>
+    </theme>
+    <theme name="fileselector-filesMRUpopup" ref="-defaults">
+        <param name="background"><image>popup.background</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="listbox" ref="listbox">
+                <theme name="display" ref="popupMenuButton"/>
+                <param name="background"><image>none</image></param>
+                <param name="border"><border>0</border></param>
+            </theme>
+            <theme name="buttonOk" ref="button">
+                <param name="text"><string>OK</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+            <theme name="buttonCancel" ref="button">
+                <param name="text"><string>Cancel</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="tooltipwindow" ref="-defaults">
+        <param name="background"><image>tooltipwindow.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="fadeInTime"><int>0</int></param>
+        <theme name="label" ref="label"/>
+    </theme>
+</themes>

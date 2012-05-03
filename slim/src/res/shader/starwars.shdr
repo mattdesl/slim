@@ -1,0 +1,28 @@
+#version 120
+
+uniform sampler2D tex0;
+uniform vec4 fontColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+void main(void) {
+	// retrieve distance from texture
+	float alphaMask = texture2D(tex0, gl_TexCoord[0].xy).a;
+	
+	// get the current color
+	vec4 color = gl_Color;
+	color.rgb = gl_Color.rgb;
+	
+	// perform simple thresholding
+	if (alphaMask < 0.5) color.a = 0.0;
+	else color.a = 1.0;
+	
+	// perform adaptive anti-aliasing of the edges based on screen coverage
+	//color.a = smoothstep(0.48, 0.52, alphaMask);
+	float w = clamp(8.0 * abs(dFdx(gl_TexCoord[0].x)) + abs(dFdy(gl_TexCoord[0].y)), 0.0, 1.0);
+	color.a = smoothstep(0.5-w, 0.5+w, alphaMask);
+	
+	// set font color
+	color *= fontColor;
+	
+	// final color
+	gl_FragColor = color;
+}
