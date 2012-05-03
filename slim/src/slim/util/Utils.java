@@ -95,7 +95,7 @@ public class Utils {
 															// Only for RGBA
 			}
 		}
-		buffer.flip(); // FOR THE LOVE OF GOD DO NOT FORGET THIS
+		buffer.flip(); 
 		return new Texture2D(w, h, Texture.Format.RGBA, Texture.Format.RGBA, buffer);
 	}
     
