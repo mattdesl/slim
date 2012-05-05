@@ -73,11 +73,10 @@ public class Utils {
     }
     
     public static void error(String msg, Throwable t) {
-    	Sys.alert("Error", msg);
     	if (t!=null) getLogger().log(Level.SEVERE, msg, t);
     	else getLogger().log(Level.SEVERE, msg);
     }
-
+    
 	public static Texture2D createTexture(BufferedImage image) {
 		int w = image.getWidth();
 		int h = image.getHeight();

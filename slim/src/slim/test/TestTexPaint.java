@@ -131,7 +131,7 @@ public class TestTexPaint extends GUITestBase {
 		widgets = new PreviewWidgets();
 		widgets.setTheme("previewwidgets");
 		widgets.setPosition(10, 10);
-		
+		getRootPane().setTheme("blah");
 //		ComboBox<String> cb = new ComboBox<String>();
 //		SimpleChangableListModel<String> model = new SimpleChangableListModel<String>();
 //        for(Field f : Color.class.getFields()) {

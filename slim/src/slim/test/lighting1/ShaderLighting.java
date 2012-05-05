@@ -10,9 +10,9 @@ import slim.Color;
 import slim.FBO;
 import slim.GL2D;
 import slim.Image2D;
-import slim.ShaderProgram;
 import slim.SlimException;
 import slim.SpriteBatch;
+import slim.shader.ShaderProgram;
 import slim.texture.Texture;
 
 public class ShaderLighting {
@@ -74,7 +74,7 @@ public class ShaderLighting {
 	
 	protected ShaderProgram initShader(String vert, String frag) {
 		try {
-			ShaderProgram prog = ShaderProgram.loadProgram(vert, frag);
+			ShaderProgram prog = ShaderProgram.load(vert, frag);
 			if (prog.getLog().length()!=0)
 				System.out.println(prog.getLog());
 			prog.bind();

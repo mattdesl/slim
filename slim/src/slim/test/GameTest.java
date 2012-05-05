@@ -8,8 +8,8 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 import slim.Color;
-import slim.ShaderProgram;
 import slim.SlimException;
+import slim.shader.ShaderProgram;
 import slim.texture.Texture;
 import slim.texture.Texture2DArray;
 import slim.util.Utils;

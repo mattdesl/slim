@@ -43,7 +43,6 @@ public abstract class GUITestBase extends TestBase {
 
 	protected void initImpl() throws SlimException {
 		root = createRootPane();
-
 		try {
 			// renderer = new LWJGLRenderer();
 			renderer = new LWJGLEffectsRenderer();

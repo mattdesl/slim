@@ -116,7 +116,7 @@ public abstract class TestBase {
 		System.out.println("Resized "+getWidth()+" "+getHeight());
 	}
 	
-	public void start() throws SlimException {
+	void rungame() throws SlimException {
 		running = true;
 		Display.setResizable(true);
 		Display.setTitle("Game");
@@ -158,6 +158,14 @@ public abstract class TestBase {
 			}
 		}
 		destroy();
+	}
+	
+	public void start() throws SlimException {
+		try {
+			rungame();
+		} finally {
+			destroy();
+		}
 	}
 	
 	public void destroy() {
@@ -254,6 +262,7 @@ public abstract class TestBase {
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 	
 	public void initGL() {

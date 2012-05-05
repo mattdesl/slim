@@ -140,6 +140,7 @@
     </inputMapDef>
 
     <theme name="-defaults">
+        <theme name="" ref="*"/>
         <param name="background"><image>none</image></param>
         <param name="overlay"><image>none</image></param>
         <param name="textAlignment"><enum type="alignment">left</enum></param>
@@ -150,6 +151,7 @@
         <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
         <param name="font"><font>normal</font></param>
     </theme>
+    <theme name="*" ref="-defaults"/>
 
     <theme name="label" ref="-defaults" allowWildcard="true">
     </theme>

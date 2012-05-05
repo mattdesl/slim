@@ -1,4 +1,4 @@
-package slim;
+package slim.shader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,10 +7,9 @@ import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -18,6 +17,8 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.vector.Vector2f;
 
+import slim.Color;
+import slim.SlimException;
 import slim.util.Utils;
 
 /**
@@ -35,15 +36,14 @@ public class ShaderProgram {
 	private static boolean strict = true;
 	
 	/**
-	 * Returns true if GLSL shaders are supported in hardware on this system. This checks for
-	 * the following OpenGL extensions: GL_ARB_shader_objects, GL_ARB_vertex_shader,
-	 * GL_ARB_fragment_shader
+	 * Returns true if OpenGL 2.0 is present.
 	 * 
 	 * @return true if shaders are supported
 	 */
 	public static boolean isSupported() {
 		ContextCapabilities c = GLContext.getCapabilities();
-		return c.GL_ARB_shader_objects && c.GL_ARB_vertex_shader && c.GL_ARB_fragment_shader;
+		//return c.GL_ARB_shader_objects && c.GL_ARB_vertex_shader && c.GL_ARB_fragment_shader;
+		return c.OpenGL20;
 	}
 	
 	/**
@@ -72,6 +72,13 @@ public class ShaderProgram {
 		return strict;
 	}
 	
+	/**
+	 * Unbinds all shader programs.
+	 */
+	public static void unbindAll() {
+		GL20.glUseProgram(0);
+	}
+	
 	/** The OpenGL handle for this shader program object. */
 	protected int program;
 	/** The log for this program. */
@@ -91,6 +98,10 @@ public class ShaderProgram {
 	
 	private FloatBuffer buf4;
 	private IntBuffer ibuf4;
+
+	public static ShaderProgram load(String vertFile, String fragFile) throws SlimException {
+		return load(vertFile, fragFile, null);
+	}
 	
 	/**
 	 * A convenience method to load a ShaderProgram from two text files.
@@ -98,26 +109,30 @@ public class ShaderProgram {
 	 * @param fragFile the location of the frag shader source
 	 * @return the compiled and linked ShaderProgram
 	 * @throws SlimException if there was an issue reading the file, compiling the source,
-	 * 				or linking the program
+	 * 				or linking the program, or if the resources couldn't be located
 	 */
-	public static ShaderProgram loadProgram(String vertFile, String fragFile) throws SlimException {
+	public static ShaderProgram load(String vertFile, String fragFile,
+			HashMap<String, Integer> attribLocations) throws SlimException {
 		String vSrc=null, fSrc=null;
-		try {
-			InputStream v = Utils.getResourceAsStream(vertFile);
-			InputStream f = Utils.getResourceAsStream(fragFile);
-			vSrc = readFile(v); 
-			fSrc = readFile(f);
-			return new ShaderProgram(vSrc, fSrc);
+		//first check for I/O errors
+		try { 
+			vSrc = readFile(Utils.getResourceAsStream(vertFile)); 
+			fSrc = readFile(Utils.getResourceAsStream(fragFile));
 		} catch (IOException e) {
-			String res = vSrc==null ? vSrc : fSrc;
-			throw new SlimException("error reading source file "+res+":\n"+e.getMessage(), e);
+			String res = vSrc==null ? vertFile : fragFile;
+			throw new SlimException("error loading "+res, e);
+		}
+		//now try compiling...
+		try {
+			return new ShaderProgram(vSrc, fSrc);
 		} catch (SlimException e) {
-			//just for a nicer debug message to the developer...
-			int t = 0;
-			if (e.getMessage().startsWith("VERTEX_SHADER")) t = 1;
-			else if (e.getMessage().startsWith("FRAGMENT_SHADER")) t = 2;
-			String res = t==0 ? vertFile+" / "+fragFile : (t==1 ? vertFile : fragFile);
-			throw new SlimException("error compiling source file "+res, e);
+			// just for clearer debugging...
+			String res = null;
+			if (e.getMessage().startsWith("VERTEX")) res = vertFile;
+			else if (e.getMessage().startsWith("FRAGMENT")) res = fragFile;
+			if (res!=null) 
+				Utils.error("Error compiling "+res);
+			throw e;
 		}
 	}
 	
@@ -130,8 +145,7 @@ public class ShaderProgram {
 	 */
     public static String readFile(InputStream in) throws IOException {
 		final StringBuffer sBuffer = new StringBuffer();
-		final BufferedReader br = new BufferedReader(new InputStreamReader(
-				in));
+		final BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		final char[] buffer = new char[1024];
 
 		int cnt;
@@ -139,10 +153,10 @@ public class ShaderProgram {
 			sBuffer.append(buffer, 0, cnt);
 		}
 		br.close();
+		in.close();
 		return sBuffer.toString();
 	}
     
-
     /**
      * Creates a new shader program with the given vertex and fragment shader
      * source code. The given source code is compiled, then the shaders attached
@@ -161,17 +175,17 @@ public class ShaderProgram {
      * @throws SlimException if there was an issue
      * @throws IllegalArgumentException if there was an issue
      */
-    public ShaderProgram(String vertexShaderSource, String fragShaderSource) throws SlimException {
+    public ShaderProgram(String vertexShaderSource, String fragShaderSource, HashMap<String, Integer> attribLocations) throws SlimException {
     	if (vertexShaderSource==null || fragShaderSource==null) 
 			throw new IllegalArgumentException("shader source must be non-null");
     	if (!isSupported())
-			throw new SlimException("no shader support found; driver does not support extension GL_ARB_shader_objects");
-		
+			throw new SlimException("no shader support found; shaders require OpenGL 2.0");
     	this.vertShaderSource = vertexShaderSource;
     	this.fragShaderSource = fragShaderSource;
     	vert = compileShader(VERTEX_SHADER, vertexShaderSource);
     	frag = compileShader(FRAGMENT_SHADER, fragShaderSource);
 		program = createProgram();
+		bindAttributes(attribLocations);
 		try {
 			linkProgram();
 		} catch (SlimException e) {
@@ -180,6 +194,10 @@ public class ShaderProgram {
 		}
 		if (log!=null && log.length()!=0)
 			Utils.warn("GLSL Info: "+log);
+    }
+    
+    public ShaderProgram(String vertexShaderSource, String fragShaderSource) throws SlimException {
+    	this(vertexShaderSource, fragShaderSource, null);
     }
     
 	/**
@@ -196,12 +214,18 @@ public class ShaderProgram {
 	 * @throws SlimException if the result is zero
 	 */
 	protected int createProgram() throws SlimException {
-		if (!isSupported())
-			throw new SlimException("no shader support found; driver does not support extension GL_ARB_shader_objects");
-		int program = ARBShaderObjects.glCreateProgramObjectARB();
+		int program = GL20.glCreateProgram();
 		if (program == 0)
 			throw new SlimException("could not create program; check ShaderProgram.isSupported()");
 		return program;
+	}
+	
+	protected void bindAttributes(HashMap<String, Integer> attribLocations) {
+		for (Entry<String, Integer> e : attribLocations.entrySet()) {
+			String n = e.getKey();
+			int v = e.getValue();
+			GL20.glBindAttribLocation(program, v, n);
+		}
 	}
 	
 	private String shaderTypeString(int type) {
@@ -222,15 +246,16 @@ public class ShaderProgram {
 	 * @throws SlimException if compilation was unsuccessful
 	 */
 	protected int compileShader(int type, String source) throws SlimException {
-		int shader = ARBShaderObjects.glCreateShaderObjectARB(type);
+		int shader = GL20.glCreateShader(type);
 		if (shader==0) 
 			throw new SlimException("could not create shader object; check ShaderProgram.isSupported()");
-		ARBShaderObjects.glShaderSourceARB(shader, source);
-		ARBShaderObjects.glCompileShaderARB(shader);
-		int comp = ARBShaderObjects.glGetObjectParameteriARB(shader, GL20.GL_COMPILE_STATUS);
-		int len = ARBShaderObjects.glGetObjectParameteriARB(shader, GL20.GL_INFO_LOG_LENGTH);
+		GL20.glShaderSource(shader, source);
+		GL20.glCompileShader(shader);
+		
+		int comp = GL20.glGetShader(shader, GL20.GL_COMPILE_STATUS);
+		int len = GL20.glGetShader(shader, GL20.GL_INFO_LOG_LENGTH);
 		String t = shaderTypeString(type);
-		String err = ARBShaderObjects.glGetInfoLogARB(shader, len); 
+		String err = GL20.glGetShaderInfoLog(shader, len); 
 		if (err!=null&&err.length()!=0) 
 			log += t+" compile log:\n"+err+"\n";
 		if (comp==GL11.GL_FALSE)
@@ -242,8 +267,8 @@ public class ShaderProgram {
 	 * Called to attach vertex and fragment; users may override this for more specific purposes.
 	 */
 	protected void attachShaders() {
-		ARBShaderObjects.glAttachObjectARB(getID(), vert);
-		ARBShaderObjects.glAttachObjectARB(getID(), frag);
+		GL20.glAttachShader(getID(), vert);
+		GL20.glAttachShader(getID(), frag);
 	}
 	
 	/**
@@ -262,10 +287,10 @@ public class ShaderProgram {
 		
 		attachShaders();
 
-        ARBShaderObjects.glLinkProgramARB(program);
-        int comp = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_LINK_STATUS);
-        int len = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_INFO_LOG_LENGTH);
-		String err = ARBShaderObjects.glGetInfoLogARB(program, len);
+        GL20.glLinkProgram(program);
+		int comp = GL20.glGetProgram(program, GL20.GL_LINK_STATUS);
+		int len = GL20.glGetProgram(program, GL20.GL_INFO_LOG_LENGTH);
+		String err = GL20.glGetProgramInfoLog(program, len); 
 		if (err!=null&&err.length()!=0) log = err + "\n" + log;
 		if (log!=null) log = log.trim();
         if (comp==GL11.GL_FALSE) 
@@ -291,7 +316,7 @@ public class ShaderProgram {
 	public void bind() {
 		if (!valid())
 			throw new IllegalStateException("trying to enable a program that is not valid");
-		ARBShaderObjects.glUseProgramObjectARB(program);
+		GL20.glUseProgram(program);
 	}
 	
 	/**
@@ -304,13 +329,13 @@ public class ShaderProgram {
 	public void releaseShaders() {
 		unbind();
 		if (vert!=0) {
-			ARBShaderObjects.glDetachObjectARB(getID(), vert);
-			ARBShaderObjects.glDeleteObjectARB(vert);
+			GL20.glDetachShader(getID(), vert);
+			GL20.glDeleteShader(vert);
 			vert = 0;
 		}
 		if (frag!=0) {
-			ARBShaderObjects.glDetachObjectARB(getID(), frag);
-			ARBShaderObjects.glDeleteObjectARB(frag);
+			GL20.glDetachShader(getID(), frag);
+			GL20.glDeleteShader(frag);
 			frag = 0;
 		}
 	}
@@ -325,16 +350,18 @@ public class ShaderProgram {
 		if (program!=0) {
 			unbind();
 			releaseShaders();
-			ARBShaderObjects.glDeleteObjectARB(program);
+			GL20.glDeleteProgram(program);
 			program = 0;
 		}
 	}
 	
 	/**
-	 * Disables shaders.
+	 * Unbinds all shaders; this is the equivalent of ShaderProgram.unbindAll(), and only included
+	 * for consistency with bind() and the rest of the API (i.e. FBO). Users do not need to unbind
+	 * one shader before binding a new one.
 	 */
 	public void unbind() {
-		ARBShaderObjects.glUseProgramObjectARB(0);
+		ShaderProgram.unbindAll();
 	}
 	
 	/**
@@ -388,25 +415,25 @@ public class ShaderProgram {
 	}
 	
 	private void fetchUniforms() {
-		int len = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_ACTIVE_UNIFORMS);
+		int len = GL20.glGetProgram(program, GL20.GL_ACTIVE_UNIFORMS);
 		//max length of all uniforms stored in program
-		int strLen = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_ACTIVE_UNIFORM_MAX_LENGTH);
+		int strLen = GL20.glGetProgram(program, GL20.GL_ACTIVE_UNIFORM_MAX_LENGTH);
 		
 		for (int i=0; i<len; i++) {
-			String name = ARBShaderObjects.glGetActiveUniformARB(program, i, strLen);
-			int id = ARBShaderObjects.glGetUniformLocationARB(program, name);
+			String name = GL20.glGetActiveUniform(program, i, strLen);
+			int id = GL20.glGetUniformLocation(program, name);
 			uniforms.put(name, id);
 		}
 	}
 	
 	private void fetchAttributes() {
-		int len = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_ACTIVE_ATTRIBUTES);
+		int len = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTES);
 		//max length of all uniforms stored in program
-		int strLen = ARBShaderObjects.glGetObjectParameteriARB(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH); 
+		int strLen = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH); 
 		for (int i=0; i<len; i++) {
-			String name = ARBVertexShader.glGetActiveAttribARB(program, i, strLen);
-			int id = ARBVertexShader.glGetAttribLocationARB(program, name);
-			uniforms.put(name, id);
+			String name = GL20.glGetActiveAttrib(program, i, strLen);
+			int id = GL20.glGetAttribLocation(program, name);
+			attributes.put(name, id);
 		}
 	}
 
@@ -420,7 +447,7 @@ public class ShaderProgram {
 		int location = locI==null ? -1 : locI.intValue();
 		if (location!=-1)
 			return location;
-		location = ARBShaderObjects.glGetUniformLocationARB(program, name);
+		location = GL20.glGetUniformLocation(program, name);
 		if (location == -1 && strict)
 			throw new IllegalArgumentException("no active uniform by name '"+name+"' (disable strict compiling to suppress warnings)");
 		uniforms.put(name, location); 
@@ -433,10 +460,11 @@ public class ShaderProgram {
 	 * @return the ID (location) in the shader program
 	 */
 	public int getAttributeID(String name) {
-		int location = attributes.get(name);
+		Integer locI = attributes.get(name);
+		int location = locI==null ? -1 : locI.intValue();
 		if (location!=-1)
 			return location;
-		location = ARBVertexShader.glGetAttribLocationARB(program, name);
+		location = GL20.glGetAttribLocation(program, name);
 		if (location == -1 && strict)
 			throw new IllegalArgumentException("no active attribute by name '"+name+"'");
 		attributes.put(name, location); 
@@ -474,7 +502,7 @@ public class ShaderProgram {
 	public boolean enableVertexAttribute(String name) {
 		int id = getAttributeID(name);
 		if (id==-1) return false;
-		ARBVertexShader.glEnableVertexAttribArrayARB(id);
+		GL20.glEnableVertexAttribArray(id);
 		return true;
 	}
 	
@@ -491,7 +519,7 @@ public class ShaderProgram {
 	public boolean disableVertexAttribute(String name) {
 		int id = getAttributeID(name);
 		if (id==-1) return false;
-		ARBVertexShader.glDisableVertexAttribArrayARB(id);
+		GL20.glDisableVertexAttribArray(id);
 		return true;
 	}
 	
@@ -644,7 +672,7 @@ public class ShaderProgram {
 	public boolean getUniform(String name, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return false;
-		ARBShaderObjects.glGetUniformARB(program, id, buf);
+		GL20.glGetUniform(program, id, buf);
 		return true;
 	}
 	
@@ -662,7 +690,7 @@ public class ShaderProgram {
 	public boolean getUniform(String name, IntBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return false;
-		ARBShaderObjects.glGetUniformARB(program, id, buf);
+		GL20.glGetUniform(program, id, buf);
 		return true;
 	}
 	
@@ -698,7 +726,7 @@ public class ShaderProgram {
 	public void setUniform1f(String name, float f) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform1fARB(id, f);
+		GL20.glUniform1f(id, f);
 	}
 	
 	/**
@@ -709,7 +737,7 @@ public class ShaderProgram {
 	public void setUniform1i(String name, int i) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform1iARB(id, i);
+		GL20.glUniform1i(id, i);
 	}
 	
 	/**
@@ -721,7 +749,7 @@ public class ShaderProgram {
 	public void setUniform2f(String name, float a, float b) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform2fARB(id, a, b);
+		GL20.glUniform2f(id, a, b);
 	}
 	
 	/**
@@ -734,8 +762,7 @@ public class ShaderProgram {
 	public void setUniform3f(String name, float a, float b, float c) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		
-		ARBShaderObjects.glUniform3fARB(id, a, b, c);
+		GL20.glUniform3f(id, a, b, c);
 	}
 
 	/**
@@ -749,7 +776,7 @@ public class ShaderProgram {
 	public void setUniform4f(String name, float a, float b, float c, float d) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform4fARB(id, a, b, c, d);
+		GL20.glUniform4f(id, a, b, c, d);
 	}
 	
 	/**
@@ -761,7 +788,7 @@ public class ShaderProgram {
 	public void setUniform2i(String name, int a, int b) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform2iARB(id, a, b);
+		GL20.glUniform2i(id, a, b);
 	}
 
 	/**
@@ -774,7 +801,7 @@ public class ShaderProgram {
 	public void setUniform3i(String name, int a, int b, int c) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform3iARB(id, a, b, c);
+		GL20.glUniform3i(id, a, b, c);
 	}
 	
 	/**
@@ -788,7 +815,7 @@ public class ShaderProgram {
 	public void setUniform4i(String name, int a, int b, int c, int d) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniform4iARB(id, a, b, c, d);
+		GL20.glUniform4i(id, a, b, c, d);
 	}
 	
 	/**
@@ -800,7 +827,7 @@ public class ShaderProgram {
 	public void setMatrix2(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniformMatrix2ARB(id, transpose, buf);
+		GL20.glUniformMatrix2(id, transpose, buf);
 	}
 
 	/**
@@ -812,7 +839,7 @@ public class ShaderProgram {
 	public void setMatrix3(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniformMatrix3ARB(id, transpose, buf);
+		GL20.glUniformMatrix3(id, transpose, buf);
 	}
 
 	/**
@@ -824,6 +851,6 @@ public class ShaderProgram {
 	public void setMatrix4(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
-		ARBShaderObjects.glUniformMatrix4ARB(id, transpose, buf);
+		GL20.glUniformMatrix4(id, transpose, buf);
 	}
 }

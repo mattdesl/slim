@@ -7,9 +7,9 @@ import org.lwjgl.opengl.GL14;
 
 import slim.FBO;
 import slim.Image2D;
-import slim.ShaderProgram;
 import slim.SlimException;
 import slim.SpriteBatch;
+import slim.shader.ShaderProgram;
 import slim.test.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
@@ -205,7 +205,7 @@ public class LightingTest extends GUITestBase {
 			ShaderProgram prog;
 			if (old!=null)
 				old.release();
-			prog = ShaderProgram.loadProgram(vert, frag);
+			prog = ShaderProgram.load(vert, frag);
 			if (prog.getLog()!=null && prog.getLog().length()!=0)
 				System.out.println(prog.getLog());
 			prog.bind();

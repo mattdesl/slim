@@ -1,17 +1,14 @@
-#version 120
+#version 130
 
 uniform sampler2D tex0;
 const float PI = 3.14159265358979323846264;
-
-uniform vec2 texSize;
-//uniform vec2 texOff;
 
 void main(void) {
 	vec2 texCoord = gl_TexCoord[0].st;
 	
 	vec2 texOff = gl_Color.ba;
 	
-	texCoord = (texCoord-texOff)/texSize, 1);
+	//texCoord = (texCoord-texOff)/texSize;
 	
 	//polar 2 rect filter
 	vec2 norm = texCoord * 2.0 - 1.0;
@@ -21,14 +18,14 @@ void main(void) {
 	cart = ( (cart/2.0) + 0.5 );
 	
 	//sample from polarized coords
-	vec4 color = texture2D(tex0, cart*texSize+texOff);
+	vec4 color = texture2D(tex0, cart);
 	
 	//if under 30% transparency, we'll use "texCoord.t" as our distance
 	//otherwise use white (1.0) as a max value
 	float distColor = color.a>0.3f ? texCoord.t : 1.0f;
 	
-	//vec4 c = texture2D(tex0, texCoord);
-	//gl_FragColor = c;
+	//vec4 c = texture2D(tex0, texCoord*texSize+texOff);
+	//gl_FragColor = c; *texSize+texOff
 	
 	gl_FragColor = vec4(distColor, distColor, distColor, .4);
 } 

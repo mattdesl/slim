@@ -27,6 +27,6 @@ public class EmptyGUITest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah.xml");
+		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }
