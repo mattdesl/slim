@@ -370,6 +370,15 @@ public abstract class Texture {
     			* getTextureDepth();
     }
 	
+	/**
+	 * Clears the contents of the texture by uploading an empty buffer
+	 * to glTexImage2D.
+	 */
+	public void clear() {
+		glTexImage(getTarget(), getTextureWidth(), getTextureHeight(), getTextureDepth(),
+					getFormat(), Texture.Format.RGBA, null);
+	}
+	
 	void glTexSubImage(int target, int x, int y, int z, 
 					int width, int height, int depth,
 					Format dataFormat, ByteBuffer data) {

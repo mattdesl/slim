@@ -204,10 +204,8 @@ public class Java2DTest extends JFrame implements ActionListener {
 		public void paintComponent(Graphics g) {
 			g.clearRect(0, 0, 800, 600);
 			
-			for (int i = 0; i < numberOfBalls; i++) {
-				g.setColor(Color.RED);
-				g.fillOval((int)balls[i].x, (int)balls[i].y, 32, 32);
-			}
+			g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
+			
 			g.setColor(Color.black);
 			g.drawString("FPS: "+fps+" COUNT: "+numberOfBalls, 5, 10);
 			frameCount++;

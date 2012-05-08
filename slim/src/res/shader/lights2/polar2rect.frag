@@ -1,4 +1,4 @@
-#version 130
+#version 120
 
 uniform sampler2D tex0;
 const float PI = 3.14159265358979323846264;

@@ -168,9 +168,9 @@ public class FBO {
 	
 		
 	/**
-	 * @see org.newdawn.slick.Graphics#destroy()
+	 * Destroys this FBO, but does not release the associated texture(s).
 	 */
-	public void release() {
+	public void destroy() {
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 		//glReadBuffer(GL_BACK);
 		glDeleteFramebuffersEXT(id);

@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<!-- 
+	Copyright (c) 2012, Matt DesLauriers All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are met:
+
+	* Redistributions of source code must retain the above copyright notice, this
+	  list of conditions and the following disclaimer. 
+
+	* Redistributions in binary
+	  form must reproduce the above copyright notice, this list of conditions and
+	  the following disclaimer in the documentation and/or other materials provided
+	  with the distribution. 
+
+	* Neither the name of the Matt DesLauriers nor the names
+	  of his contributors may be used to endorse or promote products derived from
+	  this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+	AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+	LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+	SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+	CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+	POSSIBILITY OF SUCH DAMAGE.
+    -->
+<!-- 
+    Theme by davedes, based on the free "Chutzpah" theme by Morgan Knutson. More details here:
+    http://slick.javaunlimited.net/viewtopic.php?f=18&t=4859
+    
+    version 4
+-->    
 <themes>
     <images file="gui.png">
         <cursor name="cursor_text" hotSpotX="3" hotSpotY="2" xywh="56,0,7,18"/>
@@ -17,11 +53,31 @@
         <area name="vscrollbar" xywh="81,0,10,17" splity="T5,B4"/>
         <area name="hscrollbar_thumb" xywh="67,20,16,12" splitx="L5,R5"/>
         <area name="hscrollbar" xywh="87,21,18,12" splitx="L5,R5"/>
-        <area name="icon_arrow" xywh="20,33,11,7" center="true"/>
+        <area name="icon_arrow" xywh="20,32,12,7" center="true"/>
         <area name="icon_checkbox" xywh="0,33,16,14"/>
         <area name="tooltip_background" xywh="67,34,7,14" splitx="L3,R3" splity="T5,B6"/>
         <area name="panel_background" xywh="0,48,34,34" splitx="L14,R14" splity="T14,B14"/>
         <alias name="textarea_background" ref="white_pixel" tint="#ECECEC"/>
+        <area name="valueadjuster_background" xywh="114,0,14,30" splity="T5,B5" splitx="L4,R4"/>
+        <area name="frame_active" xywh="18,108,30,43" splitx="L9,R9" splity="T29,B10"/>
+        <select name="frame_resizeHandle">
+            <area xywh="80,122,11,9" if="!keyboardFocus + !hasOpenPopups"/>
+            <area xywh="80,110,11,9"/>
+        </select>
+        <select name="frame_background">
+            <area xywh="49,108,30,43" splitx="L9,R9" splity="T29,B10" if="!keyboardFocus + !hasOpenPopups"/>
+            <area xywh="18,108,30,43" splitx="L9,R9" splity="T29,B10"/>
+        </select>
+        <select name="valueadjuster_dec">
+            <area xywh="92,50,13,30" if="pressed"/>
+            <area xywh="65,50,13,30" if="hover"/>
+            <area xywh="37,50,13,30" splity="T0,B0"/>
+        </select>
+        <select name="valueadjuster_inc">
+            <area xywh="108,50,13,30" if="pressed"/>
+            <area xywh="79,50,13,30" if="hover"/>
+            <area xywh="51,50,13,30"/>
+        </select>
         <select name="button_background">
             <alias ref="button_pressed" if="pressed"/>
             <alias ref="button_hover" if="hover"/>
@@ -90,6 +146,11 @@
         <fontParam if="disabled" color="#B0B0B0"/>
         <fontParam if="hover" color="#2A74BB"/>
     </fontDef>
+    <fontDef name="titlebar_font" filename="ptsans.fnt">
+        <fontParam if="error" color="red"/>
+        <fontParam if="warning" color="orange"/>
+        <fontParam if="disabled" color="#E1FFFFFF"/>
+    </fontDef>
     <fontDef name="italic" filename="ptsans_italic.fnt" color="#C32B2B2B">
         <fontParam if="error" color="red"/>
         <fontParam if="warning" color="orange"/>
@@ -151,6 +212,7 @@
         <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
         <param name="font"><font>normal</font></param>
     </theme>
+
     <theme name="*" ref="-defaults"/>
 
     <theme name="label" ref="-defaults" allowWildcard="true">
@@ -284,11 +346,68 @@
         </param>
     
     </theme>
+    <theme name="valueadjuster" ref="-defaults" allowWildcard="false">
+        <theme name="decButton" ref="button">
+            <param name="minWidth"><int>13</int></param>
+            <param name="background"><image>valueadjuster_dec</image></param>
+        </theme>
+        <theme name="incButton" ref="button">
+            <param name="minWidth"><int>13</int></param>
+            <param name="background"><image>valueadjuster_inc</image></param>
+        </theme>
+        <theme name="valueDisplay" ref="-defaults">
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+            <param name="background"><image>valueadjuster_background</image></param>
+        </theme>
+        <theme name="valueEdit" ref="editfield">
+            <theme name="renderer" ref="-defaults">
+                <param name="textAlignment"><enum type="alignment">center</enum></param>
+            </theme>
+            <param name="background"><image>valueadjuster_background</image></param>
+        </theme>
+        <param name="width"><int>65</int></param>
+        <param name="useMouseWheel"><bool>false</bool></param>
+        <param name="displayPrefix"><string/></param>
+    </theme>
+    <theme name="resizableframe" ref="dialoglayout">
+        <param name="titleAreaTop"><int>0</int></param>
+        <param name="titleAreaLeft"><int>1</int></param>
+        <param name="titleAreaRight"><int>-1</int></param>
+        <param name="titleAreaBottom"><int>29</int></param>
+        <param name="hasResizeHandle"><bool>false</bool></param>
+        <param name="resizeHandleX"><int>-17</int></param>
+        <param name="resizeHandleY"><int>-17</int></param>
+        <param name="hasCloseButton"><bool>true</bool></param>
+        <param name="closeButtonX"><int>-12</int></param>
+        <param name="closeButtonY"><int>-5</int></param>
+        <param name="fadeColorInactive"><color>white</color></param>
+        <param name="fadeDurationActivate"><int>0</int></param>
+        <param name="fadeDurationDeactivate"><int>0</int></param>
+        <param name="fadeDurationShow"><int>0</int></param>
+        <param name="fadeDurationHide"><int>0</int></param>
+        <theme name="title" ref="label">
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+            <param name="border"><border>0,8,3,0</border></param>
+            <param name="font"><font>titlebar_font</font></param>
+        </theme>
+        <theme name="closeButton" ref="radiobutton">
+            <param name="minWidth"><int>22</int></param>
+            <param name="minHeight"><int>23</int></param>
+        </theme>
+        <theme name="resizeHandle" ref="-defaults">
+            <param name="background"><image>frame_resizeHandle</image></param>
+        </theme>
+        <param name="border"><border>28,7,7,7</border></param>
+        <param name="background"><image>frame_background</image></param>
+    </theme>
+    <theme name="resizableframe-resizeHandle" ref="resizableframe">
+        <param name="hasResizeHandle"><bool>true</bool></param>
+    </theme>
     <theme name="panel" ref="dialoglayout">
         <param name="background"><image>panel_background</image></param>
         <param name="border"><border>10</border></param>
     </theme>
-    <theme name="previewwidgets" ref="panel">
+    <theme name="previewwidgets" ref="dialoglayout">
         <theme name="label" ref="label">
         </theme>
         <theme name="button" ref="button"/>

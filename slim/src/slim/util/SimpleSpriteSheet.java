@@ -23,7 +23,7 @@ import slim.SlimException;
  * 
  * @author davedes
  */
-public class SimpleSpriteSheet {
+public class SimpleSpriteSheet implements SpriteSheet {
 	
 	private HashMap<String, Image2D> sprites = new HashMap<String, Image2D>();
 	private Image2D sheet;
@@ -72,5 +72,13 @@ public class SimpleSpriteSheet {
 	
 	public HashMap<String, Image2D> sprites() {
 		return sprites;
+	}
+	
+	public Image2D getSheet() {
+		return sheet;
+	}
+	
+	public Image2D[] toArray() {
+		return sprites.values().toArray(new Image2D[size()]);
 	}
 }

@@ -221,6 +221,8 @@ public class ShaderProgram {
 	}
 	
 	protected void bindAttributes(HashMap<String, Integer> attribLocations) {
+		if (attribLocations==null)
+			return;
 		for (Entry<String, Integer> e : attribLocations.entrySet()) {
 			String n = e.getKey();
 			int v = e.getValue();

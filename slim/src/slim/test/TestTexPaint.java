@@ -56,6 +56,7 @@ import slim.texture.io.ImageDecoder;
 import slim.util.Utils;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.ValueAdjusterFloat;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.Font;
 
@@ -107,7 +108,7 @@ public class TestTexPaint extends GUITestBase {
 	@Override
 	public void init() throws SlimException {
 		System.out.println(GLContext.getCapabilities().GL_ARB_draw_instanced);
-		GL11.glClearColor(0.4f, 0.4f, 0.4f, 1f);
+		GL11.glClearColor(0.8f, 0.8f, 0.8f, 1f);
 		init3D();
 		
 		Texture2D.enable(GL11.GL_TEXTURE_2D);
@@ -128,10 +129,6 @@ public class TestTexPaint extends GUITestBase {
 //		} else {
 //			Utils.warn("No default cursor found...");
 //		}
-		widgets = new PreviewWidgets();
-		widgets.setTheme("previewwidgets");
-		widgets.setPosition(10, 10);
-		getRootPane().setTheme("blah");
 //		ComboBox<String> cb = new ComboBox<String>();
 //		SimpleChangableListModel<String> model = new SimpleChangableListModel<String>();
 //        for(Field f : Color.class.getFields()) {
@@ -145,7 +142,18 @@ public class TestTexPaint extends GUITestBase {
 //        cb.setPosition(5, 5);
 //        cb.setTooltipContent("hello");
 //        widgets = cb;
-		getRootPane().add(widgets);
+		
+//		ResizableFrame f = new ResizableFrame();
+//		f.setTitle("This is a title...");
+//		
+//		PreviewWidgets previewWidgets = new PreviewWidgets();
+//        previewWidgets.setTheme("/previewwidgets");
+//        
+//        f.add(previewWidgets);
+//        widgets = f;
+		widgets = new ValueAdjusterFloat();
+		widgets.setPosition(50, 50);
+        getRootPane().add(widgets);
 	}
 	
 	protected void layoutRootPane() {

@@ -18,6 +18,8 @@ import slim.Color;
 import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
+import slim.texture.TextureLoader;
+import slim.texture.io.ImageDecoder;
 
 public class Utils {
 	public static final long DEFAULT_SEED = 1331106565117L;
@@ -75,6 +77,26 @@ public class Utils {
     public static void error(String msg, Throwable t) {
     	if (t!=null) getLogger().log(Level.SEVERE, msg, t);
     	else getLogger().log(Level.SEVERE, msg);
+    }
+    
+    public static ImageDecoder uploadImageData(Texture2D dst, URL imageData, int x, int y) throws IOException {
+    	ImageDecoder d = TextureLoader.get().createDecoder(imageData);
+        if (!d.open()) 
+            throw new IOException("could not open a decoder for "+imageData.getPath());
+        int width = d.getWidth();
+        int height = d.getHeight();
+        Texture2D.Format fmt = d.getFormat();
+        int perPixel = fmt.getBytesPerPixel();
+        ByteBuffer buf = null;
+        try {
+            buf = BufferUtils.createByteBuffer(width * height * perPixel);
+            d.decode(buf);
+        } finally {
+            d.close();
+        }
+        buf.flip();
+        dst.uploadSubImage(x, y, width, height, fmt, buf);
+        return d;
     }
     
 	public static Texture2D createTexture(BufferedImage image) {

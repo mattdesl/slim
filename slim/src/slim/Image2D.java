@@ -20,6 +20,7 @@ public class Image2D {
 	private float textureOffsetX, textureOffsetY, normalizedWidth = 1f, normalizedHeight = 1f;
 	private float width, height;
 	private float centerX, centerY;
+	private float xOff, yOff;
 	
 	private Texture2D texture;
 	
@@ -63,6 +64,10 @@ public class Image2D {
 			this.normalizedHeight = texture.getNormalizedHeight();
 			this.width = texture.getWidth();
 			this.height = texture.getHeight();
+			this.xOff = 0;
+			this.yOff = 0;
+			this.textureOffsetX = 0;
+			this.textureOffsetY = 0;
 			this.resetCenter();
 		}
 	}
@@ -118,6 +123,24 @@ public class Image2D {
 		return centerY;
 	}
 	
+	/**
+	 * Get the x offset (in pixels) from this image's parent texture, i.e. if 
+	 * created with getSubImage. 
+	 * @return the x offset in the sprite sheet
+	 */
+	public float getOffsetX() {
+		return xOff;
+	}
+	
+	/**
+	 * Get the y offset (in pixels) from this image's parent texture, i.e. if 
+	 * created with getSubImage. 
+	 * @return the y offset in the sprite sheet
+	 */
+	public float getOffsetY() {
+		return yOff;
+	}
+	
 	public void setCenter(float x, float y) {
 		this.centerX = x;
 		this.centerY = y;
@@ -145,6 +168,8 @@ public class Image2D {
 		img.texture = texture;
 		img.width = getWidth();
 		img.height = getHeight();
+		img.xOff = getOffsetX();
+		img.yOff = getOffsetY();
 		img.textureOffsetX = getNormalizedXOffset();
 		img.textureOffsetY = getNormalizedYOffset();
 		img.normalizedWidth = getNormalizedWidth();
@@ -191,6 +216,8 @@ public class Image2D {
 		img.height = height;
 		img.normalizedWidth = tw;
 		img.normalizedHeight = th;
+		img.xOff = x;
+		img.yOff = y;
 		img.resetCenter();
 		return img;
 	}
