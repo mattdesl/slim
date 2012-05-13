@@ -1,0 +1,74 @@
+package slim.test;
+
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_TRANSFORM_BIT;
+import static org.lwjgl.opengl.GL11.GL_VIEWPORT_BIT;
+import static org.lwjgl.opengl.GL11.glViewport;
+
+import java.net.URL;
+
+import org.lwjgl.opengl.GL11;
+
+import slim.Color;
+import slim.GL2D;
+import slim.Image2D;
+import slim.SlimException;
+import slim.SpriteBatchImage;
+import slim.g2d.FBO;
+import slim.shader.ShaderProgram;
+import slim.util.Utils;
+
+public class SpriteBatchTest extends GUITestBase {
+	public static void main(String[] args) throws SlimException {
+		new SpriteBatchTest().start();
+	}
+	
+	public URL getThemeURL() throws SlimException {
+		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+	}
+
+	private ShaderProgram prog1, prog2;
+	private Image2D image, image2;
+	private SpriteBatchImage batch, batch2;
+	FBO fbo;
+	
+	@Override
+	public void init() throws SlimException {
+		init2D();
+		GL2D.setBackground(Color.gray);
+		
+		
+		image = new Image2D("res/tilesheet.png");
+		fbo = new FBO(256, 256);
+		batch = new SpriteBatchImage();
+		
+		//GL11.glTranslatef(30, 0, 0);
+		fbo.bind();
+		batch.setColor(Color.white);
+		GL2D.fillRect(batch, 0, 0, 252, 252);
+		batch.drawImage(image);
+		GL2D.drawRect(batch, 5, 5, 25, 25);
+		batch.setColor(Color.red);
+		GL2D.fillRect(batch, 25, 25, 10, 10);
+		batch.flush();
+		fbo.unbind();
+		
+	}
+
+	@Override
+	public void render() throws SlimException {
+		
+		
+		batch.setColor(Color.white);
+		batch.drawImage(fbo.getImage());
+		
+		batch.drawImage(image, 400, 400);
+		batch.flush();
+	}
+	
+	
+	@Override
+	public void update(int delta) throws SlimException {
+		
+	}
+}

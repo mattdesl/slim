@@ -33,7 +33,7 @@ public class SpriteTest extends BasicGame {
         super("slick test");
     }
 	
-    SpriteBatch batch;
+    SpriteBatchImage batch;
     Image image;
 	boolean batching = true;
 	boolean renderInUse = true;
@@ -58,7 +58,7 @@ public class SpriteTest extends BasicGame {
 		c.getGraphics().setBackground(Color.white);
 		c.setClearEachFrame(false);
 		//19,200
-		batch = new SpriteBatch(batchSize, vbo ? SpriteBatch.STRATEGY_VBO : SpriteBatch.STRATEGY_DEFAULT);
+		batch = new SpriteBatchImage(batchSize, vbo ? SpriteBatchImage.STRATEGY_VBO : SpriteBatchImage.STRATEGY_DEFAULT);
 		image = new Image("res/small.png");
 		
 		// initilise balls
@@ -137,11 +137,11 @@ public class SpriteTest extends BasicGame {
         	case Input.KEY_O: 
         		vbo = !vbo;
         		batch.flush(); 
-        		batch = new SpriteBatch(batchSize, 
-    				vbo ? SpriteBatch.STRATEGY_VBO : SpriteBatch.STRATEGY_VBO);
+        		batch = new SpriteBatchImage(batchSize, 
+    				vbo ? SpriteBatchImage.STRATEGY_VBO : SpriteBatchImage.STRATEGY_VBO);
         		break;
-        	case Input.KEY_B: batch.flush(); batch = new SpriteBatch(batchSize, 
-        				vbo ? SpriteBatch.STRATEGY_VBO : SpriteBatch.STRATEGY_DEFAULT); 
+        	case Input.KEY_B: batch.flush(); batch = new SpriteBatchImage(batchSize, 
+        				vbo ? SpriteBatchImage.STRATEGY_VBO : SpriteBatchImage.STRATEGY_DEFAULT); 
         		break; //press B to update with new batch size 
         	case Input.KEY_V: vsync = !vsync;
         					  container.setVSync(vsync);break;

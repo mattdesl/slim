@@ -8,11 +8,11 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
 
 import slim.Color;
-import slim.FBO;
 import slim.GL2D;
 import slim.Image2D;
 import slim.SlimException;
-import slim.SpriteBatch;
+import slim.SpriteBatchImage;
+import slim.g2d.FBO;
 import slim.test.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
@@ -56,7 +56,7 @@ public class Main extends GUITestBase {
 	Image2D[] sprites;
 	
 	
-	SpriteBatch batch;
+	SpriteBatchImage batch;
 
 	float zoom = 1f, zoomFit = 1f, zoomFitTiles = 1f;
 	boolean panning = false, commandKeyDown = false;
@@ -101,7 +101,7 @@ public class Main extends GUITestBase {
 		init2D();
 		GL2D.setBackground(Color.lightGray);
 		
-		batch = new SpriteBatch();
+		batch = new SpriteBatchImage();
 		
 		checkeredBG = new Image2D("res/check.png", Texture.FILTER_NEAREST);
 		checkeredBG.getTexture().setWrap(Texture.WRAP_REPEAT);

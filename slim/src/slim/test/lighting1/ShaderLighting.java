@@ -7,11 +7,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
 import slim.Color;
-import slim.FBO;
 import slim.GL2D;
 import slim.Image2D;
 import slim.SlimException;
-import slim.SpriteBatch;
+import slim.SpriteBatchImage;
+import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
 
@@ -31,11 +31,11 @@ public class ShaderLighting {
 	public static final String TINT_UNIFORM = "tint";
 	
 	private ShaderProgram polar2rect, rect2polar, lightmapShader, hblur, vblur;
-	private SpriteBatch batch;
+	private SpriteBatchImage batch;
 	
 	private boolean blurring = false;
 	
-	public ShaderLighting(SpriteBatch batch, Image2D shadowCasters, int regionSize, int pixelBias) throws SlimException {
+	public ShaderLighting(SpriteBatchImage batch, Image2D shadowCasters, int regionSize, int pixelBias) throws SlimException {
 		this.batch = batch;
 		this.shadowCasters = shadowCasters;
 		this.regionSize = regionSize;
@@ -60,7 +60,7 @@ public class ShaderLighting {
 		vblur.setUniform1f(REGION_SIZE_UNIFORM, regionSize);
 	}
 	
-	public ShaderLighting(SpriteBatch batch, Image2D shadowCasters, int regionSize) throws SlimException {
+	public ShaderLighting(SpriteBatchImage batch, Image2D shadowCasters, int regionSize) throws SlimException {
 		this(batch, shadowCasters, regionSize, DEFAULT_PIXEL_BIAS);
 	}
 	

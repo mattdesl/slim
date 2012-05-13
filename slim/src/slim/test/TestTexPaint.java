@@ -56,7 +56,7 @@ import slim.texture.io.ImageDecoder;
 import slim.util.Utils;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.ValueAdjusterFloat;
+import de.matthiasmann.twl.ResizableFrame;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.Font;
 
@@ -143,16 +143,9 @@ public class TestTexPaint extends GUITestBase {
 //        cb.setTooltipContent("hello");
 //        widgets = cb;
 		
-//		ResizableFrame f = new ResizableFrame();
-//		f.setTitle("This is a title...");
-//		
-//		PreviewWidgets previewWidgets = new PreviewWidgets();
-//        previewWidgets.setTheme("/previewwidgets");
-//        
-//        f.add(previewWidgets);
-//        widgets = f;
-		widgets = new ValueAdjusterFloat();
-		widgets.setPosition(50, 50);
+		System.out.println(0x01);
+		
+        widgets = new TestFrame();
         getRootPane().add(widgets);
 	}
 	

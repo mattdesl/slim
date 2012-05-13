@@ -13,7 +13,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image2D;
 import slim.SlimException;
-import slim.SpriteBatch;
+import slim.SpriteBatchImage;
 import slim.shader.GeometryShaderProgram;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
@@ -41,7 +41,7 @@ public class GeomShaderTest extends GUITestBase {
 	float ballWidth, ballHeight;
 	boolean useGeom = true;
 	
-	SpriteBatch batch;
+	SpriteBatchImage batch;
 	
 	@Override
 	public void init() throws SlimException {
@@ -57,7 +57,7 @@ public class GeomShaderTest extends GUITestBase {
 		texcoords = BufferUtils.createFloatBuffer(maxVerts * 4);
 		colors = BufferUtils.createFloatBuffer(maxVerts * 4);
 		
-		batch = new SpriteBatch(maxVerts);
+		batch = new SpriteBatchImage(maxVerts);
 		
 		ShaderProgram.setStrictMode(false);
 		

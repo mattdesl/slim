@@ -1,4 +1,4 @@
-package slim;
+package slim.g2d;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
@@ -30,12 +30,17 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
 import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
+import slim.Image2D;
+import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
+
 /**
- * A very thin wrapper around OpenGL Frame Buffer Objects.
+ * A very thin wrapper around OpenGL Frame Buffer Objects, mostly intended for
+ * 2D purposes.  
  * @author davedes
  */
 public class FBO {
@@ -69,11 +74,13 @@ public class FBO {
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 							 	  texture.getTarget(), texture.getID(), 0);
 		int result = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER);
-		glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 		if (result!=GL_FRAMEBUFFER_COMPLETE) {
+			glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 			glDeleteFramebuffers(id);
 			throw new SlimException("exception "+result+" when checking FBO status");
 		}
+		
+		glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 	}
 	
 	/**
@@ -156,8 +163,7 @@ public class FBO {
 		if (id==0)
 			return;
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		//glReadBuffer(GL_BACK);
-		
+
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
@@ -166,7 +172,6 @@ public class FBO {
 			glPopAttrib();
 	}
 	
-		
 	/**
 	 * Destroys this FBO, but does not release the associated texture(s).
 	 */

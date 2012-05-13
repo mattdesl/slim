@@ -5,10 +5,10 @@ import java.net.URL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import slim.FBO;
 import slim.Image2D;
 import slim.SlimException;
-import slim.SpriteBatch;
+import slim.SpriteBatchImage;
+import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
 import slim.test.GUITestBase;
 import slim.texture.Texture;
@@ -25,7 +25,7 @@ public class LightingTest extends GUITestBase {
 	
 	Image2D img;
 	Texture2D imgTex;
-	SpriteBatch batch;
+	SpriteBatchImage batch;
 	ShaderProgram unwrapShader, lightMapShader, wrapShader, blurHShader, blurVShader;
 	
 	FBO subFBO, unwrapFBO, occlusionMapFBO, lightMapFBO, wrappedMapFBO, blurFBO;
@@ -64,7 +64,7 @@ public class LightingTest extends GUITestBase {
 		imgTex = img.getTexture();
 		imgTex.setFilter(Texture.FILTER_NEAREST);
 		
-		batch = new SpriteBatch();
+		batch = new SpriteBatchImage();
 		
 		
 		ShaderProgram.setStrictMode(false);

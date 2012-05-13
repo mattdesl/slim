@@ -1,5 +1,7 @@
 package slim.test;
 
+import static org.lwjgl.opengl.GL11.glViewport;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.openal.AL;
@@ -258,10 +260,12 @@ public abstract class TestBase {
 	}
 	
 	public void init2D() {
+		glViewport(0, 0, width, height);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glLoadIdentity();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 	
