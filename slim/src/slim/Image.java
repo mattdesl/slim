@@ -15,7 +15,7 @@ import slim.util.Utils;
  * 
  * @author davedes
  */
-public class Image2D {
+public class Image {
     
 	private float textureOffsetX, textureOffsetY, normalizedWidth = 1f, normalizedHeight = 1f;
 	private float width, height;
@@ -24,27 +24,27 @@ public class Image2D {
 	
 	private Texture2D texture;
 	
-	protected Image2D() { }
+	protected Image() { }
 	
 	/**
 	 * A convenience wrapper around Texture.loadTexture, useful for prototyping and rapid development. 
 	 */
-	public Image2D(String ref, int filter) throws SlimException {
+	public Image(String ref, int filter) throws SlimException {
 		this(Utils.getResource(ref), filter);
 	}
 	
-	public Image2D(String ref) throws SlimException {
+	public Image(String ref) throws SlimException {
 		this(ref, Texture.FILTER_LINEAR);
 	}
 
 	/**
 	 * A convenient way to create a standard RGBA texture from an image URL.
 	 */
-	public Image2D(URL url) throws SlimException {
+	public Image(URL url) throws SlimException {
 		this(url, Texture.FILTER_LINEAR);
 	}
 	
-	public Image2D(URL url, int filter) throws SlimException {
+	public Image(URL url, int filter) throws SlimException {
 		try {
 			this.texture = Texture2D.loadTexture(url, filter);
 		} catch (IOException e) {
@@ -53,7 +53,7 @@ public class Image2D {
 		init();
 	}
 	
-	public Image2D(Texture2D texture) {
+	public Image(Texture2D texture) {
 		this.texture = texture;
 		init();
 	}
@@ -163,8 +163,8 @@ public class Image2D {
 	 * Creates a shallow copy of this image (does not copy Texture / image data).
 	 * @return a copy of this image wrapper
 	 */
-	public Image2D copy() {
-		Image2D img = new Image2D();
+	public Image copy() {
+		Image img = new Image();
 		img.texture = texture;
 		img.width = getWidth();
 		img.height = getHeight();
@@ -178,20 +178,20 @@ public class Image2D {
 		return img;
 	}
 	
-	public Image2D getScaledCopy(float width, float height) {
-		Image2D img = copy();
+	public Image getScaledCopy(float width, float height) {
+		Image img = copy();
 		img.width = width;
 		img.height = height;
 		img.resetCenter();
 		return img;
 	}
 	
-	public Image2D getScaledCopy(float scale) {
+	public Image getScaledCopy(float scale) {
 		return getScaledCopy(scale*getWidth(), scale*getHeight());
 	}
 	
-	public Image2D getFlippedCopy(boolean horiz, boolean vert) {
-		Image2D img = copy();
+	public Image getFlippedCopy(boolean horiz, boolean vert) {
+		Image img = copy();
 		if (horiz) {
 			img.textureOffsetX = getNormalizedXOffset() + getNormalizedWidth();
 			img.normalizedWidth = -getNormalizedWidth();
@@ -203,13 +203,13 @@ public class Image2D {
 		return img;
 	}
 	
-	public Image2D getSubImage(float x, float y, float width, float height) {
+	public Image getSubImage(float x, float y, float width, float height) {
 		float tx = ( x / this.width * normalizedWidth ) + textureOffsetX;
 		float ty = ( y / this.height * normalizedHeight ) + textureOffsetY;
 		float tw = width / this.width * normalizedWidth;
 		float th = height / this.height * normalizedHeight;
 		
-		Image2D img = copy();
+		Image img = copy();
 		img.textureOffsetX = tx;
 		img.textureOffsetY = ty;
 		img.width = width;

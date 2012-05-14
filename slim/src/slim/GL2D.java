@@ -16,7 +16,7 @@ public class GL2D {
 
 	static Color sharedColor = new Color(Color.white);
 	
-	static Image2D pixel;
+	static Image pixel;
 	
 	public static void drawRect(SpriteBatchImage batch, float x, float y, float w, float h, float thickness) {
 		if (pixel==null)
@@ -45,7 +45,7 @@ public class GL2D {
 									  Texture.Format.RGBA, buf,
 									  Texture.FILTER_NEAREST,
 									  Texture.FILTER_NEAREST, false);
-		pixel = new Image2D(tex);
+		pixel = new Image(tex);
 	}
 	
 	/**

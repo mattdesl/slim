@@ -9,7 +9,7 @@ import org.lwjgl.Sys;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
@@ -51,9 +51,9 @@ public class Main extends GUITestBase {
 	int spriteHeight = 32; //height of CURRENT sprite
 	int texWidth = 512;
 	int texHeight = 512;
-	Image2D currentSprite;
+	Image currentSprite;
 	int currentSpriteIndex = 0;
-	Image2D[] sprites;
+	Image[] sprites;
 	
 	
 	SpriteBatchImage batch;
@@ -75,24 +75,24 @@ public class Main extends GUITestBase {
 	SpriteSheet sheet;
 	final int DEFAULT_FBO_SIZE = 256;
 	
-	Image2D checkeredBG;
+	Image checkeredBG;
 	
 	Color currentColor = Color.green.darker();
 	
-	Image2D drawImage;
+	Image drawImage;
 	Texture2D drawTexture;
 	ByteBuffer drawBuffer = BufferUtils.createByteBuffer(4);
 	boolean drawing = false;
 	
 	class SingleTileSheet implements SpriteSheet {
-		Image2D sheet;
+		Image sheet;
 		
-		public SingleTileSheet(Image2D sheet) {
+		public SingleTileSheet(Image sheet) {
 			this.sheet = sheet;
 		}
 		
-		public Image2D getSheet() { return sheet; }
-		public Image2D[] toArray() { return new Image2D[] { sheet }; }
+		public Image getSheet() { return sheet; }
+		public Image[] toArray() { return new Image[] { sheet }; }
 		public int size() { return 1; }
 	}
 	
@@ -103,7 +103,7 @@ public class Main extends GUITestBase {
 		
 		batch = new SpriteBatchImage();
 		
-		checkeredBG = new Image2D("res/check.png", Texture.FILTER_NEAREST);
+		checkeredBG = new Image("res/check.png", Texture.FILTER_NEAREST);
 		checkeredBG.getTexture().setWrap(Texture.WRAP_REPEAT);
 		
 		//currentSprite = new Image2D("res/grass.png", Texture.FILTER_NEAREST);
@@ -112,7 +112,7 @@ public class Main extends GUITestBase {
 		
 		try {
 			
-			Image2D img = new Image2D(new Texture2D(256, 256, Texture.FILTER_NEAREST));
+			Image img = new Image(new Texture2D(256, 256, Texture.FILTER_NEAREST));
 			//Image2D img = new Image2D("res/tilesheet.png", Texture.FILTER_NEAREST);
 			
 			
@@ -173,7 +173,7 @@ public class Main extends GUITestBase {
 			drawTexture.destroy();
 		drawTexture = new Texture2D(spriteWidth, spriteHeight, Texture.FILTER_NEAREST);
 		drawBuffer.clear();
-		drawImage = new Image2D(drawTexture);
+		drawImage = new Image(drawTexture);
 	}
 	
 	@Override
@@ -217,7 +217,7 @@ public class Main extends GUITestBase {
 			}
 			batch.setColor(Color.white);
 			
-			Image2D currentPreview = animating ? sprites[animTileIndex] : currentSprite;
+			Image currentPreview = animating ? sprites[animTileIndex] : currentSprite;
 			float pW = currentPreview.getWidth();
 			float pH = currentPreview.getHeight();
 			drawSprite(currentPreview, getWidth()-(pW*(thalf+1))-padding, pH*thalf+padding, 1f);
@@ -233,7 +233,7 @@ public class Main extends GUITestBase {
 	}
 	
 	//draws the sprite either tiled or single... depending on view
-	void drawSprite(Image2D image, float xOff, float yOff, float scale) {
+	void drawSprite(Image image, float xOff, float yOff, float scale) {
 		float sw = spriteWidth * scale;
 		float sh = spriteHeight * scale;
 		if (showTiling) {

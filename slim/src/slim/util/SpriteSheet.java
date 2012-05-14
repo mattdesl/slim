@@ -1,9 +1,9 @@
 package slim.util;
 
-import slim.Image2D;
+import slim.Image;
 
 public interface SpriteSheet {
-	public Image2D[] toArray(); //lists all sprites contained in this sheet
-	public Image2D getSheet();
+	public Image[] toArray(); //lists all sprites contained in this sheet
+	public Image getSheet();
 	public int size();
 }

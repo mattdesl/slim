@@ -7,7 +7,7 @@ import java.net.URL;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import slim.Image2D;
+import slim.Image;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 import de.matthiasmann.twl.utils.TextUtil;
@@ -66,7 +66,7 @@ public class XMLBitmapFont {
         }
     }
 
-    private final Image2D page;
+    private final Image page;
     private final Glyph[][] glyphs;
     private final int lineHeight;
     private final int baseLine;
@@ -78,7 +78,7 @@ public class XMLBitmapFont {
     	this(xmlp, baseUrl, null);
     }
     
-    public XMLBitmapFont(XMLParser xmlp, URL baseUrl, Image2D page) throws XmlPullParserException, IOException {
+    public XMLBitmapFont(XMLParser xmlp, URL baseUrl, Image page) throws XmlPullParserException, IOException {
         xmlp.require(XmlPullParser.START_TAG, null, "font");
         xmlp.nextTag();
         xmlp.require(XmlPullParser.START_TAG, null, "info");
@@ -110,7 +110,7 @@ public class XMLBitmapFont {
         
         if (page==null) { //if page is not specified, load from XML file
         	Texture2D pageTex = Texture2D.loadTexture(new URL(baseUrl, textureName), Texture.FILTER_NEAREST);
-        	page = new Image2D(pageTex);
+        	page = new Image(pageTex);
         }
         this.page = page;
         Texture2D texture = page.getTexture();
@@ -190,7 +190,7 @@ public class XMLBitmapFont {
     	return loadFont(url, null);
     }
 
-    public static XMLBitmapFont loadFont(URL url, Image2D pageImage) throws IOException {
+    public static XMLBitmapFont loadFont(URL url, Image pageImage) throws IOException {
         try {
             XMLParser xmlp = new XMLParser(url);
             try {
@@ -408,7 +408,7 @@ public class XMLBitmapFont {
         return width;
     }
     
-    public Image2D getImage() {
+    public Image getImage() {
     	return page;
     }
 }

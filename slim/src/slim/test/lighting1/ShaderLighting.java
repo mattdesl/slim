@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL14;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
@@ -17,7 +17,7 @@ import slim.texture.Texture;
 
 public class ShaderLighting {
 
-	Image2D shadowCasters;
+	Image shadowCasters;
 	List<Light> lights = new ArrayList<Light>();
 	
 	FBO targetA, occlusionMap, targetB;
@@ -35,7 +35,7 @@ public class ShaderLighting {
 	
 	private boolean blurring = false;
 	
-	public ShaderLighting(SpriteBatchImage batch, Image2D shadowCasters, int regionSize, int pixelBias) throws SlimException {
+	public ShaderLighting(SpriteBatchImage batch, Image shadowCasters, int regionSize, int pixelBias) throws SlimException {
 		this.batch = batch;
 		this.shadowCasters = shadowCasters;
 		this.regionSize = regionSize;
@@ -60,7 +60,7 @@ public class ShaderLighting {
 		vblur.setUniform1f(REGION_SIZE_UNIFORM, regionSize);
 	}
 	
-	public ShaderLighting(SpriteBatchImage batch, Image2D shadowCasters, int regionSize) throws SlimException {
+	public ShaderLighting(SpriteBatchImage batch, Image shadowCasters, int regionSize) throws SlimException {
 		this(batch, shadowCasters, regionSize, DEFAULT_PIXEL_BIAS);
 	}
 	
@@ -162,7 +162,7 @@ public class ShaderLighting {
 		l.updated();
 	}
 	
-	void drawOcclusionMap(FBO target, Image2D image) {
+	void drawOcclusionMap(FBO target, Image image) {
 		target.bind();
 		
 		//clear the background to white, our maximum value
@@ -190,14 +190,14 @@ public class ShaderLighting {
 	
 	
 	private void drawPass(FBO target, ShaderProgram shader,
-							Image2D image, float x, float y,
+							Image image, float x, float y,
 							Color clearColor, boolean transparent) {
 		drawPass(target, shader, image, x, y, image.getWidth(), 
 				image.getHeight(), clearColor, transparent);
 	}
 	
 	private void drawPass(FBO target, ShaderProgram shader,
-							Image2D image, float x, float y,
+							Image image, float x, float y,
 							float w, float h,
 							Color clearColor, boolean transparent) {
 		target.bind();

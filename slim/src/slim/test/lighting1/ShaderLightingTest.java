@@ -6,7 +6,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.easing.Easing;
@@ -23,8 +23,8 @@ public class ShaderLightingTest extends GUITestBase {
 		new ShaderLightingTest(800, 600, false).start();
 	}
 	
-	private Image2D shadowCasters; //default shadow casters
-	private Image2D boxTool; //a 'brush' tool to add boxes to the scene
+	private Image shadowCasters; //default shadow casters
+	private Image boxTool; //a 'brush' tool to add boxes to the scene
 	
 	private FBO screenFBO;
 	private SpriteBatchImage batch;
@@ -52,8 +52,8 @@ public class ShaderLightingTest extends GUITestBase {
 		
 		batch = new SpriteBatchImage();
 		
-		shadowCasters = new Image2D("res/casters.png");
-		boxTool = new Image2D("res/box1.png");
+		shadowCasters = new Image("res/casters.png");
+		boxTool = new Image("res/box1.png");
 		
 		screenFBO = new FBO(getWidth(), getHeight(), Texture.FILTER_NEAREST);
 		

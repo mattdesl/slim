@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 
 /**
@@ -25,10 +25,10 @@ import slim.SlimException;
  */
 public class SimpleSpriteSheet implements SpriteSheet {
 	
-	private HashMap<String, Image2D> sprites = new HashMap<String, Image2D>();
-	private Image2D sheet;
+	private HashMap<String, Image> sprites = new HashMap<String, Image>();
+	private Image sheet;
 	
-	public SimpleSpriteSheet(URL sheetDef, Image2D sheetImage) throws SlimException {
+	public SimpleSpriteSheet(URL sheetDef, Image sheetImage) throws SlimException {
 		this.sheet = sheetImage;
 		Properties p;
 		try {
@@ -39,7 +39,7 @@ public class SimpleSpriteSheet implements SpriteSheet {
 		} catch (IOException e) {
 			throw new SlimException("error loading sprite sheet "+e.getMessage(), e);
 		}
-		sprites = new HashMap<String, Image2D>();
+		sprites = new HashMap<String, Image>();
 		for (Map.Entry<Object, Object> e : p.entrySet()) {
 			String k = String.valueOf(e.getKey());
 			Object v = e.getValue();
@@ -48,7 +48,7 @@ public class SimpleSpriteSheet implements SpriteSheet {
 		}
 	}
 	
-	private Image2D toimg(String key, String[] s) throws SlimException {
+	private Image toimg(String key, String[] s) throws SlimException {
 		if (s==null || s.length<4)
 			throw new SlimException("invalid value for key "+key);
 		try { 
@@ -66,19 +66,19 @@ public class SimpleSpriteSheet implements SpriteSheet {
 		return sprites.size();
 	}
 
-	public Image2D getSprite(String key) {
+	public Image getSprite(String key) {
 		return sprites.get(key);
 	}
 	
-	public HashMap<String, Image2D> sprites() {
+	public HashMap<String, Image> sprites() {
 		return sprites;
 	}
 	
-	public Image2D getSheet() {
+	public Image getSheet() {
 		return sheet;
 	}
 	
-	public Image2D[] toArray() {
-		return sprites.values().toArray(new Image2D[size()]);
+	public Image[] toArray() {
+		return sprites.values().toArray(new Image[size()]);
 	}
 }

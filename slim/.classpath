@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl-2.8.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/twl"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/poly2tri"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

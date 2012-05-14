@@ -5,7 +5,7 @@ import java.net.URL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
@@ -23,19 +23,19 @@ public class LightingTest extends GUITestBase {
 		new LightingTest().start();
 	}
 	
-	Image2D img;
+	Image img;
 	Texture2D imgTex;
 	SpriteBatchImage batch;
 	ShaderProgram unwrapShader, lightMapShader, wrapShader, blurHShader, blurVShader;
 	
 	FBO subFBO, unwrapFBO, occlusionMapFBO, lightMapFBO, wrappedMapFBO, blurFBO;
 	
-	Image2D subImage, unwrapImage, occlusionMapImage, lightMapImage, wrappedMapImage, blurImage;
+	Image subImage, unwrapImage, occlusionMapImage, lightMapImage, wrappedMapImage, blurImage;
 	
 	private boolean useShader = false;
 	private float scale = 1f;
 	
-	private Image2D lightPoint;
+	private Image lightPoint;
 	private float lightX, lightY;
 	private final int RTSIZE = 256; 
 	private Font defaultFont;
@@ -58,9 +58,9 @@ public class LightingTest extends GUITestBase {
 		
 		GL11.glClearColor(0.2f, 0.2f, 0.2f, 1f);
 		
-		lightPoint = new Image2D("res/light.png");
+		lightPoint = new Image("res/light.png");
 		
-		img = new Image2D("res/fx.png");
+		img = new Image("res/fx.png");
 		imgTex = img.getTexture();
 		imgTex.setFilter(Texture.FILTER_NEAREST);
 		
@@ -72,28 +72,28 @@ public class LightingTest extends GUITestBase {
 
 		subFBO = new FBO(RTSIZE, RTSIZE);
 		subFBO.getTexture().setFilter(Texture.FILTER_NEAREST);
-		subImage = new Image2D(subFBO.getTexture());
+		subImage = new Image(subFBO.getTexture());
 		
 		unwrapFBO = new FBO(RTSIZE, RTSIZE);
 		unwrapFBO.getTexture().setFilter(Texture.FILTER_NEAREST);
-		unwrapImage = new Image2D(unwrapFBO.getTexture());
+		unwrapImage = new Image(unwrapFBO.getTexture());
 		
 		occlusionMapFBO = new FBO(RTSIZE, 1);
 		occlusionMapFBO.getTexture().setFilter(Texture.FILTER_NEAREST);
 		
-		occlusionMapImage = new Image2D(occlusionMapFBO.getTexture());
+		occlusionMapImage = new Image(occlusionMapFBO.getTexture());
 		
 		lightMapFBO = new FBO(RTSIZE, RTSIZE);
 		lightMapFBO.getTexture().setFilter(Texture.FILTER_LINEAR);
-		lightMapImage = new Image2D(lightMapFBO.getTexture());
+		lightMapImage = new Image(lightMapFBO.getTexture());
 		
 		wrappedMapFBO = new FBO(RTSIZE, RTSIZE);
 		wrappedMapFBO.getTexture().setFilter(Texture.FILTER_LINEAR);
-		wrappedMapImage = new Image2D(wrappedMapFBO.getTexture());
+		wrappedMapImage = new Image(wrappedMapFBO.getTexture());
 		
 		blurFBO = new FBO(RTSIZE, RTSIZE);
 		blurFBO.getTexture().setFilter(Texture.FILTER_LINEAR);
-		blurImage = new Image2D(blurFBO.getTexture());
+		blurImage = new Image(blurFBO.getTexture());
 		
 		//updateLights();
 	}

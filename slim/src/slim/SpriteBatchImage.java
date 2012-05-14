@@ -151,27 +151,27 @@ public class SpriteBatchImage {
 	    idx = 0;
 	}
 	
-	public void drawImageScaled(Image2D image, float x, float y, float scale) {
+	public void drawImageScaled(Image image, float x, float y, float scale) {
 		drawImage(image, x, y, image.getWidth()*scale, image.getHeight()*scale);
 	}
 	
-	public void drawImage(Image2D image) {
+	public void drawImage(Image image) {
 		drawImage(image, 0, 0);
 	}
 	
-	public void drawImage(Image2D image, float x, float y) {
+	public void drawImage(Image image, float x, float y) {
 		drawImage(image, x, y, image.getWidth(), image.getHeight());
 	}
 
-	public void drawImage(Image2D image, float x, float y, float w, float h) {
+	public void drawImage(Image image, float x, float y, float w, float h) {
 		drawImage(image, x, y, w, h, null);
 	}
 
-	public void drawImage(Image2D image, float x, float y, float rotation) {
+	public void drawImage(Image image, float x, float y, float rotation) {
 		drawImage(image, x, y, rotation, image.getWidth(), image.getHeight(), null);
 	}
 	
-	public void drawImage(Image2D image, float x, float y, float rotation, float w, float h, Color[] corners) {
+	public void drawImage(Image image, float x, float y, float rotation, float w, float h, Color[] corners) {
 		if (rotation==0) {
 			drawImage(image, x, y, w, h, corners);
 			return;
@@ -217,7 +217,7 @@ public class SpriteBatchImage {
 				 		x+x4, y+y4, tx, ty+th, corners!=null ? corners[3] : null);
 	}
 	
-	public void drawImage(Image2D image, float x, float y, float w, float h, Color[] corners) {
+	public void drawImage(Image image, float x, float y, float w, float h, Color[] corners) {
 		checkRender(image);
 		float tx = image.getNormalizedXOffset();
 		float ty = image.getNormalizedYOffset();
@@ -226,17 +226,17 @@ public class SpriteBatchImage {
 		drawImage(image, x, y, w, h, tx, ty, tw, th, corners);
 	}
 
-	public void drawSubImage(Image2D image, float srcx, float srcy,
+	public void drawSubImage(Image image, float srcx, float srcy,
 			float srcwidth, float srcheight, float x, float y) {
 		drawSubImage(image, srcx, srcy, srcwidth, srcheight, x, y, srcwidth, srcheight);
 	}
 	
-	public void drawSubImage(Image2D image, float srcx, float srcy,
+	public void drawSubImage(Image image, float srcx, float srcy,
 			float srcwidth, float srcheight, float x, float y, float w, float h) {
 		drawSubImage(image, srcx, srcy, srcwidth, srcheight, x, y, w, h, null);
 	}
 
-	public void drawSubImage(Image2D image, float srcx, float srcy,
+	public void drawSubImage(Image image, float srcx, float srcy,
 			float srcwidth, float srcheight, float x, float y, float w,
 			float h, Color[] corners) {
 		checkRender(image);
@@ -253,7 +253,7 @@ public class SpriteBatchImage {
 				corners != null ? corners[3] : null);
 	}
 	
-	public void drawImage(Image2D image, float x, float y, float width, float height, 
+	public void drawImage(Image image, float x, float y, float width, float height, 
 					float u, float v, float uWidth, float vHeight, Color[] corners) {
 		checkRender(image);
 		drawQuadElement(x, y, u, v, corners!=null ? corners[0] : null,
@@ -272,7 +272,7 @@ public class SpriteBatchImage {
 	 * @param offset
 	 * @param corners
 	 */
-	public void drawImage(Image2D image, float x, float y, float[] points, 
+	public void drawImage(Image image, float x, float y, float[] points, 
 			float[] texcoords, int offset, int texcoordsOffset, Color[] corners) {
 		checkRender(image);
 		float x1 = points[offset++];
@@ -298,7 +298,7 @@ public class SpriteBatchImage {
 				 		x+x4, y+y4, u4, v4, corners!=null ? corners[3] : null);
 	}
 	
-	private void checkRender(Image2D image) {
+	private void checkRender(Image image) {
 		if (image==null || image.getTexture()==null)
 			throw new NullPointerException("null texture");
 		

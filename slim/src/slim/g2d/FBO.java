@@ -33,7 +33,7 @@ import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
@@ -59,7 +59,7 @@ public class FBO {
 	
 	public static final int NO_BITS = 0;
 	
-	private Image2D image;
+	private Image image;
 	
 	public FBO(Texture2D texture) throws SlimException {
 		if (!isSupported()) {
@@ -101,9 +101,9 @@ public class FBO {
 	 * Lazily creates and returns the image instance for this FBO.
 	 * @return the Image2D used for this FBO's color buffer texture
 	 */
-	public Image2D getImage() {
+	public Image getImage() {
 		if (image==null)
-			image = new Image2D(getTexture());
+			image = new Image(getTexture());
 		return image;
 	}
 	

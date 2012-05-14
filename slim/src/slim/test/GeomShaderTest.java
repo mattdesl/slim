@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL20;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.shader.GeometryShaderProgram;
@@ -26,7 +26,7 @@ public class GeomShaderTest extends GUITestBase {
 		new GeomShaderTest().start();
 	}
 	
-	Image2D img;
+	Image img;
 	ShaderProgram prog;
 	
 	Texture texture;
@@ -48,7 +48,7 @@ public class GeomShaderTest extends GUITestBase {
 		init2D();
 		setTargetFPS(-1);
 		GL2D.setBackground(Color.gray);
-		img = new Image2D("res/small.png");
+		img = new Image("res/small.png");
 		ballWidth = img.getWidth();
 		ballHeight = img.getHeight();
 		//17500, 18300
@@ -169,7 +169,7 @@ public class GeomShaderTest extends GUITestBase {
 	    idx = 0;
 	}
 	
-	private void checkRender(Image2D image) {
+	private void checkRender(Image image) {
 		if (image==null || image.getTexture()==null)
 			throw new NullPointerException("null texture");
 		
@@ -184,7 +184,7 @@ public class GeomShaderTest extends GUITestBase {
 			flush();
 	}
 	
-	public void drawSprite(Image2D image, float x, float y, float w, float h, Color tint) {
+	public void drawSprite(Image image, float x, float y, float w, float h, Color tint) {
 		checkRender(image);
 		float u = image.getNormalizedXOffset();
 		float v = image.getNormalizedYOffset();

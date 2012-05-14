@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
@@ -28,7 +28,7 @@ public class SpriteBatchTest extends GUITestBase {
 	}
 
 	private ShaderProgram prog1, prog2;
-	private Image2D image, image2;
+	private Image image, image2;
 	private SpriteBatchImage batch, batch2;
 	FBO fbo;
 	
@@ -38,7 +38,7 @@ public class SpriteBatchTest extends GUITestBase {
 		GL2D.setBackground(Color.gray);
 		
 		
-		image = new Image2D("res/tilesheet.png");
+		image = new Image("res/tilesheet.png");
 		fbo = new FBO(256, 256);
 		batch = new SpriteBatchImage();
 		

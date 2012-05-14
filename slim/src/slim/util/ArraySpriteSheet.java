@@ -2,22 +2,22 @@ package slim.util;
 
 import java.util.ArrayList;
 
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 
 public class ArraySpriteSheet implements SpriteSheet {
-	private Image2D sheet;
-	private ArrayList<Image2D> sprites;
+	private Image sheet;
+	private ArrayList<Image> sprites;
 	
-	public ArraySpriteSheet(Image2D sheet, int tileWidth, int tileHeight) throws SlimException {
+	public ArraySpriteSheet(Image sheet, int tileWidth, int tileHeight) throws SlimException {
 		this(sheet, tileWidth, tileHeight, 0);
 	}
 	
-	public ArraySpriteSheet(Image2D sheet, int tileWidth, int tileHeight, int spacing) throws SlimException {
+	public ArraySpriteSheet(Image sheet, int tileWidth, int tileHeight, int spacing) throws SlimException {
 		this(sheet, tileWidth, tileHeight, spacing, -1);
 	}
 	
-	public ArraySpriteSheet(Image2D sheet, int tileWidth, int tileHeight, int spacing, int tileCount) throws SlimException {
+	public ArraySpriteSheet(Image sheet, int tileWidth, int tileHeight, int spacing, int tileCount) throws SlimException {
 		this.sheet = sheet;
 		
 		if (tileCount<0) {
@@ -27,7 +27,7 @@ public class ArraySpriteSheet implements SpriteSheet {
 				throw new IllegalArgumentException("invalid tile size relative to sheet size");
 			tileCount = xtiles * ytiles;
 		}
-		sprites = new ArrayList<Image2D>(tileCount);
+		sprites = new ArrayList<Image>(tileCount);
 		
 		
 		int x = 0;
@@ -48,27 +48,27 @@ public class ArraySpriteSheet implements SpriteSheet {
 		return sprites.size();
 	}
 	
-	public Image2D remove(int index) {
+	public Image remove(int index) {
 		return sprites.remove(index);
 	}
 	
-	public void add(int index, Image2D sprite) {
+	public void add(int index, Image sprite) {
 		sprites.add(index, sprite);
 	}
 	
-	public void add(Image2D sprite) {
+	public void add(Image sprite) {
 		sprites.add(sprite);
 	}
 	
-	public Image2D[] toArray() {
-		return sprites.toArray(new Image2D[size()]);
+	public Image[] toArray() {
+		return sprites.toArray(new Image[size()]);
 	}
 	
-	public Image2D getSprite(int index) {
+	public Image getSprite(int index) {
 		return sprites.get(index);
 	}
 	
-	public Image2D getSheet() {
+	public Image getSheet() {
 		return sheet;
 	}
 }

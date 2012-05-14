@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image2D;
+import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
@@ -24,7 +24,7 @@ public class TexTest extends GUITestBase {
 	}
 	public TexTest() { super(1024, 768, false); }
 	
-	private Image2D img;
+	private Image img;
 	private SpriteBatchImage batch;
 	private FBO targetA, targetB, occlusionMap;
 	private ShaderProgram polar2rect, lightmapShader, rect2polar, hblur, vblur;
@@ -62,7 +62,7 @@ public class TexTest extends GUITestBase {
 		init2D();
 		GL2D.setBackground(Color.gray);
 		batch = new SpriteBatchImage();
-		img = new Image2D("res/casters.png");
+		img = new Image("res/casters.png");
 		
 		targetA = new FBO(SIZE, SIZE);
 		targetB = new FBO(SIZE, SIZE);
@@ -163,7 +163,7 @@ public class TexTest extends GUITestBase {
 //		batch.setColor(Color.white);
 	}
 	
-	private void drawPass(FBO target, ShaderProgram shader, Image2D image,
+	private void drawPass(FBO target, ShaderProgram shader, Image image,
 			float x, float y, float w, float h, Color clearColor) {
 		target.bind();
 		if (clearColor!=null) {
