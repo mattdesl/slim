@@ -30,8 +30,14 @@ public class PolyTest extends GUITestBase {
 	
 	float minX, minY, maxX, maxY;
 	
+	private float scale = 1f;
+	
 	public class Point {
 		float x, y;
+		Point(float x, float y) {
+			this.x = x;
+			this.y = y;
+		}
 		public boolean equals(Object o) {
 			return o instanceof Point
 					&& ((Point)o).x == this.x
@@ -43,11 +49,51 @@ public class PolyTest extends GUITestBase {
 	public void init() throws SlimException {
 		init2D();
 		GL2D.setBackground(Color.gray);
-		img = new Image("res/grass.png");
+		img = new Image("res/grass.png", Texture.FILTER_NEAREST);
 		img.getTexture().setWrap(Texture.WRAP_REPEAT);
 		GL11.glPointSize(10);
+		
+		
+//		points.add(new Point(70, 50));
+		
+		//bezier
+		float steps = 50;
+		Point start = new Point(10, 10);
+		Point end = new Point(getWidth()/2f, getHeight()/2f);
+//		Point A = new Point(start.x, getHeight()-50);
+//		Point B = new Point(getWidth()/2f, 10);
+		
+		Point A = new Point(start.x+100, start.y-200);
+		Point B = new Point(end.x, end.y-250);
+		
+		for (int i=0; i<steps; i++) {
+			float x = bezier(start.x, A.x, B.x, end.x, i/steps);
+			float y = bezier(start.y, A.y, B.y, end.y, i/steps);
+			points.add(new Point(x, y));
+		}
+		
+//		points.add(new Point(200, 70));
+//		points.add(new Point(180, 160));
+		
+//		points.add(new Point(20, 250));
 	}
+	
 
+	float bezier(float A, // Start value
+			float B, // First control value
+			float C, // Second control value
+			float D, // Ending value
+			float t) // Parameter 0 <= t <= 1
+	{
+		float s = 1 - t;
+		float AB = A * s + B * t;
+		float BC = B * s + C * t;
+		float CD = C * s + D * t;
+		float ABC = AB * s + CD * t;
+		float BCD = BC * s + CD * t;
+		return ABC * s + BCD * t;
+	}
+	
 	public void minmax() {
 		List<DelaunayTriangle> l = triangulated.getTriangles();
 		minX = Float.MAX_VALUE; minY = Float.MAX_VALUE;
@@ -60,6 +106,14 @@ public class PolyTest extends GUITestBase {
 				minY = Math.min(minY, p[x].getYf());
 				maxY = Math.max(maxY, p[x].getYf());
 			}
+		}
+	}
+	
+	public void drawString(float x, float y, String str) {
+		if (theme!=null && theme.getDefaultFont()!=null) {
+			renderer.startRendering();
+			theme.getDefaultFont().drawText(null, (int)x, (int)y, str);
+			renderer.endRendering();
 		}
 	}
 	
@@ -77,14 +131,34 @@ public class PolyTest extends GUITestBase {
 				TriangulationPoint[] p = l.get(i).points;
 				for (int x=0; x<p.length; x++)  {
 					float xp = p[x].getXf(), yp = p[x].getYf();
+					float tx = (xp-minX) / (maxX-minX), ty = (yp-minY) / (maxY-minY);
+					
+					GL11.glTexCoord2d(tx * scale, ty * scale);
 					GL11.glVertex2f(xp, yp);
-
+					
+					
+					
 					//GL11.glTexCoord2d((xp-minX) / (maxX-minX), (yp-minY) / (maxY-minY));
 //					GL11.glTexCoord2d((xp-minX) / );
 				}
 			}
-			
 			GL11.glEnd();
+//			int c = 0;
+//			for (int i=0; i<l.size(); i++) {
+//				TriangulationPoint[] p = l.get(i).points;
+//				for (int x=0; x<p.length; x++)  {
+//					float xp = p[x].getXf(), yp = p[x].getYf();
+//					
+//					//
+////					GL11.glTexCoord2d((xp-minX) / );
+//					float tx = (xp-minX) / (maxX-minX), ty = (yp-minY) / (maxY-minY);
+//					drawString(xp, yp, tx+","+ty);
+//					c++;
+//				}
+//				
+//			}
+//			
+//			System.out.println("points "+c);
 			
 			Texture.disable();
 			Color.red.bind();
@@ -97,6 +171,10 @@ public class PolyTest extends GUITestBase {
 				}
 			}
 			GL11.glEnd();
+
+			Color.white.bind();
+			Texture.clearLastBind();
+			drawString(50, 50, "this is a test");
 			
 		} else {
 			Color.white.bind();
@@ -145,12 +223,16 @@ public class PolyTest extends GUITestBase {
 		try {
 			triangulated = new Polygon(pp);
 			Poly2Tri.triangulate(triangulated);
-			minmax();
+//			minmax();
+			minX = minY = 0;
+			maxX = maxY = 32;
 		} catch (Exception e) {
 			e.printStackTrace();
 			triangulated = null;
 		}
 	}
+	
+	
 	
 	public void handleEvent(Event e) {
 		if (e.isKeyPressedEvent()) {
@@ -159,6 +241,10 @@ public class PolyTest extends GUITestBase {
 					triangulated = null;
 				else if (points.size()>2)
 					poly2tri();
+			} else if (e.getKeyCode()==Event.KEY_1) {
+				scale -= 0.25f;
+			} else if (e.getKeyCode()==Event.KEY_2) {
+				scale += 0.25f;
 			}
 		} else if (e.isMouseEvent()) {
 			if (e.getType()==Event.Type.MOUSE_BTNDOWN) {
@@ -166,9 +252,7 @@ public class PolyTest extends GUITestBase {
 					points.clear();
 					triangulated = null;
 				} else {
-					Point point = new Point();
-					point.x = e.getMouseX();
-					point.y = e.getMouseY();
+					Point point = new Point(e.getMouseX(), e.getMouseY());
 					if (!points.contains(point)) {
 						points.add(point);
 						triangulated = null;
