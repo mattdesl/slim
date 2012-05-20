@@ -1,4 +1,4 @@
-package slim.test;
+package slim.test.bare;
 
 import java.net.URL;
 import java.nio.ByteBuffer;

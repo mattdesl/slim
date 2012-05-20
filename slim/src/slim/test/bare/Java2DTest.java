@@ -1,4 +1,4 @@
-package slim.test;
+package slim.test.bare;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;

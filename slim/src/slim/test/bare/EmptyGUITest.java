@@ -1,10 +1,13 @@
-package slim.test;
+package slim.test.bare;
+
+import java.net.URL;
 
 import slim.SlimException;
+import slim.util.Utils;
 
-public class EmptyTest extends TestBase {
+public class EmptyGUITest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
-		new EmptyTest().start();
+		new EmptyGUITest().start();
 	}
 
 	@Override
@@ -20,5 +23,10 @@ public class EmptyTest extends TestBase {
 	@Override
 	public void update(int delta) throws SlimException {
 		
+	}
+
+	@Override
+	public URL getThemeURL() throws SlimException {
+		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

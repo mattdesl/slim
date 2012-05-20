@@ -1,4 +1,4 @@
-package slim.test;
+package slim.test.bare;
 
 import java.io.IOException;
 import java.net.URL;

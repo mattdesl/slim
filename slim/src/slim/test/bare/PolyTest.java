@@ -1,15 +1,18 @@
-package slim.test;
+package slim.test.bare;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.poly2tri.Poly2Tri;
 import org.poly2tri.geometry.polygon.Polygon;
 import org.poly2tri.geometry.polygon.PolygonPoint;
 import org.poly2tri.triangulation.TriangulationPoint;
 import org.poly2tri.triangulation.delaunay.DelaunayTriangle;
+import org.poly2tri.triangulation.util.PolygonGenerator;
 
 import slim.Color;
 import slim.GL2D;
@@ -31,6 +34,9 @@ public class PolyTest extends GUITestBase {
 	float minX, minY, maxX, maxY;
 	
 	private float scale = 1f;
+
+	float zoomScale=4f, panX=0f, panY=0f;
+	float panX2, panY2;
 	
 	public class Point {
 		float x, y;
@@ -48,10 +54,11 @@ public class PolyTest extends GUITestBase {
 	@Override
 	public void init() throws SlimException {
 		init2D();
+		
 		GL2D.setBackground(Color.gray);
 		img = new Image("res/grass.png", Texture.FILTER_NEAREST);
 		img.getTexture().setWrap(Texture.WRAP_REPEAT);
-		GL11.glPointSize(10);
+		GL11.glPointSize(3);
 		
 		
 //		points.add(new Point(70, 50));
@@ -66,16 +73,19 @@ public class PolyTest extends GUITestBase {
 		Point A = new Point(start.x+100, start.y-200);
 		Point B = new Point(end.x, end.y-250);
 		
-		for (int i=0; i<steps; i++) {
-			float x = bezier(start.x, A.x, B.x, end.x, i/steps);
-			float y = bezier(start.y, A.y, B.y, end.y, i/steps);
-			points.add(new Point(x, y));
-		}
+//		for (int i=0; i<steps; i++) {
+//			float x = bezier(start.x, A.x, B.x, end.x, i/steps);
+//			float y = bezier(start.y, A.y, B.y, end.y, i/steps);
+//			points.add(new Point(x, y));
+//		}
 		
 //		points.add(new Point(200, 70));
 //		points.add(new Point(180, 160));
 		
 //		points.add(new Point(20, 250));
+		
+		triangulated = PolygonGenerator.RandomCircleSweep2(50, 20000);
+		Poly2Tri.triangulate(triangulated);
 	}
 	
 
@@ -119,9 +129,12 @@ public class PolyTest extends GUITestBase {
 	
 	@Override
 	public void render() throws SlimException {
+		GL11.glScalef(zoomScale, zoomScale, 1f);
+		GL11.glTranslatef(-panX, -panY, 0f);
+		
 		img.getTexture().bind();
 		
-		if (triangulated!=null) {
+		if (triangulated!=null && triangulated.getTriangles()!=null) {
 			List<DelaunayTriangle> l = triangulated.getTriangles();
 			Color.white.bind();
 			Texture.enable(img.getTexture().getTarget());
@@ -135,30 +148,9 @@ public class PolyTest extends GUITestBase {
 					
 					GL11.glTexCoord2d(tx * scale, ty * scale);
 					GL11.glVertex2f(xp, yp);
-					
-					
-					
-					//GL11.glTexCoord2d((xp-minX) / (maxX-minX), (yp-minY) / (maxY-minY));
-//					GL11.glTexCoord2d((xp-minX) / );
 				}
 			}
 			GL11.glEnd();
-//			int c = 0;
-//			for (int i=0; i<l.size(); i++) {
-//				TriangulationPoint[] p = l.get(i).points;
-//				for (int x=0; x<p.length; x++)  {
-//					float xp = p[x].getXf(), yp = p[x].getYf();
-//					
-//					//
-////					GL11.glTexCoord2d((xp-minX) / );
-//					float tx = (xp-minX) / (maxX-minX), ty = (yp-minY) / (maxY-minY);
-//					drawString(xp, yp, tx+","+ty);
-//					c++;
-//				}
-//				
-//			}
-//			
-//			System.out.println("points "+c);
 			
 			Texture.disable();
 			Color.red.bind();
@@ -171,11 +163,6 @@ public class PolyTest extends GUITestBase {
 				}
 			}
 			GL11.glEnd();
-
-			Color.white.bind();
-			Texture.clearLastBind();
-			drawString(50, 50, "this is a test");
-			
 		} else {
 			Color.white.bind();
 			GL11.glBegin(GL11.GL_POLYGON);
@@ -199,19 +186,26 @@ public class PolyTest extends GUITestBase {
 		for (Point point : points) {
 			GL11.glVertex2f(point.x, point.y);
 		}
-		if (triangulated!=null) {
-			Color.red.bind();
-			GL11.glVertex2f(minX, minY);
-			GL11.glVertex2f(maxX, maxY);
-		}
+//		if (triangulated!=null) {
+//			Color.red.bind();
+//			GL11.glVertex2f(minX, minY);
+//			GL11.glVertex2f(maxX, maxY);
+//		}
 		GL11.glEnd();
 	}
 	
-	
+	boolean active = false;
 	
 	@Override
 	public void update(int delta) throws SlimException {
-		
+		boolean disActive = Display.isActive();
+		if (active && !disActive) { //we are losing focus
+			System.out.println("Losing focus");
+			active = false;
+		} else if (!active && disActive) {
+			System.out.println("Gaining focus");
+			active = true;
+		}
 	}
 	
 	private void poly2tri() {
@@ -222,6 +216,7 @@ public class PolyTest extends GUITestBase {
 		}
 		try {
 			triangulated = new Polygon(pp);
+			
 			Poly2Tri.triangulate(triangulated);
 //			minmax();
 			minX = minY = 0;
@@ -252,12 +247,25 @@ public class PolyTest extends GUITestBase {
 					points.clear();
 					triangulated = null;
 				} else {
-					Point point = new Point(e.getMouseX(), e.getMouseY());
+					System.out.println(e.getMouseY()+" "+(Display.getHeight()-Mouse.getY()-1));
+					Point point = new Point(e.getMouseX()/zoomScale+panX, e.getMouseY()/zoomScale+panY);
 					if (!points.contains(point)) {
 						points.add(point);
 						triangulated = null;
 					} else
 						System.out.println("Skipping point");
+				}
+			} else if (e.getType()==Event.Type.MOUSE_WHEEL) {
+				if (Display.isActive()) {
+					float mx = e.getMouseX();
+					float my = e.getMouseY();
+	//				float zoom = e.getMouseWheelDelta()*.1f;
+	//				zoomScale += e.getMouseWheelDelta()*.1f;
+					
+					float scale = 1 + e.getMouseWheelDelta()*.01f;
+					panX = (mx / zoomScale + panX - mx/(zoomScale*scale));
+					panY = (my / zoomScale + panY - my/(zoomScale*scale));
+					zoomScale *= scale;
 				}
 			}
 		}

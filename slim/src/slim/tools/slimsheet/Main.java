@@ -13,7 +13,7 @@ import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatchImage;
 import slim.g2d.FBO;
-import slim.test.GUITestBase;
+import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 import slim.util.ArraySpriteSheet;

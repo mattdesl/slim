@@ -1,4 +1,4 @@
-package slim.test;
+package slim.test.bare;
 
 import static org.lwjgl.opengl.GL11.glViewport;
 

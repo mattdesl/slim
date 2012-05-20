@@ -13,7 +13,7 @@ import slim.easing.Easing;
 import slim.easing.SimpleFX;
 import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
-import slim.test.GUITestBase;
+import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
 import slim.util.Utils;
 import de.matthiasmann.twl.Event;

@@ -1,8 +1,12 @@
 package slim.texture;
 
 import java.nio.ByteBuffer;
+import static org.lwjgl.opengl.EXTTextureCompressionS3TC.*;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.ARBTextureCompression;
+import org.lwjgl.opengl.ARBTextureCompressionBPTC;
+import org.lwjgl.opengl.ARBTextureCompressionRGTC;
 import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.GL11;
@@ -38,8 +42,14 @@ public abstract class Texture {
     
     public static final Format DEFAULT_INTERNAL_FORMAT = Format.RGBA;
     
-    public static class Format {
-    	
+    
+    public static class Format  {
+        
+        public static final Format COMPRESSED_RGB_DXT1 = new Format("COMPRESSED_RGB_DXT1", GL_COMPRESSED_RGB_S3TC_DXT1_EXT, 3);
+        public static final Format COMPRESSED_RGBA_DXT1 = new Format("COMPRESSED_RGBA_DXT1", GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 4);
+        public static final Format COMPRESSED_RGBA_DXT3 = new Format("COMPRESSED_RGBA_DXT3", GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 4);
+        public static final Format COMPRESSED_RGBA_DXT5 = new Format("COMPRESSED_RGBA_DXT5", GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 4);
+        
         public static final Format RGBA = new Format("RGBA", GL11.GL_RGBA, 4);
         public static final Format RGB = new Format("RGB", GL11.GL_RGB, 3);
         

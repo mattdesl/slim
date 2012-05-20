@@ -44,35 +44,35 @@ public class Texture2DArray extends Texture {
 //	}
 	
 	
-	public static Texture2DArray fromTiles(URL url, int tileWidth, int tileHeight, int spacing, int tileCount,
-						Format internalFormat, int minFilter, int magFilter, boolean genMipmaps) throws IOException {
-		ImageDecoder d = TextureLoader.get().createDecoder(url);
-		if (!d.open()) 
-			throw new IOException("could not open a decoder for " + url.getPath());
-		int width = d.getWidth();
-		int height = d.getHeight();
-		Texture2D.Format fmt = d.getFormat();
-		int perPixel = fmt.getBytesPerPixel();
-		ByteBuffer buf = null;
-		try {
-			buf = BufferUtils.createByteBuffer(width * height * perPixel);
-			d.decode(buf);
-		} finally {
-			d.close();
-		}
-		buf.flip();
-
-		int tileBytes = tileWidth * tileHeight * perPixel;
-		ByteBuffer tile = BufferUtils.createByteBuffer(tileBytes);
-		Texture2DArray array = new Texture2DArray(tileWidth, tileHeight,
-				tileCount, internalFormat, minFilter, magFilter, genMipmaps);
-		int x = 0, y = 0;
-		for (int i=0; i<tileCount; i++) {
-			
-		}
-		
-		return array;
-	}
+//	public static Texture2DArray fromTiles(URL url, int tileWidth, int tileHeight, int spacing, int tileCount,
+//						Format internalFormat, int minFilter, int magFilter, boolean genMipmaps) throws IOException {
+//		ImageDecoder d = TextureLoader.get().createDecoder(url);
+//		if (!d.open()) 
+//			throw new IOException("could not open a decoder for " + url.getPath());
+//		int width = d.getWidth();
+//		int height = d.getHeight();
+//		Texture2D.Format fmt = d.getFormat();
+//		int perPixel = fmt.getBytesPerPixel();
+//		ByteBuffer buf = null;
+//		try {
+//			buf = BufferUtils.createByteBuffer(width * height * perPixel);
+//			d.decode(buf);
+//		} finally {
+//			d.close();
+//		}
+//		buf.flip();
+//
+//		int tileBytes = tileWidth * tileHeight * perPixel;
+//		ByteBuffer tile = BufferUtils.createByteBuffer(tileBytes);
+//		Texture2DArray array = new Texture2DArray(tileWidth, tileHeight,
+//				tileCount, internalFormat, minFilter, magFilter, genMipmaps);
+//		int x = 0, y = 0;
+//		for (int i=0; i<tileCount; i++) {
+//			
+//		}
+//		
+//		return array;
+//	}
 	
 	public Texture2DArray(int width, int height, int layers,
 			Format internalFormat, int minFilter, int magFilter, boolean genMipmaps) {

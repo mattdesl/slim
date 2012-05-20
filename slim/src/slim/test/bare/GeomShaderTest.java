@@ -1,5 +1,6 @@
-package slim.test;
+package slim.test.bare;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
@@ -7,7 +8,11 @@ import java.util.HashMap;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GLContext;
 
 import slim.Color;
 import slim.GL2D;
@@ -26,7 +31,7 @@ public class GeomShaderTest extends GUITestBase {
 		new GeomShaderTest().start();
 	}
 	
-	Image img;
+	Image img, img2;
 	ShaderProgram prog;
 	
 	Texture texture;
@@ -39,7 +44,7 @@ public class GeomShaderTest extends GUITestBase {
 	Ball[] balls = new Ball[100000];
 	static final int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
 	float ballWidth, ballHeight;
-	boolean useGeom = true;
+	boolean useGeom = true, compressed = true;
 	
 	SpriteBatchImage batch;
 	
@@ -48,7 +53,23 @@ public class GeomShaderTest extends GUITestBase {
 		init2D();
 		setTargetFPS(-1);
 		GL2D.setBackground(Color.gray);
-		img = new Image("res/small.png");
+		URL url = Utils.getResource("res/small.png");
+		
+		img = new Image(url);
+		
+		try {
+			img2 = new Image(Texture2D.loadTexture(url, Texture.Format.COMPRESSED_RGB_DXT1));
+			img2.getTexture().bind();
+			int i = GL11.glGetTexLevelParameteri(img2.getTexture().getTarget(), 0, GL13.GL_TEXTURE_COMPRESSED);
+			if (i==GL11.GL_TRUE)
+				System.out.println("TRUE");
+			else
+				System.out.println("FALSE");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ballWidth = img.getWidth();
 		ballHeight = img.getHeight();
 		//17500, 18300
@@ -111,6 +132,7 @@ public class GeomShaderTest extends GUITestBase {
 				case Event.KEY_0: numberOfBalls -= 100; break;
 				case 147: numberOfBalls -= 100; break;
 				case 13: numberOfBalls += 100; break;
+				case Event.KEY_C: compressed = !compressed; break;
 			}
 			// cap at max balls
 			if (numberOfBalls > balls.length) numberOfBalls = balls.length;
@@ -120,6 +142,7 @@ public class GeomShaderTest extends GUITestBase {
 	
 	@Override
 	public void render() throws SlimException {
+		Image img = compressed ? this.img2 : this.img;
 		for (int i = 0; i < numberOfBalls; i++) {
 			if (useGeom)
 				drawSprite(img, balls[i].x, balls[i].y, ballWidth, ballHeight, Color.white);
@@ -150,6 +173,7 @@ public class GeomShaderTest extends GUITestBase {
 		
 		GL20.glEnableVertexAttribArray(2);
 		GL20.glVertexAttribPointer(2, 4, false, 0, texcoords);
+//		GL13.gl
 		
 		GL20.glEnableVertexAttribArray(3);
 		GL20.glVertexAttribPointer(3, 4, false, 0, colors);
@@ -199,7 +223,7 @@ public class GeomShaderTest extends GUITestBase {
 	
 	@Override
 	public void update(int delta) throws SlimException {
-		Display.setTitle(numberOfBalls+" "+getFPS()+(useGeom?" (geom) ":""));
+		Display.setTitle(numberOfBalls+" "+getFPS()+(useGeom?" (geom)":"")+(compressed?" (compressed)":""));
 		// update ball movement
 		for (int i = 0; i < numberOfBalls; i++) {
 			balls[i].update(delta);
@@ -235,8 +259,8 @@ public class GeomShaderTest extends GUITestBase {
 				dx = -dx;
 			}
 			
-			if (x > SpriteTest.SCREEN_WIDTH - 42) {
-				x = SpriteTest.SCREEN_WIDTH - 42;
+			if (x > SCREEN_WIDTH - 42) {
+				x = SCREEN_WIDTH - 42;
 				dx = -dx;
 			}
 			
@@ -245,8 +269,8 @@ public class GeomShaderTest extends GUITestBase {
 				dy = -dy;
 			}
 			
-			if (y > SpriteTest.SCREEN_HEIGHT - 42) {
-				y = SpriteTest.SCREEN_HEIGHT - 42;
+			if (y > SCREEN_HEIGHT - 42) {
+				y = SCREEN_HEIGHT - 42;
 				dy = -dy;
 			}
 		}

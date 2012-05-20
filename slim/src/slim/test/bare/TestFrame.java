@@ -1,4 +1,4 @@
-package slim.test;
+package slim.test.bare;
 
 import de.matthiasmann.twl.ResizableFrame;
 

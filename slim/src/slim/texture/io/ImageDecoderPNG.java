@@ -56,6 +56,7 @@ public class ImageDecoderPNG extends ImageDecoder {
         decoder = new PNGDecoder(inputStream);
         width = decoder.getWidth();
         height = decoder.getHeight();
+        //best way I can see that returns the GL-capable format
         pngFormat = decoder.decideTextureFormat(PNGDecoder.Format.LUMINANCE_ALPHA);
         format = toTextureFormat(pngFormat);
         
