@@ -1,11 +1,14 @@
 package slim.texture.io;
 
+import static org.lwjgl.opengl.EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+import static org.lwjgl.opengl.EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+import static org.lwjgl.opengl.EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+import static org.lwjgl.opengl.EXTTextureCompressionS3TC.GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import static org.lwjgl.opengl.EXTTextureCompressionS3TC.*;
 
 import slim.util.Utils;
 
@@ -31,18 +34,37 @@ public class DDSDecoder {
 	private static final int DDPF_FOURCC_DXT5 = 0x35545844;
 	private static final int DDPF_FOURCC_DX10 = 0x30315844;
 	
-
+	public static enum Format {
+		RGB_DXT1(GL_COMPRESSED_RGB_S3TC_DXT1_EXT),
+		RGBA_DXT1(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT),
+		RGBA_DTX3(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT),
+		RGBA_DTX5(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT);
+		
+		int glFormat;
+		
+		Format(int glFormat) {
+			this.glFormat = glFormat;
+		}
+		
+		public int getGLFormat() {
+			return glFormat;
+		}
+	}
 	
 	InputStream input;
 	byte[] buffer;
 	int offset;
 	
     private static final int MAGIC_NUMBER = 0x20534444;
+    private static final int DXT1_BLOCKSIZE = 8;
+    private static final int DEFAULT_BLOCKSIZE = 16;
     
 	private Header header;
     private PixelFormat pixelFormat;
     boolean isCompressed;
     boolean isDX10;
+    int blockSize = DEFAULT_BLOCKSIZE;
+    int imageSize = 0;
     
     public static String toHex(String arg) {
         return String.format("%x", new BigInteger(arg.getBytes()));
@@ -72,8 +94,26 @@ public class DDSDecoder {
         readHeader();
     }
     
+    public int getWidth() {
+    	return header.width;
+    }
+    
+    public int getHeight() {
+    	return header.height;
+    }
+    
+    public int getDepth() {
+    	return header.depth;
+    }
+    
+    public int getBlockSize() {
+    	return blockSize;
+    }
+    
+    
+    
     private void readHeader() throws IOException {
-    	readFully(buffer, 0, 1024);
+    	readFully(buffer, 0, 128);
     	offset = 0;
         long magic = readInt();
         if (magic != MAGIC_NUMBER) 
@@ -101,7 +141,13 @@ public class DDSDecoder {
         
         readDX10Header();
         
-        if (isCompressed) {
+        readData();
+        
+        
+    }
+    
+    private void readData() throws IOException {
+    	if (isCompressed) {
 	        switch (pixelFormat.fourCC) {
 	        case DDPF_FOURCC_DXT1:
 	        	System.out.println("dxt1"); break;
@@ -115,6 +161,8 @@ public class DDSDecoder {
         } else {
         	throw new IOException("DDSDecoder currently only supports compressed data");
         }
+    	
+    	
     }
     
     private void readDX10Header() {
@@ -139,8 +187,12 @@ public class DDSDecoder {
             this.isCompressed = false;
         else if ((pixelFormat.flags & DDPF_FOURCC) == DDPF_FOURCC) {
             this.isCompressed = true;
+            if (pixelFormat.fourCC == DDPF_FOURCC_DXT1)
+            	this.blockSize = DXT1_BLOCKSIZE; 
             this.isDX10 = pixelFormat.fourCC == DDPF_FOURCC_DX10;
         }
+        
+        imageSize = Math.ceil(header.width/4) * Math.ceil(header.height/4) * blockSize;
     }
 //    
 //    public void decode(ByteBuffer buffer, int stride, Format fmt) throws IOException {
