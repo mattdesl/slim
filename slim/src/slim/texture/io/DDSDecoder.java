@@ -8,23 +8,23 @@ import static org.lwjgl.opengl.EXTTextureCompressionS3TC.GL_COMPRESSED_RGB_S3TC_
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
+import java.nio.ByteBuffer;
+
+import org.lwjgl.opengl.GL11;
 
 import slim.util.Utils;
 
 public class DDSDecoder {
 
-	public static void main(String[] args) throws Exception {
-		DDSDecoder d = new DDSDecoder(Utils.getResourceAsStream("res/texture4.dds"));
-	}
-	 
 	private static final int DDSCAPS2_CUBEMAP = 0x200;
+	private static final int DDSCAPS_MIPMAP = 0x400000;
+	private static final int DDSCAPS_COMPLEX = 0x8;
 	
 	private static final int DDPF_ALPHAPIXELS = 0x1;
 //	private static final int DDPF_ALPHA = 0x2;
 	private static final int DDPF_FOURCC = 0x4;
 	private static final int DDPF_RGB = 0x40;
-//	private static final int DDPF_LUMINANCE = 0x20000; //not yet supported
+	private static final int DDPF_LUMINANCE = 0x20000; //not yet supported
 //	private static final int DDPF_YUV = 0x200; //not yet supported	
 
 	private static final int DDPF_FOURCC_DXT1 = 0x31545844;
@@ -35,19 +35,30 @@ public class DDSDecoder {
 	private static final int DDPF_FOURCC_DX10 = 0x30315844;
 	
 	public static enum Format {
-		RGB_DXT1(GL_COMPRESSED_RGB_S3TC_DXT1_EXT),
-		RGBA_DXT1(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT),
-		RGBA_DTX3(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT),
-		RGBA_DTX5(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT);
+		RGB_DXT1(GL_COMPRESSED_RGB_S3TC_DXT1_EXT, 3),
+		RGBA_DXT1(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 4),
+		RGBA_DXT3(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 4),
+		RGBA_DXT5(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 4),
+		
+		LUMINANCE(GL11.GL_LUMINANCE, 1),
+		LUMINANCE_ALPHA(GL11.GL_LUMINANCE_ALPHA, 2),
+		ALPHA(GL11.GL_ALPHA, 1),
+		RGB(GL11.GL_RGB, 3);
 		
 		int glFormat;
+		int bpp;
 		
-		Format(int glFormat) {
+		Format(int glFormat, int bpp) {
 			this.glFormat = glFormat;
+			this.bpp = bpp;
 		}
 		
 		public int getGLFormat() {
 			return glFormat;
+		}
+		
+		public int getBytesPerPixel() {
+			return bpp;
 		}
 	}
 	
@@ -64,17 +75,17 @@ public class DDSDecoder {
     boolean isCompressed;
     boolean isDX10;
     int blockSize = DEFAULT_BLOCKSIZE;
-    int imageSize = 0;
-    
-    public static String toHex(String arg) {
-        return String.format("%x", new BigInteger(arg.getBytes()));
-    }
+    int bpp = 4;
+    boolean hasAlpha = false;
+    Format ddsFmt;
+    int imageSize;
     
     private class Header {
     	int width, height, depth;
 	    int flags;
 	    int linearSize;
 	    int mipMapCount;
+	    int caps;
 	    int caps2; 
     }
     
@@ -90,7 +101,7 @@ public class DDSDecoder {
     
     public DDSDecoder(InputStream input) throws IOException {
         this.input = input;
-        this.buffer = new byte[1024];
+        this.buffer = new byte[128];
         readHeader();
     }
     
@@ -106,10 +117,27 @@ public class DDSDecoder {
     	return header.depth;
     }
     
-    public int getBlockSize() {
-    	return blockSize;
+    public int getSize() {
+    	int s = (int)(Math.ceil(getWidth()/4f) * Math.ceil(getHeight()/4f) * blockSize); //size of main image
+    	System.out.println(s);
+    	return s;
     }
     
+    public int getMipMapCount() {
+    	return header.mipMapCount;
+    }
+    
+    public Format getFormat() {
+    	return ddsFmt;
+    }
+    
+    public void decode(ByteBuffer buffer) throws IOException {
+    	final int offset = buffer.position();
+    	System.out.println(getFormat().name());
+    	this.buffer = new byte[getSize()];
+    	readFully(this.buffer, 0, this.buffer.length);
+    	buffer.put(this.buffer);
+    }
     
     
     private void readHeader() throws IOException {
@@ -124,51 +152,30 @@ public class DDSDecoder {
         header = new Header();
         header.flags = readInt();
         header.height = readInt();
-        header.width = readInt();
-        int linearSize = readInt(); //ignore linear size from file
-        header.depth = readInt();
-        header.mipMapCount = readInt();
-        
-        System.out.println(header.width+" "+header.height+" "+header.depth+" "+header.mipMapCount);
+        header.width = Math.max(1, readInt());
+        header.linearSize = readInt(); //ignore linear size from file
+        header.depth = Math.max(1, readInt());
+        header.mipMapCount = Math.max(1, readInt());
         
         offset += 11 * 4; //skips reserved1
         
         readPixelFormat();
         
-        readInt(); //ignore caps from file
+        header.caps = readInt();
         header.caps2 = readInt();
         offset += 12; //skips caps3, caps4 and reserved2
         
-        readDX10Header();
+        //since caps is sometimes not written, we will only assume we have mipmaps
+        //if mipMapCount > 1
         
-        readData();
-        
-        
+        if (isCompressed && pixelFormat.fourCC == DDPF_FOURCC_DX10)
+        	readDX10Header();
     }
     
-    private void readData() throws IOException {
-    	if (isCompressed) {
-	        switch (pixelFormat.fourCC) {
-	        case DDPF_FOURCC_DXT1:
-	        	System.out.println("dxt1"); break;
-	        case DDPF_FOURCC_DXT3:
-	        	System.out.println("dxt3"); break;
-	        case DDPF_FOURCC_DXT5:
-	        	System.out.println("dxt5"); break;
-	        default:
-	        	throw new IOException("DDSDecoder only supports DXT1, 3, 5 and DX10");
-	        }
-        } else {
-        	throw new IOException("DDSDecoder currently only supports compressed data");
-        }
-    	
-    	
+    private void readDX10Header() throws IOException {
+    	throw new IOException("DDSDecoder doesn't support DX10 formats yet");
     }
     
-    private void readDX10Header() {
-    	
-    }
-
     private void readPixelFormat() throws IOException {
     	int size = readInt();
     	if (size != 32)
@@ -183,21 +190,38 @@ public class DDSDecoder {
     	pixelFormat.bBitMask = readInt();
     	pixelFormat.aBitMask = readInt();
     	
-        if ((pixelFormat.flags & DDPF_RGB) == DDPF_RGB)
+    	if ((pixelFormat.flags & DDPF_ALPHAPIXELS) == DDPF_ALPHAPIXELS)
+    		hasAlpha = true;
+    	
+    	if ((pixelFormat.flags & DDPF_LUMINANCE) == DDPF_LUMINANCE) {
+    		ddsFmt = hasAlpha ? Format.LUMINANCE_ALPHA : Format.LUMINANCE;
+    	}
+    		
+        if ((pixelFormat.flags & DDPF_RGB) == DDPF_RGB) {
             this.isCompressed = false;
-        else if ((pixelFormat.flags & DDPF_FOURCC) == DDPF_FOURCC) {
+        	ddsFmt = Format.RGB; 
+        } else if ((pixelFormat.flags & DDPF_FOURCC) == DDPF_FOURCC) {
             this.isCompressed = true;
             if (pixelFormat.fourCC == DDPF_FOURCC_DXT1)
             	this.blockSize = DXT1_BLOCKSIZE; 
             this.isDX10 = pixelFormat.fourCC == DDPF_FOURCC_DX10;
         }
         
-        imageSize = Math.ceil(header.width/4) * Math.ceil(header.height/4) * blockSize;
+        if (isCompressed) {
+	        switch (pixelFormat.fourCC) {
+	        case DDPF_FOURCC_DXT1:
+	        	ddsFmt = hasAlpha ? Format.RGBA_DXT1 : Format.RGB_DXT1; break;
+	        case DDPF_FOURCC_DXT3:
+	        	ddsFmt = Format.RGBA_DXT3; break;
+	        case DDPF_FOURCC_DXT5:
+	        	ddsFmt = Format.RGBA_DXT5; break;
+	        default:
+	        	throw new IOException("Invalid format. Supported formats:\nDXT1, DXT1A, DXT3, DXT5");
+	        }
+        } else {
+        	throw new IOException("Invalid format. Supported formats:\nDXT1, DXT1A, DXT3, DXT5");
+        }
     }
-//    
-//    public void decode(ByteBuffer buffer, int stride, Format fmt) throws IOException {
-//    	final int offset = buffer.position();
-//    }
     
     private void readFully(byte[] buffer, int offset, int length) throws IOException {
         do {

@@ -43,6 +43,7 @@ import slim.texture.Texture;
  * Async texture loader base class
  * 
  * @author Matthias Mann
+ * @author davedes (some modifications)
  */
 public abstract class ImageDecoder {
     
@@ -63,9 +64,17 @@ public abstract class ImageDecoder {
     public final int getHeight() {
         return height;
     }
+    
+    public int getSize() {
+    	return getFormat().getBytesPerPixel() * getWidth() * getHeight();
+    }
 
     public Texture.Format getFormat() {
         return format;
+    }
+    
+    public int getMipMapCount() {
+    	return 0;
     }
 
     public abstract boolean open() throws IOException;

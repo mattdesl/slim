@@ -3,6 +3,7 @@ package slim.texture;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -41,17 +42,21 @@ public class Texture2D extends Texture {
         int width = d.getWidth();
         int height = d.getHeight();
         Texture2D.Format fmt = d.getFormat();
-        int perPixel = fmt.getBytesPerPixel();
         ByteBuffer buf = null;
         try {
-            buf = BufferUtils.createByteBuffer(width * height * perPixel);
+            buf = BufferUtils.createByteBuffer(d.getSize());
             d.decode(buf);
         } finally {
             d.close();
         }
         buf.flip();
-        return new Texture2D(width, height, internalFormat, fmt, buf, 
+        if (fmt.isCompressed() && !internalFormat.equals(fmt)) {
+        	//if the format is compressed, internalFormat will be ignored
+        	internalFormat = fmt;
+        }
+        Texture2D tex = new Texture2D(width, height, internalFormat, fmt, buf, 
         					 minFilter, magFilter, genMipmaps);
+        return tex;
     }
 	
 	/**

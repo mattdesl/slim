@@ -39,42 +39,41 @@ import slim.texture.io.PNGDecoder.Format;
 
 /**
  *
- * @author Matthias Mann
+ * @author davedes
  */
-public class ImageDecoderPNG extends ImageDecoder {
+public class ImageDecoderDDS extends ImageDecoder {
     
-    private PNGDecoder decoder;
-    private PNGDecoder.Format pngFormat;
+    private DDSDecoder decoder;
     
-    public ImageDecoderPNG(URL url) {
+    public ImageDecoderDDS(URL url) {
         super(url);
     }
 
     @Override
     public boolean open() throws IOException {
         inputStream = url.openStream();
-        decoder = new PNGDecoder(inputStream);
+        decoder = new DDSDecoder(inputStream);
         width = decoder.getWidth();
         height = decoder.getHeight();
-        //best way I can see that returns the GL-capable format
-        pngFormat = decoder.decideTextureFormat(PNGDecoder.Format.LUMINANCE_ALPHA);
-        format = toTextureFormat(pngFormat);
-        
+        format = toTextureFormat(decoder.getFormat());
         return true;
     }
     
-    private Texture.Format toTextureFormat(PNGDecoder.Format fmt) {
+    private Texture.Format toTextureFormat(DDSDecoder.Format fmt) {
     	switch (fmt) {
         case LUMINANCE: return Texture.Format.LUMINANCE;
         case LUMINANCE_ALPHA: return Texture.Format.LUMINANCE_ALPHA;
         case RGB: return Texture.Format.RGB;
-        default:
-        case RGBA: return Texture.Format.RGBA;
+        case RGB_DXT1: return Texture.Format.COMPRESSED_RGB_DXT1;
+        case RGBA_DXT1: return Texture.Format.COMPRESSED_RGBA_DXT1;
+        case RGBA_DXT3: return Texture.Format.COMPRESSED_RGBA_DXT3;
+        case RGBA_DXT5: return Texture.Format.COMPRESSED_RGBA_DXT5;
+        default: throw new UnsupportedOperationException("texture format "+fmt+" not supported");
         }
     }
 
     @Override
     public void decode(ByteBuffer bb) throws IOException {
-        decoder.decode(bb, width*pngFormat.getNumComponents(), pngFormat);
+        decoder.decode(bb);
     }
 }

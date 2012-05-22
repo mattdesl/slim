@@ -2,11 +2,10 @@ package slim.texture;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import org.lwjgl.BufferUtils;
 
 import slim.texture.io.ImageDecoder;
 import slim.texture.io.ImageDecoderBMP;
+import slim.texture.io.ImageDecoderDDS;
 import slim.texture.io.ImageDecoderJPEG;
 import slim.texture.io.ImageDecoderPNG;
 import slim.texture.io.ImageDecoderTGA;
@@ -56,6 +55,8 @@ public class TextureLoader {
             return new ImageDecoderTGA(url);
         } else if (endsWithIgnoreCase(p, ".jpg") || endsWithIgnoreCase(p, ".jpeg")) {
             return new ImageDecoderJPEG(url);
+        } else if (endsWithIgnoreCase(p, ".dds")) {
+        	return new ImageDecoderDDS(url);
         } else if (endsWithIgnoreCase(p, ".bmp")) {
             return new ImageDecoderBMP(url);
         }

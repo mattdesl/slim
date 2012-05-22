@@ -17,6 +17,8 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL31;
 import org.lwjgl.opengl.GLContext;
 
+import slim.util.Utils;
+
 public abstract class Texture {
 	
 	public static final int TEXTURE_1D = GL11.GL_TEXTURE_1D;
@@ -45,10 +47,10 @@ public abstract class Texture {
     
     public static class Format  {
         
-        public static final Format COMPRESSED_RGB_DXT1 = new Format("COMPRESSED_RGB_DXT1", GL_COMPRESSED_RGB_S3TC_DXT1_EXT, 3);
-        public static final Format COMPRESSED_RGBA_DXT1 = new Format("COMPRESSED_RGBA_DXT1", GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 4);
-        public static final Format COMPRESSED_RGBA_DXT3 = new Format("COMPRESSED_RGBA_DXT3", GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 4);
-        public static final Format COMPRESSED_RGBA_DXT5 = new Format("COMPRESSED_RGBA_DXT5", GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 4);
+        public static final Format COMPRESSED_RGB_DXT1 = new Format("COMPRESSED_RGB_DXT1", GL_COMPRESSED_RGB_S3TC_DXT1_EXT, 3, true);
+        public static final Format COMPRESSED_RGBA_DXT1 = new Format("COMPRESSED_RGBA_DXT1", GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 4, true);
+        public static final Format COMPRESSED_RGBA_DXT3 = new Format("COMPRESSED_RGBA_DXT3", GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 4, true);
+        public static final Format COMPRESSED_RGBA_DXT5 = new Format("COMPRESSED_RGBA_DXT5", GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 4, true);
         
         public static final Format RGBA = new Format("RGBA", GL11.GL_RGBA, 4);
         public static final Format RGB = new Format("RGB", GL11.GL_RGB, 3);
@@ -67,6 +69,7 @@ public abstract class Texture {
         private int glFormat;
         private int bpp;
         private String debugName = "";
+        private boolean compressed;
         
         public Format(int glFormat, int bpp) {
             this.glFormat = glFormat;
@@ -74,9 +77,18 @@ public abstract class Texture {
         }
         
         public Format(String debugName, int glFormat, int bpp) {
+        	this(debugName, glFormat, bpp, false);
+        }
+        
+        public Format(String debugName, int glFormat, int bpp, boolean compressed) {
         	this.glFormat = glFormat;
         	this.bpp = bpp;
         	this.debugName = debugName;
+        	this.compressed = compressed;
+        }
+        
+        public boolean isCompressed() {
+        	return compressed;
         }
         
         public int getGLFormat() {
@@ -89,6 +101,10 @@ public abstract class Texture {
         
         public String toString() {
         	return debugName!=null&&debugName.length()!=0 ? debugName : super.toString();
+        }
+        
+        public boolean equals(Object o) {
+        	return o instanceof Format && ((Format)o).getGLFormat()==getGLFormat();
         }
     }
     
@@ -400,15 +416,24 @@ public abstract class Texture {
     	int df = dataFormat.getGLFormat();
 		switch (target) {
 			case TEXTURE_1D:
-				GL11.glTexSubImage1D(target, 0, x, width, df, DEFAULT_DATA_TYPE, data);
+				if (dataFormat.isCompressed())
+					GL13.glCompressedTexSubImage1D(target, 0, x, width, df, data);
+				else 
+					GL11.glTexSubImage1D(target, 0, x, width, df, DEFAULT_DATA_TYPE, data);
 				break;
 			case TEXTURE_2D:
 			case TEXTURE_1D_ARRAY:
-				GL11.glTexSubImage2D(target, 0, x, y, width, height, df, DEFAULT_DATA_TYPE, data);
+				if (dataFormat.isCompressed())
+					GL13.glCompressedTexSubImage2D(target, 0, x, y, width, height, df, data);
+				else
+					GL11.glTexSubImage2D(target, 0, x, y, width, height, df, DEFAULT_DATA_TYPE, data);
 				break;
 			case TEXTURE_3D:
 			case TEXTURE_2D_ARRAY:
-				GL12.glTexSubImage3D(target, 0, x, y, z, width, height, depth, df, DEFAULT_DATA_TYPE, data);
+				if (dataFormat.isCompressed())
+					GL13.glCompressedTexSubImage3D(target, 0, x, y, z, width, height, depth, df, data);
+				else
+					GL12.glTexSubImage3D(target, 0, x, y, z, width, height, depth, df, DEFAULT_DATA_TYPE, data);
 				break;
 		}
     }
@@ -421,12 +446,16 @@ public abstract class Texture {
     	this.height = texHeight = height;
     	this.depth = texDepth = depth;
     	this.internalFormat = internalFormat;
+		boolean compressed = dataFormat.isCompressed();
     	//if we are forcing POT or if POT is not supported...
         boolean usePOT = Texture.isForcePOT() || !Texture.isNPOTSupported();
         if (usePOT) {
+        	if (compressed) //TODO: add NPOT support for compressed textures
+        		throw new IllegalArgumentException("use POT sizes for compressed textures");
             texWidth = Texture.toPowerOfTwo(width);
             texHeight = Texture.toPowerOfTwo(height);
             texDepth = Texture.toPowerOfTwo(depth);
+            
         }
         normalizedWidth = texWidth!=0 ? width / (float)texWidth : 0;
         normalizedHeight = texHeight!=0 ? height / (float)texHeight : 0;
@@ -435,6 +464,11 @@ public abstract class Texture {
 		int f = internalFormat.getGLFormat(); // internal format GL type
 		int df = dataFormat.getGLFormat(); // data format GL type
 		
+		if (dataFormat.isCompressed() && !internalFormat.equals(dataFormat)) {
+			Utils.warn("internalFormat must match compressed dataFormat;" +
+					" format will be stored using dataFormat");
+		}
+		
 		boolean hasNewSize = width!=texWidth || height!=texHeight || depth!=texDepth;
 		
 		//if we're forcing POT or if the given data is null
@@ -442,19 +476,31 @@ public abstract class Texture {
 		ByteBuffer d = hasNewSize || data == null 
 				? BufferUtils.createByteBuffer(size) 
 				: data;
+		
 		switch (target) {
 			case TEXTURE_1D:
-				GL11.glTexImage1D(target, 0, f, texWidth, 0, df, DEFAULT_DATA_TYPE, d);
+				if (compressed)
+					GL13.glCompressedTexImage1D(target, 0, df, texWidth, 0, d);
+				else
+					GL11.glTexImage1D(target, 0, f, texWidth, 0, df, DEFAULT_DATA_TYPE, d);
 				break;
 			case TEXTURE_2D:
-				GL11.glTexImage2D(target, 0, f, texWidth, texHeight, 0, df, DEFAULT_DATA_TYPE, d);
+				if (compressed) 
+					GL13.glCompressedTexImage2D(target, 0, df, texWidth, texHeight, 0, d);
+				else
+					GL11.glTexImage2D(target, 0, f, texWidth, texHeight, 0, df, DEFAULT_DATA_TYPE, d);
 				break;
 			case TEXTURE_3D:
-				GL12.glTexImage3D(target, 0, f, texWidth, texHeight, texDepth, 0, df, DEFAULT_DATA_TYPE, d);
+				if (compressed)
+					GL13.glCompressedTexImage3D(target, 0, df, texWidth, texHeight, texDepth, 0, d);
+				else
+					GL12.glTexImage3D(target, 0, f, texWidth, texHeight, texDepth, 0, df, DEFAULT_DATA_TYPE, d);
 				break;
 		}
+		
 		if (data!=null && hasNewSize) 
 			glTexSubImage(target, 0, 0, 0, width, height, depth, dataFormat, data);
+		
     }
 	
 

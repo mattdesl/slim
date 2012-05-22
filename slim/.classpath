@@ -5,5 +5,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/twl"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl-2.8.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/poly2tri"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsquish"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/filedrop"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
