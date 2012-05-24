@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.easing.Easing;
 import slim.easing.SimpleFX;
 import slim.g2d.FBO;
@@ -27,7 +27,7 @@ public class ShaderLightingTest extends GUITestBase {
 	private Image boxTool; //a 'brush' tool to add boxes to the scene
 	
 	private FBO screenFBO;
-	private SpriteBatchImage batch;
+	private SpriteBatch batch;
 	
 	private int paintMode = 2; //1 - sprites, 2 - lights
 	
@@ -50,7 +50,7 @@ public class ShaderLightingTest extends GUITestBase {
 		
 		GL11.glClearColor(0.2f, 0.3f, 0.2f, 1f);
 		
-		batch = new SpriteBatchImage();
+		batch = new SpriteBatch();
 		
 		shadowCasters = new Image("res/casters.png");
 		boxTool = new Image("res/box1.png");

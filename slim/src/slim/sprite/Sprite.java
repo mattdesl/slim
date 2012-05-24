@@ -1,5 +1,5 @@
 package slim.sprite;
 
 public interface Sprite {
-	public void draw(SpriteBatch batch);
+	public void draw(SpriteBatchNew batch);
 }

@@ -7,6 +7,6 @@ package slim.sprite;
  * 
  * @author davedes
  */
-public class SpriteBatch {
+public class SpriteBatchNew {
 	
 }

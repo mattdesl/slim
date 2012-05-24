@@ -10,7 +10,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
@@ -31,11 +31,11 @@ public class ShaderLighting {
 	public static final String TINT_UNIFORM = "tint";
 	
 	private ShaderProgram polar2rect, rect2polar, lightmapShader, hblur, vblur;
-	private SpriteBatchImage batch;
+	private SpriteBatch batch;
 	
 	private boolean blurring = false;
 	
-	public ShaderLighting(SpriteBatchImage batch, Image shadowCasters, int regionSize, int pixelBias) throws SlimException {
+	public ShaderLighting(SpriteBatch batch, Image shadowCasters, int regionSize, int pixelBias) throws SlimException {
 		this.batch = batch;
 		this.shadowCasters = shadowCasters;
 		this.regionSize = regionSize;
@@ -60,7 +60,7 @@ public class ShaderLighting {
 		vblur.setUniform1f(REGION_SIZE_UNIFORM, regionSize);
 	}
 	
-	public ShaderLighting(SpriteBatchImage batch, Image shadowCasters, int regionSize) throws SlimException {
+	public ShaderLighting(SpriteBatch batch, Image shadowCasters, int regionSize) throws SlimException {
 		this(batch, shadowCasters, regionSize, DEFAULT_PIXEL_BIAS);
 	}
 	
@@ -145,18 +145,18 @@ public class ShaderLighting {
 		lightmapShader.bind();
 		lightmapShader.setUniform4f(TINT_UNIFORM, c);
 		drawPass(targetA, null, occlusionMap.getImage(), 
-				0, 0, regionSize, regionSize, c, true);
+				0, 0, regionSize, regionSize, c, false);
 		lightmapShader.unbind();
 		
 //		//Un-polarize
-		drawPass(targetB, rect2polar, targetA.getImage(), 0, 0, c, true);
+		drawPass(targetB, rect2polar, targetA.getImage(), 0, 0, c, false);
 //		
 //		//Blur the image horizontally
-		drawPass(targetA, hblur, targetB.getImage(), 0, 0, c, true);
+		drawPass(targetA, hblur, targetB.getImage(), 0, 0, c, false);
 //		
 		batch.setColor(c);
 //		//bake the light onto the Light's region
-		drawPass(l.fbo, vblur, targetA.getImage(), 0, 0, c, true);
+		drawPass(l.fbo, vblur, targetA.getImage(), 0, 0, c, false);
 		batch.setColor(Color.white);
 		
 		l.updated();

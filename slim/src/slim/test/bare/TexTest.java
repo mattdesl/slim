@@ -10,7 +10,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
@@ -25,7 +25,7 @@ public class TexTest extends GUITestBase {
 	public TexTest() { super(1024, 768, false); }
 	
 	private Image img;
-	private SpriteBatchImage batch;
+	private SpriteBatch batch;
 	private FBO targetA, targetB, occlusionMap;
 	private ShaderProgram polar2rect, lightmapShader, rect2polar, hblur, vblur;
 	
@@ -61,7 +61,7 @@ public class TexTest extends GUITestBase {
 	public void init() throws SlimException {
 		init2D();
 		GL2D.setBackground(Color.gray);
-		batch = new SpriteBatchImage();
+		batch = new SpriteBatch();
 		img = new Image("res/casters.png");
 		
 		targetA = new FBO(SIZE, SIZE);

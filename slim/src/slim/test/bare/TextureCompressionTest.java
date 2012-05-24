@@ -9,7 +9,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
@@ -21,7 +21,7 @@ public class TextureCompressionTest extends GUITestBase {
 	}
 	
 	Image oneImg;
-	SpriteBatchImage batch;
+	SpriteBatch batch;
 	
 	@Override
 	public void init() throws SlimException {
@@ -31,7 +31,7 @@ public class TextureCompressionTest extends GUITestBase {
 //		shdr.setUniform1i("tex0", 0);
 		
 		GL2D.setBackground(Color.gray);
-		batch = new SpriteBatchImage();
+		batch = new SpriteBatch();
 		URL url = Utils.getResource("res/texture2.dds");
 		Texture2D tex;
 		try {

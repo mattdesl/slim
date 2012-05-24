@@ -13,7 +13,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.shader.ShaderProgram;
 import slim.util.Utils;
@@ -29,7 +29,7 @@ public class SpriteBatchTest extends GUITestBase {
 
 	private ShaderProgram prog1, prog2;
 	private Image image, image2;
-	private SpriteBatchImage batch, batch2;
+	private SpriteBatch batch, batch2;
 	FBO fbo;
 	
 	@Override
@@ -40,7 +40,7 @@ public class SpriteBatchTest extends GUITestBase {
 		
 		image = new Image("res/tilesheet.png");
 		fbo = new FBO(256, 256);
-		batch = new SpriteBatchImage();
+		batch = new SpriteBatch();
 		
 		//GL11.glTranslatef(30, 0, 0);
 		fbo.bind();

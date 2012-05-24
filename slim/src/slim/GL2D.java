@@ -18,7 +18,7 @@ public class GL2D {
 	
 	static Image pixel;
 	
-	public static void drawRect(SpriteBatchImage batch, float x, float y, float w, float h, float thickness) {
+	public static void drawRect(SpriteBatch batch, float x, float y, float w, float h, float thickness) {
 		if (pixel==null)
 			createPixel();
 		batch.drawImage(pixel, x, y, w, thickness);
@@ -27,11 +27,11 @@ public class GL2D {
 		batch.drawImage(pixel, x, y+h-thickness, w, thickness);
 	}
 	
-	public static void drawRect(SpriteBatchImage batch, float x, float y, float w, float h) {
+	public static void drawRect(SpriteBatch batch, float x, float y, float w, float h) {
 		drawRect(batch, x, y, w, h, 1);
 	}
 	
-	public static void fillRect(SpriteBatchImage batch, float x, float y, float w, float h) {
+	public static void fillRect(SpriteBatch batch, float x, float y, float w, float h) {
 		if (pixel==null)
 			createPixel();
 		batch.drawImage(pixel, x, y, w, h);

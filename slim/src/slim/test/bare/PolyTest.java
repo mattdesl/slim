@@ -84,7 +84,7 @@ public class PolyTest extends GUITestBase {
 		
 //		points.add(new Point(20, 250));
 		
-		triangulated = PolygonGenerator.RandomCircleSweep2(50, 20000);
+		triangulated = PolygonGenerator.RandomCircleSweep2(50, 2000);
 		Poly2Tri.triangulate(triangulated);
 	}
 	

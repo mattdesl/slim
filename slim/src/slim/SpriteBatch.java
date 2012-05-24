@@ -13,7 +13,7 @@ import slim.util.FastTrig;
  * 
  * @author Matt DesLauriers (davedes)
  */
-public class SpriteBatchImage {
+public class SpriteBatch {
 
 	public static final int ALIGN_LEFT = 0;
 	public static final int ALIGN_CENTER = 1;
@@ -53,11 +53,11 @@ public class SpriteBatchImage {
 	
 	private float translateX, translateY;
 	
-	public SpriteBatchImage() {
+	public SpriteBatch() {
 		this(1000);
 	}
 	
-	public SpriteBatchImage(int size) {
+	public SpriteBatch(int size) {
 		if (size<=0)
 			throw new IllegalArgumentException("batch size must be larger than 0");
 		this.maxVerts = size;

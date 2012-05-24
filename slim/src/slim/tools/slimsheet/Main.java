@@ -11,7 +11,7 @@ import slim.Color;
 import slim.GL2D;
 import slim.Image;
 import slim.SlimException;
-import slim.SpriteBatchImage;
+import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
@@ -56,7 +56,7 @@ public class Main extends GUITestBase {
 	Image[] sprites;
 	
 	
-	SpriteBatchImage batch;
+	SpriteBatch batch;
 
 	float zoom = 1f, zoomFit = 1f, zoomFitTiles = 1f;
 	boolean panning = false, commandKeyDown = false;
@@ -101,7 +101,7 @@ public class Main extends GUITestBase {
 		init2D();
 		GL2D.setBackground(Color.lightGray);
 		
-		batch = new SpriteBatchImage();
+		batch = new SpriteBatch();
 		
 		checkeredBG = new Image("res/check.png", Texture.FILTER_NEAREST);
 		checkeredBG.getTexture().setWrap(Texture.WRAP_REPEAT);
