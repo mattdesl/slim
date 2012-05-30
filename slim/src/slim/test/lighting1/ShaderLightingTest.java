@@ -6,12 +6,12 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import slim.GL2D;
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
 import slim.easing.Easing;
 import slim.easing.SimpleFX;
 import slim.g2d.FBO;
+import slim.g2d.Image;
 import slim.shader.ShaderProgram;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;

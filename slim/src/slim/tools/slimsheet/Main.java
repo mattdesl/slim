@@ -9,10 +9,10 @@ import org.lwjgl.Sys;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
 import slim.g2d.FBO;
+import slim.g2d.Image;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;

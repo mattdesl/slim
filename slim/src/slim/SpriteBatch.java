@@ -5,6 +5,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
+import slim.g2d.Image;
 import slim.texture.Texture2D;
 import slim.util.FastTrig;
 

@@ -5,10 +5,10 @@ import java.net.URL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
 import slim.g2d.FBO;
+import slim.g2d.Image;
 import slim.shader.ShaderProgram;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;

@@ -2,8 +2,8 @@ package slim.util;
 
 import java.util.ArrayList;
 
-import slim.Image;
 import slim.SlimException;
+import slim.g2d.Image;
 
 public class ArraySpriteSheet implements SpriteSheet {
 	private Image sheet;

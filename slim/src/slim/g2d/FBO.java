@@ -33,7 +33,6 @@ import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-import slim.Image;
 import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;

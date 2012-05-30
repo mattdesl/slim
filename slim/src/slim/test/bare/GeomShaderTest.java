@@ -16,9 +16,9 @@ import org.lwjgl.opengl.GLContext;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
+import slim.g2d.Image;
 import slim.shader.GeometryShaderProgram;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;

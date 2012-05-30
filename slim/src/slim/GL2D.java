@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
+import slim.g2d.Image;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 

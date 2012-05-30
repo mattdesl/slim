@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import slim.Image;
 import slim.SlimException;
+import slim.g2d.Image;
 
 /**
  * A small SpriteSheet utility based on Properties files. Format:

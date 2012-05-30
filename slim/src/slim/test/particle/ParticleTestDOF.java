@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
+import slim.g2d.Image;
 import slim.test.bare.GUITestBase;
 import slim.util.Utils;
 

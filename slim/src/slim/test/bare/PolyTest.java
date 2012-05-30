@@ -16,8 +16,8 @@ import org.poly2tri.triangulation.util.PolygonGenerator;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image;
 import slim.SlimException;
+import slim.g2d.Image;
 import slim.texture.Texture;
 import slim.util.Utils;
 import de.matthiasmann.twl.Event;

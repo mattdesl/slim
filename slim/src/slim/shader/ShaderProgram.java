@@ -15,6 +15,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.vector.Matrix;
+import org.lwjgl.util.vector.Matrix3f;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 
 import slim.Color;
@@ -96,8 +99,10 @@ public class ShaderProgram {
 	/** The OpenGL handle for this program's fragment shader object. */
 	protected int frag;
 	
-	private FloatBuffer buf4;
+	private FloatBuffer fbuf16;
 	private IntBuffer ibuf4;
+	private Matrix4f m4;
+	private Matrix3f m3;
 
 	public static ShaderProgram load(String vertFile, String fragFile) throws SlimException {
 		return load(vertFile, fragFile, null);
@@ -193,7 +198,7 @@ public class ShaderProgram {
 			throw e;
 		}
 		if (log!=null && log.length()!=0)
-			Utils.warn("GLSL Info: "+log);
+			Utils.warn(log);
     }
     
     public ShaderProgram(String vertexShaderSource, String fragShaderSource) throws SlimException {
@@ -548,11 +553,11 @@ public class ShaderProgram {
 	}
 	
 	private FloatBuffer uniformf(String name) {
-		if (buf4==null)
-			buf4 = BufferUtils.createFloatBuffer(4);
-		buf4.clear();
-		getUniform(name, buf4);
-		return buf4;
+		if (fbuf16==null)
+			fbuf16 = BufferUtils.createFloatBuffer(16);
+		fbuf16.clear();
+		getUniform(name, fbuf16);
+		return fbuf16;
 	}
 	
 	private IntBuffer uniformi(String name) {
@@ -826,7 +831,7 @@ public class ShaderProgram {
 	 * @param transpose whether to transpose the matrix
 	 * @param buf the buffer representing the matrix2
 	 */
-	public void setMatrix2(String name, boolean transpose, FloatBuffer buf) {
+	public void setUniformMatrix2(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix2(id, transpose, buf);
@@ -838,7 +843,7 @@ public class ShaderProgram {
 	 * @param transpose whether to transpose the matrix
 	 * @param buf the buffer representing the matrix3
 	 */
-	public void setMatrix3(String name, boolean transpose, FloatBuffer buf) {
+	public void setUniformMatrix3(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix3(id, transpose, buf);
@@ -850,9 +855,35 @@ public class ShaderProgram {
 	 * @param transpose whether to transpose the matrix
 	 * @param buf the buffer representing the matrix4
 	 */
-	public void setMatrix4(String name, boolean transpose, FloatBuffer buf) {
+	public void setUniformMatrix4(String name, boolean transpose, FloatBuffer buf) {
 		int id = getUniformID(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix4(id, transpose, buf);
+	}
+//	
+//	public Matrix4f getUniformMatrix4(String name) {
+//		return new Matrix4f( m4.load( uniformf(name) ) );
+//	}
+	
+	public void setUniformMatrix3(String name, boolean transpose, Matrix3f m) {
+		int id = getUniformID(name);
+		if (id==-1) return;
+		if (fbuf16==null)
+			fbuf16 = BufferUtils.createFloatBuffer(16);
+		fbuf16.clear();
+		m.store(fbuf16);
+		fbuf16.flip();
+		GL20.glUniformMatrix3(id, transpose, fbuf16);
+	}
+	
+	public void setUniformMatrix4(String name, boolean transpose, Matrix4f m) {
+		int id = getUniformID(name);
+		if (id==-1) return;
+		if (fbuf16==null)
+			fbuf16 = BufferUtils.createFloatBuffer(16);
+		fbuf16.clear();
+		m.store(fbuf16);
+		fbuf16.flip();
+		GL20.glUniformMatrix4(id, transpose, fbuf16);
 	}
 }

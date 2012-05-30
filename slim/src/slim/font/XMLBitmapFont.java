@@ -7,7 +7,7 @@ import java.net.URL;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import slim.Image;
+import slim.g2d.Image;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 import de.matthiasmann.twl.utils.TextUtil;

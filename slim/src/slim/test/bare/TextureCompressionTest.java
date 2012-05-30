@@ -7,9 +7,9 @@ import org.lwjgl.opengl.Display;
 
 import slim.Color;
 import slim.GL2D;
-import slim.Image;
 import slim.SlimException;
 import slim.SpriteBatch;
+import slim.g2d.Image;
 import slim.shader.ShaderProgram;
 import slim.texture.Texture;
 import slim.texture.Texture2D;

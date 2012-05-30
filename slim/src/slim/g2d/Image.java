@@ -1,8 +1,9 @@
-package slim;
+package slim.g2d;
 
 import java.io.IOException;
 import java.net.URL;
 
+import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 import slim.util.Utils;
