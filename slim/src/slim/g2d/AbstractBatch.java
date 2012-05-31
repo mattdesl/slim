@@ -24,8 +24,7 @@ public abstract class AbstractBatch {
 	
 	protected int idx;
 	
-	protected AbstractBatch(int bufferSize) {
-		this.vertexData = BufferUtils.createFloatBuffer(bufferSize);
+	protected AbstractBatch() {
 		this.viewStack = new MatrixStack(32);
 		viewMatrix = viewStack.push(new Matrix4f());
 	}

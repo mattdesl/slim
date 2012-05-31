@@ -3,19 +3,20 @@ package slim.test.bare;
 import java.net.URL;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector4f;
 
 import slim.Color;
 import slim.GL2D;
 import slim.SlimException;
 import slim.shader.ShaderProgram;
+import slim.shader.VertexAttrib;
+import slim.shader.VertexAttribs;
 import slim.util.FastTrig;
 import slim.util.Utils;
 
@@ -46,6 +47,7 @@ public class BatchTest2 extends GUITestBase {
 	
 	@Override
 	public void init() throws SlimException {
+		System.out.println(GLContext.getCapabilities().GL_ARB_explicit_attrib_location);
 		//init2D();
 		
 		verts.put(VERTS_ARRAY);
@@ -53,16 +55,21 @@ public class BatchTest2 extends GUITestBase {
 		GL2D.setBackground(Color.gray);
 		GL11.glViewport(0, 0, 800, 600);
 		
-		HashMap<String, Integer> ids = new HashMap<String, Integer>();
-		ids.put("Position", 0);
-		ids.put("Color", 1);
-		ids.put("TexCoord0", 2);
+		//note that any 
+		VertexAttribs attr = new VertexAttribs(
+				VertexAttrib.DEFAULT_POSITION,
+				VertexAttrib.DEFAULT_COLOR,
+				VertexAttrib.DEFAULT_TEXCOORD0,
+				new VertexAttrib("MyAttrib2", 4),
+				new VertexAttrib("MyAttrib", 4));
 		
-		prog = ShaderProgram.load("res/shader/batch/sprite.vert", "res/shader/batch/sprite.frag", ids);
+		prog = ShaderProgram.load("res/shader/batch/sprite.vert", "res/shader/batch/sprite.frag", attr);
 		System.out.println(prog.getAttributeID("Color"));
 		prog.bind();
 		System.out.println(Arrays.toString(prog.getAttributes()));
-
+		
+		
+		
 		viewMatrix = new Matrix4f();
 		projMatrix = ortho2D(0, 0, 800, 600);
 
@@ -250,55 +257,4 @@ public class BatchTest2 extends GUITestBase {
 	public URL getThemeURL() throws SlimException {
 		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
-
-	class VertexAttrib {
-		int layout;
-		int numComponents; // e.g. RGBA -> 4
-		String name;
-
-		VertexAttrib(int layout, String name, int numComponents) {
-			this.layout = layout;
-			this.numComponents = numComponents;
-			this.name = name;
-		}
-	}
-
-	/**
-	 * All vertex data is interleaved. By default: x, y, u, v, r, g, b, a
-	 * 
-	 * Say you want layering in your system.
-	 * 
-	 * Attributes array = new Attributes( VertexAttrib("Position", 3),
-	 * VertexAttrib("Color", 1), //
-	 * 
-	 * ShaderProgram program = new ShaderProgram(
-	 * 
-	 */
-	class VertexData {
-
-		private VertexAttrib[] attribs;
-		private int totalComponents, vertCount;
-		private FloatBuffer buffer;
-
-		public VertexData(int vertCount) {
-			this(vertCount, new VertexAttrib(0, "Position", 3),
-					new VertexAttrib(1, "Color", 4), new VertexAttrib(2,
-							"TexCoord", 2));
-		}
-
-		public VertexData(int vertCount, VertexAttrib... attribs) {
-			this.vertCount = vertCount;
-			this.attribs = attribs;
-			for (VertexAttrib a : attribs) {
-				totalComponents += a.numComponents;
-			}
-			this.buffer = BufferUtils.createFloatBuffer(vertCount
-					* totalComponents);
-		}
-
-		public void bind() {
-
-		}
-	}
-
 }

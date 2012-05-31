@@ -88,8 +88,7 @@ public class ShaderProgram {
 	protected String log = "";
 	/** A map of uniforms by <name, int>. */
 	protected HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
-	/** A map of attributes by <name, int>. */
-	protected HashMap<String, Integer> attributes = new HashMap<String, Integer>();
+
 	/** The vertex shader source. */
 	protected String vertShaderSource;
 	/** The fragment shader source. */
@@ -98,6 +97,9 @@ public class ShaderProgram {
 	protected int vert;
 	/** The OpenGL handle for this program's fragment shader object. */
 	protected int frag;
+	/** A simple header defining the location and types of the vertex attributes. */
+	protected VertexAttribs attribs;
+	protected HashMap<String, Integer> attributes = new HashMap<String, Integer>();
 	
 	private FloatBuffer fbuf16;
 	private IntBuffer ibuf4;
@@ -117,7 +119,7 @@ public class ShaderProgram {
 	 * 				or linking the program, or if the resources couldn't be located
 	 */
 	public static ShaderProgram load(String vertFile, String fragFile,
-			HashMap<String, Integer> attribLocations) throws SlimException {
+			VertexAttribs attribs) throws SlimException {
 		String vSrc=null, fSrc=null;
 		//first check for I/O errors
 		try { 
@@ -129,7 +131,7 @@ public class ShaderProgram {
 		}
 		//now try compiling...
 		try {
-			return new ShaderProgram(vSrc, fSrc);
+			return new ShaderProgram(vSrc, fSrc, attribs);
 		} catch (SlimException e) {
 			// just for clearer debugging...
 			String res = null;
@@ -180,17 +182,17 @@ public class ShaderProgram {
      * @throws SlimException if there was an issue
      * @throws IllegalArgumentException if there was an issue
      */
-    public ShaderProgram(String vertexShaderSource, String fragShaderSource, HashMap<String, Integer> attribLocations) throws SlimException {
+    public ShaderProgram(String vertexShaderSource, String fragShaderSource, VertexAttribs attribs) throws SlimException {
     	if (vertexShaderSource==null || fragShaderSource==null) 
 			throw new IllegalArgumentException("shader source must be non-null");
     	if (!isSupported())
 			throw new SlimException("no shader support found; shaders require OpenGL 2.0");
+    	this.attribs = attribs;
     	this.vertShaderSource = vertexShaderSource;
     	this.fragShaderSource = fragShaderSource;
     	vert = compileShader(VERTEX_SHADER, vertexShaderSource);
     	frag = compileShader(FRAGMENT_SHADER, fragShaderSource);
 		program = createProgram();
-		bindAttributes(attribLocations);
 		try {
 			linkProgram();
 		} catch (SlimException e) {
@@ -225,14 +227,14 @@ public class ShaderProgram {
 		return program;
 	}
 	
-	protected void bindAttributes(HashMap<String, Integer> attribLocations) {
-		if (attribLocations==null)
-			return;
-		for (Entry<String, Integer> e : attribLocations.entrySet()) {
-			String n = e.getKey();
-			int v = e.getValue();
-			GL20.glBindAttribLocation(program, v, n);
-		}
+	/**
+	 * Called to bind attributes with user-specified locations before linking; 
+	 * if attribs is null, this method does nothing and attributes will be bound 
+	 * by default (i.e. either by OpenGL or by specifying in the shader with the 'layout' syntax).
+	 * @param attribs
+	 */
+	protected void bindAttributes() {
+		
 	}
 	
 	private String shaderTypeString(int type) {
@@ -290,10 +292,17 @@ public class ShaderProgram {
 			throw new SlimException("trying to link an invalid (i.e. released) program");
 		
 		uniforms.clear();
-		attributes.clear();
+		
+		//bind user-defined attributes
+		if (attribs!=null) {
+			for (int i=0; i<attribs.size(); i++) {
+				VertexAttrib a = attribs.get(i);
+				System.out.println("Trying to bind "+a.name+" to "+i);
+				GL20.glBindAttribLocation(program, i, a.name);
+			}
+		}
 		
 		attachShaders();
-
         GL20.glLinkProgram(program);
 		int comp = GL20.glGetProgram(program, GL20.GL_LINK_STATUS);
 		int len = GL20.glGetProgram(program, GL20.GL_INFO_LOG_LENGTH);
@@ -306,6 +315,29 @@ public class ShaderProgram {
         fetchUniforms();
 		fetchAttributes();
 	}
+	
+
+	private void fetchAttributes() {
+		int len = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTES);
+		//max length of all uniforms stored in program
+		int strLen = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH); 
+		for (int i=0; i<len; i++) {
+			String name = GL20.glGetActiveAttrib(program, i, strLen);
+			int id = GL20.glGetAttribLocation(program, name);
+			System.out.println("Attribute "+name+" = "+id);
+			attributes.put(name, id);
+		}
+	}
+	
+	public VertexAttribs getVertexAttribs() {
+		return attribs;
+	}
+	
+	public VertexAttrib getAttribute(int location) {
+		return attribs.get(location);
+	}
+	
+	
 	
 	/**
 	 * Returns the full log of compiling/linking errors, info, warnings, etc.
@@ -433,16 +465,6 @@ public class ShaderProgram {
 		}
 	}
 	
-	private void fetchAttributes() {
-		int len = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTES);
-		//max length of all uniforms stored in program
-		int strLen = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH); 
-		for (int i=0; i<len; i++) {
-			String name = GL20.glGetActiveAttrib(program, i, strLen);
-			int id = GL20.glGetAttribLocation(program, name);
-			attributes.put(name, id);
-		}
-	}
 
 	/**
 	 * Returns the ID of the given uniform.

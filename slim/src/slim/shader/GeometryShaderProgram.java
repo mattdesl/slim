@@ -22,7 +22,7 @@ public class GeometryShaderProgram extends ShaderProgram {
 	}
 	
 	public static GeometryShaderProgram loadProgram(String vertFile, String fragFile, String geomFile,
-												int geomIn, int geomOut, int verts, HashMap<String, Integer> attribLocations) throws SlimException {
+												int geomIn, int geomOut, int verts, VertexAttribs attribs) throws SlimException {
 		String vSrc=null, fSrc=null, gSrc=null;
 		try {
 			vSrc = readFile(Utils.getResourceAsStream(vertFile)); 
@@ -35,7 +35,7 @@ public class GeometryShaderProgram extends ShaderProgram {
 			throw new SlimException("error loading "+res, e);
 		}
 		try {
-			return new GeometryShaderProgram(vSrc, fSrc, gSrc, geomIn, geomOut, verts, attribLocations);
+			return new GeometryShaderProgram(vSrc, fSrc, gSrc, geomIn, geomOut, verts, attribs);
 		} catch (SlimException e) {
 			// just for clearer debugging...
 			String res = null;
@@ -56,7 +56,7 @@ public class GeometryShaderProgram extends ShaderProgram {
 	protected int geomIn, geomOut, verts;
 	
 	public GeometryShaderProgram(String vert, String frag, String geom, 
-					int geomIn, int geomOut, int verts, HashMap<String, Integer> attribLocations) throws SlimException {
+					int geomIn, int geomOut, int verts, VertexAttribs attribs) throws SlimException {
 		this.geomIn = geomIn;
 		this.geomOut = geomOut;
 		this.verts = verts;
@@ -69,7 +69,7 @@ public class GeometryShaderProgram extends ShaderProgram {
     	this.geom = compileShader(GEOMETRY_SHADER, geomShaderSource);
 		program = createProgram();
 		
-		bindAttributes(attribLocations);
+		bindAttributes(attribs);
 		
 		try { 
 			linkProgram(); 

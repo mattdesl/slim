@@ -4,18 +4,20 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 
 //in
-attribute vec3 Position;  //location=0
-attribute vec4 Color;     //location=1
-attribute vec2 TexCoord0; //location=2
+attribute vec3 Position;
+attribute vec4 Color;
+attribute vec2 TexCoord;
+attribute vec4 MyAttrib;
+attribute vec4 RealAttrib;
 
 //out
 varying vec3 vPosition;
 varying vec4 vColor;
-varying vec2 vTexCoord0; 
+varying vec2 vTexCoord; 
 
 void main() {
-	vPosition = Position;
-	vColor = Color;
-	vTexCoord0 = TexCoord0;
+	//vPosition = Position;
+	vColor = Color * RealAttrib;
+	vTexCoord = TexCoord;
 	gl_Position = projMatrix * viewMatrix * vec4(Position.xyz, 1);
 } 
