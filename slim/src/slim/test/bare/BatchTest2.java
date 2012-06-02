@@ -3,6 +3,7 @@ package slim.test.bare;
 import java.net.URL;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
+import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -16,7 +17,6 @@ import slim.GL2D;
 import slim.SlimException;
 import slim.shader.ShaderProgram;
 import slim.shader.VertexAttrib;
-import slim.shader.VertexAttribs;
 import slim.util.FastTrig;
 import slim.util.Utils;
 
@@ -47,33 +47,31 @@ public class BatchTest2 extends GUITestBase {
 	
 	@Override
 	public void init() throws SlimException {
-		System.out.println(GLContext.getCapabilities().GL_ARB_explicit_attrib_location);
 		//init2D();
 		
 		verts.put(VERTS_ARRAY);
 		
 		GL2D.setBackground(Color.gray);
 		GL11.glViewport(0, 0, 800, 600);
+		VertexAttrib a2;
 		
-		//note that any 
-		VertexAttribs attr = new VertexAttribs(
-				VertexAttrib.DEFAULT_POSITION,
-				VertexAttrib.DEFAULT_COLOR,
-				VertexAttrib.DEFAULT_TEXCOORD0,
-				new VertexAttrib("MyAttrib2", 4),
-				new VertexAttrib("MyAttrib", 4));
+		//we can bind a few by default like so:
+		List<VertexAttrib> a = Arrays.asList(
+				new VertexAttrib(0, "Position", 2),
+				new VertexAttrib(1, "Color", 4),
+				new VertexAttrib(2, "TexCoord", 2));
 		
-		prog = ShaderProgram.load("res/shader/batch/sprite.vert", "res/shader/batch/sprite.frag", attr);
-		System.out.println(prog.getAttributeID("Color"));
+		prog = ShaderProgram.load("res/shader/batch/sprite.vert", "res/shader/batch/sprite.frag", a);
+		
+		
 		prog.bind();
-		System.out.println(Arrays.toString(prog.getAttributes()));
-		
 		
 		
 		viewMatrix = new Matrix4f();
 		projMatrix = ortho2D(0, 0, 800, 600);
 
 		//scale(viewMatrix, 4f, 4f, 1f);
+		translate(viewMatrix, 345, 100, 0);
 		
 		//rotateZ(viewMatrix, 45f, 75, 75);
 //		rotate(viewMatrix, 1, 0, 0, 45f);
@@ -87,7 +85,6 @@ public class BatchTest2 extends GUITestBase {
 //		buf.clear();
 //		viewMatrix.store(buf);
 //		buf.flip();
-		prog.setUniformMatrix4("viewMatrix", true, viewMatrix);
 	}
 	
 	static void printMatrix(Matrix4f m) {
@@ -224,7 +221,7 @@ public class BatchTest2 extends GUITestBase {
 		GL20.glVertexAttribPointer(1, 4, false, stride, verts);
 
 		//texcoord
-		verts.position(8);
+		verts.position(7);
 		GL20.glVertexAttribPointer(2, 2, false, stride, verts);
 		
 	    GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);
@@ -233,15 +230,15 @@ public class BatchTest2 extends GUITestBase {
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
 		
-		Matrix4f m = new Matrix4f(viewMatrix);
-		translate(m, 150, 50, 0);
+//		Matrix4f m = new Matrix4f(viewMatrix);
+//		translate(m, 150, 50, 0);
 		
 		
-		GL20.glVertexAttrib4f(1, 0.5f, 1, 0.5f, 1);
-		GL11.glPointSize(10f);
-		GL11.glBegin(GL11.GL_POINTS);
-		GL20.glVertexAttrib3f(0, 10, 10, 0);
-		GL11.glEnd();
+//		GL20.glVertexAttrib4f(1, 0.5f, 1, 0.5f, 1);
+//		GL11.glPointSize(10f);
+//		GL11.glBegin(GL11.GL_POINTS);
+//		GL20.glVertexAttrib3f(0, 10, 10, 0);
+//		GL11.glEnd();
 	}
 	
 	void draw() {

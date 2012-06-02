@@ -1,5 +1,8 @@
 package slim;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Matrix4f;
 
 import slim.util.FastTrig;
@@ -15,16 +18,39 @@ public class MathUtil {
 		tmp.m00 = scaleX;
 		tmp.m11 = scaleY;
 		tmp.m22 = scaleZ;
+		tmp.transpose();
 		Matrix4f.mul(tmp, m, m);
+	}
+	
+	public static void printMatrix(Matrix4f m) {
+		FloatBuffer buf = BufferUtils.createFloatBuffer(16);
+		m.store(buf);
+		buf.flip();
+		for (int i=0;i<4; i++)
+			System.out.println(buf.get()+" "+buf.get()+" "+buf.get()+" "+buf.get());
 	}
 	
 	public static void translate(Matrix4f m, float x, float y, float z) {
 		if (m==null)
 			m = new Matrix4f();
-		tmp.setIdentity();
+//		tmp.setIdentity();
+		tmp.m00 = 1;
+		tmp.m01 = 0;
+		tmp.m02 = 0;
 		tmp.m03 = x;
+		tmp.m10 = 0;
+		tmp.m11 = 1;
+		tmp.m12 = 0;
 		tmp.m13 = y;
+		tmp.m20 = 0;
+		tmp.m21 = 0;
+		tmp.m22 = 1;
 		tmp.m23 = z;
+		tmp.m30 = 0;
+		tmp.m31 = 0;
+		tmp.m32 = 0;
+		tmp.m33 = 1;
+		tmp.transpose();
 		Matrix4f.mul(tmp, m, m);
 	}
 	

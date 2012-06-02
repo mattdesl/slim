@@ -3,11 +3,16 @@ package slim.g2d;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import slim.MathUtil;
 import slim.shader.ShaderProgram;
+import slim.shader.VertexAttrib;
+import slim.shader.VertexAttribs;
 
 public abstract class AbstractBatch {
 	
@@ -17,26 +22,87 @@ public abstract class AbstractBatch {
 	
 	private Matrix4f tmpM = new Matrix4f();
 	private Vector4f tmpV = new Vector4f();
+	private Vector3f tmpV3 = new Vector3f();
 	
 	private boolean transformEnabled = true;
 	
 	protected FloatBuffer vertexData;
 	
 	protected int idx;
+	public int renderCalls = 0;
+	
+	protected int geomType = GL11.GL_TRIANGLES;
+	
+	protected ShaderProgram program;
+	protected int totalNumComponents;
 	
 	protected AbstractBatch() {
 		this.viewStack = new MatrixStack(32);
 		viewMatrix = viewStack.push(new Matrix4f());
 	}
 	
-	public void flush() {
-		if (idx>0) 
-			render();
-		idx = 0;
-		vertexData.clear();
+	public ShaderProgram getShaderProgram() {
+		return program;
 	}
 	
-	protected abstract void render();
+	/**
+	 * Flushes this sprite batch and then binds the given program.
+	 * @param program the program to bind
+	 */
+	public void useShaderProgram(ShaderProgram program) {
+		//flush whatever we have so far...
+		flush();
+		
+		this.program = program;
+		this.program.bind();
+		totalNumComponents = 0;
+		for (int i=0; i<program.getAttributeCount(); i++) {
+			VertexAttrib a = program.getAttributeAt(i);
+			totalNumComponents += a.numComponents;
+		}
+	}
+	
+	protected int getTotalNumComponents() {
+		return totalNumComponents;
+	}
+	
+	protected void bindVertexData() {
+		int stride = totalNumComponents * 4;
+		int offset = 0;
+		for (int i=0; i<program.getAttributeCount(); i++) {
+			VertexAttrib a = program.getAttributeAt(i);
+			vertexData.position(offset);
+			GL20.glEnableVertexAttribArray(a.location);
+			GL20.glVertexAttribPointer(a.location, a.numComponents, false, stride, vertexData);
+			offset += a.numComponents;
+		}
+	}
+	
+	protected void unbindVertexData() {
+		for (int i=0; i<program.getAttributeCount(); i++) {
+			VertexAttrib a = program.getAttributeAt(i);
+			GL20.glDisableVertexAttribArray(a.location);
+		}
+	}
+	
+	protected void render() {
+		bindVertexData();
+	    GL11.glDrawArrays(geomType, 0, idx);
+		unbindVertexData();
+	}
+	
+	public void flush() {
+		if (vertexData==null)
+			return;
+		
+		if (idx>0) {
+			renderCalls++;
+			vertexData.flip();
+			render();
+		    idx = 0;
+		}
+		vertexData.clear();
+	}
 	
 	/**
 	 * Place a single float value in our array.
@@ -46,12 +112,29 @@ public abstract class AbstractBatch {
 		return vertexData.put(vert);
 	}
 	
-	/**
-	 * Once color, texture, position, etc. has been placed,
-	 * end the vertex.
-	 */
-	protected void endVertex() {
-		idx++;
+	public void scale(float x, float y) {
+		tmpV3.set(x, y);
+		viewMatrix.scale(tmpV3);
+	}
+	
+	public void translate(float x, float y) {
+		tmpV3.set(x, y);
+		viewMatrix.translate(tmpV3);
+	}
+	
+	public void rotate(float angle) {
+		if (angle==0)
+			return;
+		tmpV3.set(0, 0, 1);
+		viewMatrix.rotate(angle, tmpV3);
+	}
+	
+	public void rotate(float angle, float x, float y) {
+		if (angle==0)
+			return;
+		translate(x, y);
+		rotate(angle);
+		translate(-x, -y);
 	}
 	
 	public void pushTransform() {

@@ -6,16 +6,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL21;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.vector.Matrix;
 import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
@@ -88,7 +89,8 @@ public class ShaderProgram {
 	protected String log = "";
 	/** A map of uniforms by <name, int>. */
 	protected HashMap<String, Integer> uniforms = new HashMap<String, Integer>();
-
+	protected List<VertexAttrib> attributes;
+	
 	/** The vertex shader source. */
 	protected String vertShaderSource;
 	/** The fragment shader source. */
@@ -97,9 +99,6 @@ public class ShaderProgram {
 	protected int vert;
 	/** The OpenGL handle for this program's fragment shader object. */
 	protected int frag;
-	/** A simple header defining the location and types of the vertex attributes. */
-	protected VertexAttribs attribs;
-	protected HashMap<String, Integer> attributes = new HashMap<String, Integer>();
 	
 	private FloatBuffer fbuf16;
 	private IntBuffer ibuf4;
@@ -119,7 +118,7 @@ public class ShaderProgram {
 	 * 				or linking the program, or if the resources couldn't be located
 	 */
 	public static ShaderProgram load(String vertFile, String fragFile,
-			VertexAttribs attribs) throws SlimException {
+			List<VertexAttrib> attribLocations) throws SlimException {
 		String vSrc=null, fSrc=null;
 		//first check for I/O errors
 		try { 
@@ -131,7 +130,7 @@ public class ShaderProgram {
 		}
 		//now try compiling...
 		try {
-			return new ShaderProgram(vSrc, fSrc, attribs);
+			return new ShaderProgram(vSrc, fSrc, attribLocations);
 		} catch (SlimException e) {
 			// just for clearer debugging...
 			String res = null;
@@ -182,19 +181,18 @@ public class ShaderProgram {
      * @throws SlimException if there was an issue
      * @throws IllegalArgumentException if there was an issue
      */
-    public ShaderProgram(String vertexShaderSource, String fragShaderSource, VertexAttribs attribs) throws SlimException {
+    public ShaderProgram(String vertexShaderSource, String fragShaderSource, List<VertexAttrib> attribLocations) throws SlimException {
     	if (vertexShaderSource==null || fragShaderSource==null) 
 			throw new IllegalArgumentException("shader source must be non-null");
     	if (!isSupported())
 			throw new SlimException("no shader support found; shaders require OpenGL 2.0");
-    	this.attribs = attribs;
     	this.vertShaderSource = vertexShaderSource;
     	this.fragShaderSource = fragShaderSource;
     	vert = compileShader(VERTEX_SHADER, vertexShaderSource);
     	frag = compileShader(FRAGMENT_SHADER, fragShaderSource);
 		program = createProgram();
 		try {
-			linkProgram();
+			linkProgram(attribLocations);
 		} catch (SlimException e) {
 			release();
 			throw e;
@@ -227,16 +225,7 @@ public class ShaderProgram {
 		return program;
 	}
 	
-	/**
-	 * Called to bind attributes with user-specified locations before linking; 
-	 * if attribs is null, this method does nothing and attributes will be bound 
-	 * by default (i.e. either by OpenGL or by specifying in the shader with the 'layout' syntax).
-	 * @param attribs
-	 */
-	protected void bindAttributes() {
-		
-	}
-	
+	/** Used only for clearer debug messages. */
 	private String shaderTypeString(int type) {
 		if (type==FRAGMENT_SHADER) return "FRAGMENT_SHADER";
 		else if (type==VERTEX_SHADER) return "VERTEX_SHADER";
@@ -280,25 +269,27 @@ public class ShaderProgram {
 		GL20.glAttachShader(getID(), frag);
 	}
 	
+	
+	
 	/**
-	 * Calls attachShaders and links the program.
+	 * Tries to bind the given attributes by location, then calls attachShaders() and links the program.
 	 * 
+	 * @param attribs tries to bind the given attributes in their order of appearance
 	 * @throws SlimException
 	 *             if this program is invalid (released) or
 	 *             if the link was unsuccessful
 	 */
-	protected void linkProgram() throws SlimException {
+	protected void linkProgram(List<VertexAttrib> attribLocations) throws SlimException {
 		if (!valid())
 			throw new SlimException("trying to link an invalid (i.e. released) program");
 		
 		uniforms.clear();
 		
-		//bind user-defined attributes
-		if (attribs!=null) {
-			for (int i=0; i<attribs.size(); i++) {
-				VertexAttrib a = attribs.get(i);
-				System.out.println("Trying to bind "+a.name+" to "+i);
-				GL20.glBindAttribLocation(program, i, a.name);
+		//bind user-defined attribute locations
+		if (attribLocations!=null) {
+			for (VertexAttrib a : attribLocations) {
+				if (a!=null)
+					GL20.glBindAttribLocation(program, a.location, a.name);
 			}
 		}
 		
@@ -313,31 +304,76 @@ public class ShaderProgram {
 			throw new SlimException(log);
         
         fetchUniforms();
-		fetchAttributes();
+		fetchAttributes(attribLocations);
 	}
 	
-
-	private void fetchAttributes() {
+	private static VertexAttrib findAttrib(List<VertexAttrib> l, String name) {
+		for (int i=0; i<l.size(); i++) {
+			VertexAttrib a = l.get(i);
+			if (a!=null && a.name.equals(name))
+				return a;
+		}
+		return null;
+	}
+	
+	private void fetchAttributes(List<VertexAttrib> attribsHint) {
 		int len = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTES);
-		//max length of all uniforms stored in program
+		
+		this.attributes = new ArrayList<VertexAttrib>(len);
 		int strLen = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH); 
 		for (int i=0; i<len; i++) {
 			String name = GL20.glGetActiveAttrib(program, i, strLen);
-			int id = GL20.glGetAttribLocation(program, name);
-			System.out.println("Attribute "+name+" = "+id);
-			attributes.put(name, id);
+			int location = GL20.glGetAttribLocation(program, name);
+			int numComponents = attribNumComponents(name, i);
+			VertexAttrib instance = null;
+			VertexAttrib expected = attribsHint!=null 
+					? ShaderProgram.findAttrib(attribsHint, name) : null;
+			boolean useInstance = expected!=null; //name matches
+			if (expected!=null) {
+				//if glGetActiveAttribType failed, use numComponents from user-specified hints
+				if (numComponents==-1)
+					numComponents = expected.numComponents;
+				if (expected.location!=location) {
+					useInstance = false; //location mismatch, create new instance
+					Utils.warn("The location of VertexAttrib '"+name+"' ("+expected.location+") does not" +
+							" match the location specified in the shader ("+location+")");
+				}
+				if (numComponents!=expected.numComponents) {
+					useInstance = false; //numComponents mismatch, create new instance
+					Utils.warn("The numComponents of VertexAttrib '"+name+"' ("+expected.numComponents+") does not" +
+							" match the numComponents specified in the shader ("+numComponents+")");
+				}
+			}
+			instance = useInstance ? expected : new VertexAttrib(location, name, numComponents);
+			this.attributes.add(instance);
 		}
 	}
 	
-	public VertexAttribs getVertexAttribs() {
-		return attribs;
+	//only used for clearer debugging messages
+	private int attribNumComponents(String attribName, int attribIndex) {
+		int type = GL20.glGetActiveAttribType(program, attribIndex);
+		switch (type) {
+		case GL11.GL_FLOAT: return 1;
+		case GL20.GL_FLOAT_VEC2: return 2;
+		case GL20.GL_FLOAT_VEC3: return 3;
+		case GL20.GL_FLOAT_VEC4: return 4;
+		case GL20.GL_FLOAT_MAT2: return 4;
+		case GL20.GL_FLOAT_MAT3: return 9;
+		case GL20.GL_FLOAT_MAT4: return 16;
+		case GL21.GL_FLOAT_MAT2x3:
+		case GL21.GL_FLOAT_MAT3x2:
+			return 6;
+		case GL21.GL_FLOAT_MAT2x4: 
+		case GL21.GL_FLOAT_MAT4x2:
+			return 8;
+		case GL21.GL_FLOAT_MAT3x4:
+		case GL21.GL_FLOAT_MAT4x3:
+			return 12;
+		default: //couldn't figure it out
+			Utils.warn("unknown attribute type "+type+" for '"+attribName+"'");
+			return -1;
+		}
 	}
-	
-	public VertexAttrib getAttribute(int location) {
-		return attribs.get(location);
-	}
-	
-	
 	
 	/**
 	 * Returns the full log of compiling/linking errors, info, warnings, etc.
@@ -467,46 +503,82 @@ public class ShaderProgram {
 	
 
 	/**
-	 * Returns the ID of the given uniform.
+	 * Returns the location of the uniform by name. If the uniform
+	 * is not found and we are in strict mode, an IllegalArgumentException
+	 * will be thrown, otherwise -1 will be returned if no active uniform
+	 * by that name exists.
 	 * @param name the uniform name
 	 * @return the ID (location) in the shader program
 	 */
-	public int getUniformID(String name) {
+	public int getUniformLocation(String name) {
 		Integer locI = uniforms.get(name);
 		int location = locI==null ? -1 : locI.intValue();
 		if (location!=-1)
 			return location;
 		location = GL20.glGetUniformLocation(program, name);
 		if (location == -1 && strict)
-			throw new IllegalArgumentException("no active uniform by name '"+name+"' (disable strict compiling to suppress warnings)");
+			throw new IllegalArgumentException("no active uniform by name '"+name+"' " +
+					"(disable strict compiling to suppress warnings)");
 		uniforms.put(name, location); 
 		return location;
 	}
 
 	/**
-	 * Returns the ID of the given attribute.
+	 * Returns the location of the attribute by name. If the attribute
+	 * is not found and we are in strict mode, an IllegalArgumentException
+	 * will be thrown, otherwise -1 will be returned if no active attribute
+	 * by that name exists.
 	 * @param name the attribute name
 	 * @return the ID (location) in the shader program
 	 */
-	public int getAttributeID(String name) {
-		Integer locI = attributes.get(name);
-		int location = locI==null ? -1 : locI.intValue();
-		if (location!=-1)
-			return location;
-		location = GL20.glGetAttribLocation(program, name);
-		if (location == -1 && strict)
-			throw new IllegalArgumentException("no active attribute by name '"+name+"'");
-		attributes.put(name, location); 
-		return location;
+	public int getAttributeLocation(String name) {
+		VertexAttrib a = getAttribute(name);
+		int loc = a != null ? a.location : -1;
+		if (loc==-1 && strict)
+			throw new IllegalArgumentException("no active attribute by the name '"+name+"' " +
+					"(disable strict compiling to suppress warnings)");
+		return loc;
 	}
-
+	
+	public VertexAttrib getAttribute(String name) {
+		return ShaderProgram.findAttrib(attributes, name);
+	}
+	
 	/**
-	 * Returns the names of all active attributes that were found
-	 * when linking the program.
-	 * @return an array list of active attribute names
+	 * Returns the size of the list of active attributes.
+	 * @return the number of active attributes in this program
 	 */
-	public String[] getAttributes() {
-		return attributes.keySet().toArray(new String[attributes.size()]);
+	public int getAttributeCount() {
+		return attributes.size();
+	}
+	
+	/**
+	 * Returns the active attribute at the given INDEX in the
+	 * list of attributes (not the same as LOCATION).
+	 * @param index
+	 * @return
+	 */
+	public VertexAttrib getAttributeAt(int index) {
+		return attributes.get(index);
+	}
+	
+	
+	
+	/**
+	 * Returns an array of active attributes in this program; the user is
+	 * free to modify this array. For maximum performance, you should use
+	 * getAttributeCount() and getAttributeAt(int) for fast access.
+	 * @return an array representing the vertex attributes
+	 */
+	public VertexAttrib[] attributes() {
+		return attributes.toArray(new VertexAttrib[getAttributeCount()]);
+	}
+	
+	public String[] getAttributeNames() {
+		String[] s = new String[attributes.size()];
+		for (int i=0; i<s.length; i++)
+			s[i] = attributes.get(i).name;
+		return s;
 	}
 	
 	/**
@@ -517,44 +589,6 @@ public class ShaderProgram {
 	public String[] getUniformNames() {
 		return uniforms.keySet().toArray(new String[uniforms.size()]);
 	}
-	
-	/**
-	 * Enables the vertex array -- in strict mode, if the vertex attribute
-	 * is not found (or it's inactive), an IllegalArgumentException will
-	 * be thrown. If strict mode is disabled and the vertex attribute 
-	 * is not found, this method will return <tt>false</tt> otherwise it
-	 * will return <tt>true</tt>.
-	 * 
-	 * @param name the name of the vertex attribute to enable
-	 * @return false if strict mode is disabled and this attribute couldn't be found
-	 */
-	public boolean enableVertexAttribute(String name) {
-		int id = getAttributeID(name);
-		if (id==-1) return false;
-		GL20.glEnableVertexAttribArray(id);
-		return true;
-	}
-	
-	/**
-	 * Disables the vertex array -- in strict mode, if the vertex attribute
-	 * is not found (or it's inactive), an IllegalArgumentException will
-	 * be thrown. If strict mode is disabled and the vertex attribute 
-	 * is not found, this method will return <tt>false</tt> otherwise it
-	 * will return <tt>true</tt>.
-	 * 
-	 * @param name the name of the vertex attribute to disable
-	 * @return false if strict mode is disabled and this attribute couldn't be found
-	 */
-	public boolean disableVertexAttribute(String name) {
-		int id = getAttributeID(name);
-		if (id==-1) return false;
-		GL20.glDisableVertexAttribArray(id);
-		return true;
-	}
-	
-//	public void setVertexAttribute(String name, int size, int type, boolean normalize, int stride, FloatBuffer buffer) {
-//		ARBVertexShader.glVertexAttrib
-//	}
 	
 	/**
 	 * Sets the value of an RGBA vec4 uniform to the given color
@@ -699,7 +733,7 @@ public class ShaderProgram {
 	 * @return true if the uniform was found, false if there is no active uniform by that name
 	 */
 	public boolean getUniform(String name, FloatBuffer buf) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return false;
 		GL20.glGetUniform(program, id, buf);
 		return true;
@@ -717,7 +751,7 @@ public class ShaderProgram {
 	 * @return true if the uniform was found, false if there is no active uniform by that name
 	 */
 	public boolean getUniform(String name, IntBuffer buf) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return false;
 		GL20.glGetUniform(program, id, buf);
 		return true;
@@ -734,7 +768,7 @@ public class ShaderProgram {
 	public boolean hasUniform(String name) {
 		return uniforms.containsKey(name);
 	}
-	
+
 	/**
 	 * Whether the shader program was linked with the active attribute by the given name. A
 	 * attribute might be "inactive" even if it was declared at the top of a shader;
@@ -744,7 +778,7 @@ public class ShaderProgram {
 	 * @return true if this shader program could find the active attribute
 	 */
 	public boolean hasAttribute(String name) {
-		return attributes.containsKey(name);
+		return attributes.indexOf(name) != -1;
 	}
 
 	/**
@@ -753,7 +787,7 @@ public class ShaderProgram {
 	 * @param f the float value
 	 */
 	public void setUniform1f(String name, float f) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform1f(id, f);
 	}
@@ -764,7 +798,7 @@ public class ShaderProgram {
 	 * @param i the integer / active texture (e.g. 0 for TEXTURE0)
 	 */
 	public void setUniform1i(String name, int i) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform1i(id, i);
 	}
@@ -776,7 +810,7 @@ public class ShaderProgram {
 	 * @param b vec.y / tex.t
 	 */
 	public void setUniform2f(String name, float a, float b) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform2f(id, a, b);
 	}
@@ -789,7 +823,7 @@ public class ShaderProgram {
 	 * @param c vec.z / color.b / tex.p
 	 */
 	public void setUniform3f(String name, float a, float b, float c) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform3f(id, a, b, c);
 	}
@@ -803,7 +837,7 @@ public class ShaderProgram {
 	 * @param d vec.w / color.a 
 	 */
 	public void setUniform4f(String name, float a, float b, float c, float d) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform4f(id, a, b, c, d);
 	}
@@ -815,7 +849,7 @@ public class ShaderProgram {
 	 * @param b vec.y / tex.t
 	 */
 	public void setUniform2i(String name, int a, int b) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform2i(id, a, b);
 	}
@@ -828,7 +862,7 @@ public class ShaderProgram {
 	 * @param c vec.z / color.b 
 	 */
 	public void setUniform3i(String name, int a, int b, int c) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform3i(id, a, b, c);
 	}
@@ -842,7 +876,7 @@ public class ShaderProgram {
 	 * @param d vec.w / color.a 
 	 */
 	public void setUniform4i(String name, int a, int b, int c, int d) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniform4i(id, a, b, c, d);
 	}
@@ -854,7 +888,7 @@ public class ShaderProgram {
 	 * @param buf the buffer representing the matrix2
 	 */
 	public void setUniformMatrix2(String name, boolean transpose, FloatBuffer buf) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix2(id, transpose, buf);
 	}
@@ -866,7 +900,7 @@ public class ShaderProgram {
 	 * @param buf the buffer representing the matrix3
 	 */
 	public void setUniformMatrix3(String name, boolean transpose, FloatBuffer buf) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix3(id, transpose, buf);
 	}
@@ -878,7 +912,7 @@ public class ShaderProgram {
 	 * @param buf the buffer representing the matrix4
 	 */
 	public void setUniformMatrix4(String name, boolean transpose, FloatBuffer buf) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		GL20.glUniformMatrix4(id, transpose, buf);
 	}
@@ -888,7 +922,7 @@ public class ShaderProgram {
 //	}
 	
 	public void setUniformMatrix3(String name, boolean transpose, Matrix3f m) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		if (fbuf16==null)
 			fbuf16 = BufferUtils.createFloatBuffer(16);
@@ -899,7 +933,7 @@ public class ShaderProgram {
 	}
 	
 	public void setUniformMatrix4(String name, boolean transpose, Matrix4f m) {
-		int id = getUniformID(name);
+		int id = getUniformLocation(name);
 		if (id==-1) return;
 		if (fbuf16==null)
 			fbuf16 = BufferUtils.createFloatBuffer(16);
@@ -908,4 +942,6 @@ public class ShaderProgram {
 		fbuf16.flip();
 		GL20.glUniformMatrix4(id, transpose, fbuf16);
 	}
+	
+	
 }
