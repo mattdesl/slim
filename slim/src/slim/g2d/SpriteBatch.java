@@ -67,6 +67,7 @@ public class SpriteBatch extends AbstractBatch {
 		if (vertCount < 3)
 			throw new IllegalArgumentException("SpriteBatch uses triangles so vertCount must be > 3");
 		useShaderProgram(program);
+		this.program.setUniformMatrix4("viewMatrix", true, viewMatrix);
 		
 		this.vertCount = vertCount;
 		vertexData = BufferUtils.createFloatBuffer(vertCount * getTotalNumComponents());
@@ -181,6 +182,7 @@ public class SpriteBatch extends AbstractBatch {
 			rotate(rotation, cx, cy);
 		}
 		
+		this.program.setUniformMatrix4("viewMatrix", true, viewMatrix);
 		drawQuad(x, y, u, v, corners!=null ? corners[0] : null,
 		 		 x+width, y, u+uWidth, v, corners!=null ? corners[1] : null,
 		 		 x+width, y+height, u+uWidth, v+vHeight, corners!=null ? corners[2] : null,

@@ -4,38 +4,40 @@ import java.net.URL;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
+import org.lwjgl.opengl.GL13;
 
 import slim.Color;
 import slim.GL2D;
 import slim.SlimException;
 import slim.g2d.Image;
 import slim.g2d.SpriteBatch;
+import slim.shader.ShaderProgram;
+import slim.texture.Texture;
 import slim.util.Utils;
 
-public class Tex3DTest extends GUITestBase {
+public class HexGridTest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
-		new Tex3DTest().start();
+		new HexGridTest().start();
 	}
 
-	Image img1;
+
+	Image img1, img2;
 	SpriteBatch batch;
 	
 	@Override
 	public void init() throws SlimException {
 		this.setTargetFPS(60);
 		Display.setVSyncEnabled(true);
-		
-		//init2D();
-		System.out.println(GLContext.getCapabilities().GL_ARB_draw_instanced);
-		System.out.println(GLContext.getCapabilities().GL_ARB_instanced_arrays);
-		System.out.println(GLContext.getCapabilities().OpenGL30);
-		System.out.println(GLContext.getCapabilities().OpenGL21);
-		
 		GL11.glViewport(0, 0, 800, 600);
 		GL2D.setBackground(Color.gray);
-		img1 = new Image("res/box1.png");
+		img1 = new Image("res/clouds.jpg");
+		img2 = new Image("res/hexgrid.png");
+		img2.getTexture().setWrap(Texture.WRAP_REPEAT);
 		batch = new SpriteBatch(12);
+		ShaderProgram.setStrictMode(false);
+		batch.getShaderProgram().bind();
+		batch.getShaderProgram().setUniform1i("tex1", 1);
+		
 	}
 
 	private float rot = 0;
@@ -43,9 +45,14 @@ public class Tex3DTest extends GUITestBase {
 	@Override
 	public void render() throws SlimException {
 		batch.resetTransform();
+
+		img1.getTexture().bind();
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		
-		batch.drawImage(img1, 20, 20, rot+=0.03f);
-		batch.drawImage(img1, 55, 20, 0);
+		img2.getTexture().bind();
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		
+		batch.drawImage(img2, 0, 0);
 		
 		batch.flush();
 		Display.setTitle(String.valueOf(getFPS()));

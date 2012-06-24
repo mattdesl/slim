@@ -1,6 +1,7 @@
 #version 120
 
 uniform mat4 projMatrix;
+uniform mat4 viewMatrix;
 
 //in
 attribute vec4 Color;
@@ -16,5 +17,5 @@ void main() {
 	//vPosition = Position;
 	vColor = Color;
 	vTexCoord = TexCoord;
-	gl_Position = projMatrix * vec4(Position.xy, 0, 1);
+	gl_Position = projMatrix * viewMatrix * vec4(Position.xy, 0, 1);
 } 

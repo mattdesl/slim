@@ -194,10 +194,11 @@ public abstract class AbstractBatch {
 	 */
 	protected Vector4f transform(float x, float y, float z) {
 		tmpV.set(x, y, z, 1f);
-		if (transformEnabled)
-			return Matrix4f.transform(viewMatrix, tmpV, tmpV);
-		else
-			return tmpV;
+		return tmpV;
+//		if (transformEnabled)
+//			return Matrix4f.transform(viewMatrix, tmpV, tmpV);
+//		else
+//			return tmpV;
 	}
 	
 	protected class MatrixStack extends ArrayList<Matrix4f> {
