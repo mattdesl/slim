@@ -3,21 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="oldsrc"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsquish"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/filedrop"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/lwjgl-2.8.4/jar/jinput.jar"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/lwjgl-2.8.4/jar/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/lwjgl-2.8.4/jar/lwjgl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/wendesl/Documents/matts/java/lwjgl-2.8.4/native/macosx"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/lwjgl-2.8.4/jar/lzma.jar"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/twl/TWL.jar"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/twl/TWLEffects.jar"/>
-	<classpathentry kind="lib" path="/Users/wendesl/Documents/matts/java/twl/external-libs/xpp3-1.1.4c.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jorbis"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/paulsound"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
