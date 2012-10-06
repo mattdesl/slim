@@ -23,6 +23,7 @@ public class EmptyGUITest extends GUITestBase {
 	@Override
 	public void update(int delta) throws SlimException {
 		
+		System.out.println(Mouse.getDX());
 	}
 
 	@Override

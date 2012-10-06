@@ -23,7 +23,6 @@ public class VertexAttrib {
 	}
 	
 	public String toString() {
-		
 		return location+"("+name+":"+type()+")";
 	}
 	

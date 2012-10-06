@@ -64,6 +64,7 @@ import de.matthiasmann.twl.renderer.Font;
 
 public class TestTexPaint extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
+		
 		System.out.println((int)'*');
 		TestTexPaint p = new TestTexPaint();
 		try { p.start(); }
@@ -107,6 +108,7 @@ public class TestTexPaint extends GUITestBase {
 	
 	@Override
 	public void init() throws SlimException {
+		System.out.println(GLContext.getCapabilities().GL_ARB_texture_float);
 		System.out.println(GLContext.getCapabilities().GL_ARB_draw_instanced);
 		GL11.glClearColor(0.8f, 0.8f, 0.8f, 1f);
 		init3D();

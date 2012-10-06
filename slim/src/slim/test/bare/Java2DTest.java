@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.lwjgl.opengl.GLContext;
+
 public class Java2DTest extends JFrame implements ActionListener {
 	private GamePanel gamePanel = new GamePanel();
 	private JButton startButton = new JButton("Start");
@@ -51,8 +53,10 @@ public class Java2DTest extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		Java2DTest glt = new Java2DTest();
-		glt.setVisible(true);
+		
+		
+		//Java2DTest glt = new Java2DTest();
+		//glt.setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent e) {
