@@ -5,20 +5,20 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import slim.core.SlimException;
-import slim.game.Game;
+import slim.game.AppContext;
 
 public class DesktopApp extends App {
 	
-	public DesktopApp(Game context) {
+	public DesktopApp(AppContext context) {
 		super(context);
 	}
 
-	public DesktopApp(Game context, int width, int height) throws SlimException {
+	public DesktopApp(AppContext context, int width, int height) throws SlimException {
 		this(context);
 		setDisplayMode(width, height);
 	}
 	
-	public DesktopApp(Game context, int width, int height, boolean fullscreen) throws SlimException {
+	public DesktopApp(AppContext context, int width, int height, boolean fullscreen) throws SlimException {
 		this(context, width, height);
 		setFullscreen(fullscreen);
 	}

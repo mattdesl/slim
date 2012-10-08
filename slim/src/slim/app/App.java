@@ -4,13 +4,13 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 
 import slim.core.SlimException;
-import slim.game.Game;
+import slim.game.AppContext;
 
 public abstract class App {
 
 	public static final int NO_TARGET_FPS = -1;
 	
-	protected Game game;
+	protected AppContext game;
 
 	/** time at last frame */
 	protected long lastFrame;
@@ -22,11 +22,11 @@ public abstract class App {
 	
 	protected int targetFPS = 60;
 	
-	protected App(Game game) {
+	protected App(AppContext game) {
 		this.game = game;
 	}
 	
-	public Game getGame() {
+	public AppContext getGame() {
 		return game;
 	}
 	

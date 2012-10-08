@@ -4,7 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import slim.app.App;
 
-public abstract class Game2D implements Game {
+public abstract class Game2D implements AppContext {
 
 	protected void setupViewport(App app) {
 		int width = app.getWidth(), height = app.getHeight();

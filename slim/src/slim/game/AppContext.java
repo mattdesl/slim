@@ -3,7 +3,7 @@ package slim.game;
 import slim.app.App;
 
 
-public interface Game {
+public interface AppContext {
 	
 	public void createContext(App app);
 	public void renderContext(App app);
