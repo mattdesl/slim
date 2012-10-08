@@ -9,14 +9,14 @@ import java.net.URL;
 
 import org.lwjgl.opengl.GL11;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.g2d.Image;
-import slim.shader.ShaderProgram;
-import slim.util.Utils;
+import slim.shader2.ShaderProgram;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 
 public class SpriteBatchTest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -24,7 +24,7 @@ public class SpriteBatchTest extends GUITestBase {
 	}
 	
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 
 	private ShaderProgram prog1, prog2;

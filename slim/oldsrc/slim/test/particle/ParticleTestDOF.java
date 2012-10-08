@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.Image;
 import slim.test.bare.GUITestBase;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 
 public class ParticleTestDOF extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -56,7 +56,7 @@ public class ParticleTestDOF extends GUITestBase {
 		batch = new SpriteBatch();
 		
 		for (int i=0; i<100; i++) {
-			entities.add(new ZEntity(image, Utils.rnd()*800, Utils.rnd()*600, Utils.rnd(1f, 0f)));
+			entities.add(new ZEntity(image, Utils2.rnd()*800, Utils2.rnd()*600, Utils2.rnd(1f, 0f)));
 		}
 	}
 
@@ -74,6 +74,6 @@ public class ParticleTestDOF extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

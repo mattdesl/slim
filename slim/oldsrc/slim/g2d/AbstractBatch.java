@@ -9,10 +9,10 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import slim.MathUtil;
-import slim.shader.ShaderProgram;
-import slim.shader.VertexAttrib;
-import slim.shader.VertexAttribs;
+import slim.shader2.ShaderProgram;
+import slim.shader2.VertexAttrib;
+import slim.shader2.VertexAttribs;
+import slimold.MathUtil;
 
 public abstract class AbstractBatch {
 	

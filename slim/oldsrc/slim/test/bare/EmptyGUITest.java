@@ -2,8 +2,8 @@ package slim.test.bare;
 
 import java.net.URL;
 
-import slim.SlimException;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.SlimException;
 
 public class EmptyGUITest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -28,6 +28,6 @@ public class EmptyGUITest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

@@ -10,11 +10,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.shader.ShaderProgram;
-import slim.util.Utils;
+import slim.shader2.ShaderProgram;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
 
 public class VertexAttribTest {
 	

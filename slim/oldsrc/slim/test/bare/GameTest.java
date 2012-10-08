@@ -7,12 +7,12 @@ import java.util.Arrays;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import slim.Color;
-import slim.SlimException;
-import slim.shader.ShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.texture.Texture;
 import slim.texture.Texture2DArray;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.SlimException;
 import de.matthiasmann.twl.Widget;
 
 public class GameTest extends GUITestBase {
@@ -167,6 +167,6 @@ public class GameTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

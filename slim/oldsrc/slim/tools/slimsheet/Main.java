@@ -7,18 +7,18 @@ import java.nio.ByteBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.g2d.Image;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
-import slim.util.ArraySpriteSheet;
-import slim.util.SpriteSheet;
-import slim.util.Utils;
+import slim.util2.ArraySpriteSheet;
+import slim.util2.SpriteSheet;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 import de.matthiasmann.twl.Event;
 
 public class Main extends GUITestBase {
@@ -546,7 +546,7 @@ public class Main extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 	
 	

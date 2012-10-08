@@ -14,16 +14,16 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GLContext;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.Image;
-import slim.shader.GeometryShaderProgram;
-import slim.shader.ShaderProgram;
+import slim.shader2.GeometryShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 import de.matthiasmann.twl.Event;
 
 public class GeomShaderTest extends GUITestBase {
@@ -53,7 +53,7 @@ public class GeomShaderTest extends GUITestBase {
 		init2D();
 		setTargetFPS(-1);
 		GL2D.setBackground(Color.gray);
-		URL url = Utils.getResource("res/small.png");
+		URL url = Utils2.getResource("res/small.png");
 		
 		img = new Image(url);
 		
@@ -105,7 +105,7 @@ public class GeomShaderTest extends GUITestBase {
 		
 		// initilise balls
 		for (int i = 0; i < balls.length; i++) {
-			balls[i] = new Ball((int)(Utils.rndFloat() * SCREEN_WIDTH), (int)(Utils.rndFloat() * SCREEN_HEIGHT));
+			balls[i] = new Ball((int)(Utils2.rndFloat() * SCREEN_WIDTH), (int)(Utils2.rndFloat() * SCREEN_HEIGHT));
 		}
 	}
 	
@@ -232,7 +232,7 @@ public class GeomShaderTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 
 	public static class Ball {
@@ -243,8 +243,8 @@ public class GeomShaderTest extends GUITestBase {
 			this.x = x;
 			this.y = y;
 			
-			this.dx = 0.1f + (float)(Utils.rnd()*0.1f) * (Utils.rnd() < 0.5 ? 1 : -1);
-			this.dy = 0.1f + (float)(Utils.rnd()*0.1f) * (Utils.rnd() < 0.5 ? 1 : -1);
+			this.dx = 0.1f + (float)(Utils2.rnd()*0.1f) * (Utils2.rnd() < 0.5 ? 1 : -1);
+			this.dy = 0.1f + (float)(Utils2.rnd()*0.1f) * (Utils2.rnd() < 0.5 ? 1 : -1);
 		}
 		
 		public void update(int delta) {

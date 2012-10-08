@@ -5,17 +5,17 @@ import java.net.URL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import slim.GL2D;
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.easing.Easing;
 import slim.easing.SimpleFX;
 import slim.g2d.FBO;
 import slim.g2d.Image;
-import slim.shader.ShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.GL2D;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 import de.matthiasmann.twl.Event;
 
 public class ShaderLightingTest extends GUITestBase {
@@ -66,7 +66,7 @@ public class ShaderLightingTest extends GUITestBase {
 	
 	void resetLights() throws SlimException {
 		lightManager.clear();
-		lastLight = lightManager.createLight(mouseX, mouseY, Utils.rndColor());
+		lastLight = lightManager.createLight(mouseX, mouseY, Utils2.rndColor());
 	}
 	
 	void resetShadowCasters() {
@@ -127,7 +127,7 @@ public class ShaderLightingTest extends GUITestBase {
 					paintBox();
 				else if (paintMode==2) {
 					try {
-						lastLight = lightManager.createLight(mouseX, mouseY, Utils.rndColor());
+						lastLight = lightManager.createLight(mouseX, mouseY, Utils2.rndColor());
 					} catch (SlimException ex) {
 						ex.printStackTrace();
 					}
@@ -152,6 +152,6 @@ public class ShaderLightingTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

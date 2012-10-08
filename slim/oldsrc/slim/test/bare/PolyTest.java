@@ -14,12 +14,12 @@ import org.poly2tri.triangulation.TriangulationPoint;
 import org.poly2tri.triangulation.delaunay.DelaunayTriangle;
 import org.poly2tri.triangulation.util.PolygonGenerator;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
 import slim.g2d.Image;
 import slim.texture.Texture;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
 import de.matthiasmann.twl.Event;
 
 public class PolyTest extends GUITestBase {
@@ -273,6 +273,6 @@ public class PolyTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

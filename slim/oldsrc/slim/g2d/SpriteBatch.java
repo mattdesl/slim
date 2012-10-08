@@ -9,12 +9,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
-import slim.Color;
-import slim.MathUtil;
-import slim.SlimException;
-import slim.shader.ShaderProgram;
-import slim.shader.VertexAttrib;
+import slim.shader2.ShaderProgram;
+import slim.shader2.VertexAttrib;
 import slim.texture.Texture;
+import slimold.Color;
+import slimold.MathUtil;
+import slimold.SlimException;
 
 /**
  * A simple sprite batch class that uses the following format for

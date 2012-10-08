@@ -15,7 +15,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 
-import slim.util.Utils;
+import slim.util2.Utils2;
 
 public class AudioManager {
 	
@@ -56,7 +56,7 @@ public class AudioManager {
 		//byte[] b = c.readAll();
 		//c.close();
 		
-		AudioInputStream in = getStream(Utils.getResource("res/kirby.ogg"));
+		AudioInputStream in = getStream(Utils2.getResource("res/kirby.ogg"));
 		AudioFormat fmt = in.getFormat();
 		byte[] b = readAll(in);
 		//System.out.println("Actual size: "+b.length);

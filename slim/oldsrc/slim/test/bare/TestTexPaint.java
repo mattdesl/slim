@@ -48,12 +48,12 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
 import slim.texture.TextureLoader;
 import slim.texture.io.ImageDecoder;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.SlimException;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.ResizableFrame;
@@ -99,7 +99,7 @@ public class TestTexPaint extends GUITestBase {
 	
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 	
 	protected void handleEvent(Event evt) {

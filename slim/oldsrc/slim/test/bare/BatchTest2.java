@@ -12,13 +12,13 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.shader.ShaderProgram;
-import slim.shader.VertexAttrib;
-import slim.util.FastTrig;
-import slim.util.Utils;
+import slim.shader2.ShaderProgram;
+import slim.shader2.VertexAttrib;
+import slim.util2.FastTrig;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
 
 public class BatchTest2 extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -252,6 +252,6 @@ public class BatchTest2 extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

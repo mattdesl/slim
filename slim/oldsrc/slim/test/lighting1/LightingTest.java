@@ -5,15 +5,15 @@ import java.net.URL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.g2d.Image;
-import slim.shader.ShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.test.bare.GUITestBase;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.renderer.Font;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLFont;
@@ -270,6 +270,6 @@ public class LightingTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

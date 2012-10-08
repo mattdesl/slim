@@ -33,9 +33,9 @@ import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
+import slimold.SlimException;
 
 /**
  * A very thin wrapper around OpenGL Frame Buffer Objects, mostly intended for

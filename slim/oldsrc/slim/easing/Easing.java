@@ -30,7 +30,7 @@
  */
 package slim.easing;
 
-import slim.util.FastTrig;
+import slim.util2.FastTrig;
 
 /**
  * <p>The Easing class holds a set of general-purpose motion 

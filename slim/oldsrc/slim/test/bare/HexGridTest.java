@@ -6,14 +6,14 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
 import slim.g2d.Image;
 import slim.g2d.SpriteBatch;
-import slim.shader.ShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.texture.Texture;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
 
 public class HexGridTest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -65,6 +65,6 @@ public class HexGridTest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

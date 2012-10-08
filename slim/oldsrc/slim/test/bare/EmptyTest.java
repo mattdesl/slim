@@ -1,6 +1,6 @@
 package slim.test.bare;
 
-import slim.SlimException;
+import slimold.SlimException;
 
 public class EmptyTest extends TestBase {
 	public static void main(String[] args) throws SlimException {

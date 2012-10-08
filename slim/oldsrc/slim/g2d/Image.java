@@ -3,10 +3,10 @@ package slim.g2d;
 import java.io.IOException;
 import java.net.URL;
 
-import slim.SlimException;
 import slim.texture.Texture;
 import slim.texture.Texture2D;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.SlimException;
 
 
 /**
@@ -31,7 +31,7 @@ public class Image {
 	 * A convenience wrapper around Texture.loadTexture, useful for prototyping and rapid development. 
 	 */
 	public Image(String ref, int filter) throws SlimException {
-		this(Utils.getResource(ref), filter);
+		this(Utils2.getResource(ref), filter);
 	}
 	
 	public Image(String ref) throws SlimException {

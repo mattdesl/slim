@@ -4,12 +4,12 @@ import java.net.URL;
 
 import org.lwjgl.opengl.GL11;
 
-import slim.Color;
-import slim.SlimException;
 import slim.math.Matrix3;
 import slim.math.Vector2;
 import slim.test.bare.GUITestBase;
-import slim.util.Utils;
+import slim.util2.Utils2;
+import slimold.Color;
+import slimold.SlimException;
 
 public class EmptyGUITest extends GUITestBase {
 	public static void main(String[] args) throws SlimException {
@@ -56,6 +56,6 @@ public class EmptyGUITest extends GUITestBase {
 
 	@Override
 	public URL getThemeURL() throws SlimException {
-		return Utils.getResource("res/gui/chutzpah/chutzpah.xml");
+		return Utils2.getResource("res/gui/chutzpah/chutzpah.xml");
 	}
 }

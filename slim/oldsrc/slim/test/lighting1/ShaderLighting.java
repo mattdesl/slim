@@ -6,14 +6,14 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import slim.Color;
-import slim.GL2D;
-import slim.SlimException;
-import slim.SpriteBatch;
 import slim.g2d.FBO;
 import slim.g2d.Image;
-import slim.shader.ShaderProgram;
+import slim.shader2.ShaderProgram;
 import slim.texture.Texture;
+import slimold.Color;
+import slimold.GL2D;
+import slimold.SlimException;
+import slimold.SpriteBatch;
 
 public class ShaderLighting {
 

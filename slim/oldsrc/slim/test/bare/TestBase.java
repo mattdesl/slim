@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 
-import slim.SlimException;
+import slimold.SlimException;
 
 public abstract class TestBase {
 
