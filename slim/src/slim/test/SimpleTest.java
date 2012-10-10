@@ -1,21 +1,12 @@
 package slim.test;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-
 import slim.app.App;
 import slim.app.DesktopApp;
 import slim.core.SlimException;
-import slim.core.VertexArray;
-import slim.core.VertexAttrib;
 import slim.game.Game2D;
-import slim.shader.ShaderProgram;
+import slim.game.Gfx;
+import slim.game.SimpleGfx;
 import slim.util.GLUtil;
-import slim.util.MathUtil;
-import slim.util.Utils;
 
 //entry point
 public class SimpleTest extends Game2D {
@@ -34,75 +25,26 @@ public class SimpleTest extends Game2D {
 		}
 	}
 	
-	VertexArray array;
-	ShaderProgram program;
 
 	@Override
-	public void create(App app) {
+	public void create(App app) throws SlimException {
 		
-		
-		
-		try {
-			final String VERTEX = Utils.readFile(Utils.getResourceAsStream("res/shader/sprite/sprite.vert"));
-			final String FRAGMENT = Utils.readFile(Utils.getResourceAsStream("res/shader/sprite/sprite.frag"));
-			
-			//We need to specify the locations for < OpenGL 3.2 
-			final List<VertexAttrib> ATTRIBUTES = Arrays.asList(
-						new VertexAttrib(0, "Position", 2),
-						new VertexAttrib(1, "Color", 4),
-						new VertexAttrib(2, "TexCoord", 2));
-			
-			ShaderProgram.setStrictMode(false);
-			program = new ShaderProgram(VERTEX, FRAGMENT, ATTRIBUTES);
-			
-			Matrix4f projMatrix = MathUtil.toOrtho2D(new Matrix4f(), 0, 0, app.getWidth(), app.getHeight());
-			program.bind();
-			program.setUniformMatrix4("projMatrix", true, projMatrix);
-			program.setUniform("tex0", 0);
-			
-			array = new VertexArray(ATTRIBUTES, 3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	
 	@Override
-	public void destroy(App app) {
+	public void destroy(App app) throws SlimException {
 		
 	}
 	
     
 	@Override
-	public void render(App app) {
-		GLUtil.clear();
-//		GLUtil.rect(50, 50, 100, 100);
-		
-		array.clear();
-		
-		array.put(25).put(50);
-		array.put(1f).put(1f).put(1f).put(1f);
-		array.put(0f).put(0f);
-		
-		array.put(50).put(50);
-		array.put(1f).put(1f).put(1f).put(1f);
-		array.put(0f).put(0f);
-		
-		array.put(50).put(150);
-		array.put(1f).put(1f).put(1f).put(1f);
-		array.put(0f).put(0f);
-		
-		array.flip();
-		
-		array.bind();
-		array.draw(GL11.GL_TRIANGLES, 0, 3);
-		array.unbind();
+	public void render(App app) throws SlimException {
 		
 	}
 
 	@Override
-	public void update(App app, int delta) {
+	public void update(App app, int delta) throws SlimException {
 		APP.setTitle(""+app.getFPS());
 	}
 	

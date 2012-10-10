@@ -303,7 +303,7 @@ public class PerPixelTexture1 extends BasicGame {
 			pixels.position(pixels.capacity());
 			pixels.flip();
 			int glFmt = format.getOGLType();
-			final SGL GL = Renderer.get();
+			final SGL GL = SimpleGfx.get();
 			texture.bind();
 			GL.glTexSubImage2D(GL.GL_TEXTURE_2D, 0, x, y, width, height, 
 					glFmt, GL.GL_UNSIGNED_BYTE, pixels);

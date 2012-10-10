@@ -86,13 +86,13 @@ public class DesktopApp extends App {
 	}
 	
 	@Override
-	protected void onFrameStart() {
+	protected void onFrameStart() throws SlimException {
 		if (Display.wasResized())
 			game.onResize(this);
 	}
 
 	@Override
-	protected void onFrameEnd() {
+	protected void onFrameEnd() throws SlimException {
 		Display.update();
 		int f = getTargetFPS();
 		if (f > 0 && f != NO_TARGET_FPS)

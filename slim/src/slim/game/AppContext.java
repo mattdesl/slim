@@ -1,14 +1,15 @@
 package slim.game;
 
 import slim.app.App;
+import slim.core.SlimException;
 
 
 public interface AppContext {
 	
-	public void createContext(App app);
-	public void renderContext(App app);
-	public void updateContext(App app, int delta);
-	public void destroyContext(App app);
+	public void createContext(App app) throws SlimException;
+	public void renderContext(App app) throws SlimException;
+	public void updateContext(App app, int delta) throws SlimException;
+	public void destroyContext(App app) throws SlimException;
 	
-	public void onResize(App app);
+	public void onResize(App app) throws SlimException;
 }

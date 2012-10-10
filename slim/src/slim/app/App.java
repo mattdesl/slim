@@ -89,8 +89,8 @@ public abstract class App {
 	protected abstract void create() throws SlimException;
 	protected abstract void destroy() throws SlimException;
 	
-	protected abstract void onFrameStart();
-	protected abstract void onFrameEnd();
+	protected abstract void onFrameStart() throws SlimException;
+	protected abstract void onFrameEnd() throws SlimException;
 	
 
 	/** 

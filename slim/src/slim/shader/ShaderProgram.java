@@ -78,6 +78,8 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import slim.core.SlimException;
 import slim.core.VertexAttrib;
@@ -684,6 +686,24 @@ public class ShaderProgram {
 	 */
 	public void setUniform(String name, Vector2f vec) {
 		setUniform(name, vec.x, vec.y);
+	}
+	
+	/**
+	 * Sets the value of a vec3 uniform to the given Vector3f.
+	 * @param name the vec3 uniform
+	 * @param vec the vector to use
+	 */
+	public void setUniform(String name, Vector3f vec) {
+		setUniform(name, vec.x, vec.y, vec.z);
+	}
+	
+	/**
+	 * Sets the value of a vec4 uniform to the given Vector4f.
+	 * @param name the vec4 uniform
+	 * @param vec the vector to use
+	 */
+	public void setUniform(String name, Vector4f vec) {
+		setUniform(name, vec.x, vec.y, vec.z, vec.w);
 	}
 	
 
